@@ -19,6 +19,14 @@ int WINAPI WinMain(
     // Initialize the DX Library
     if (DxLib_Init() == -1) return -1;
 
+    // Main loop
+    while (true) {
+        // Break the loop when a quit message (WM_QUIT) is received
+        if (ProcessMessage() != 0) {
+            break;
+        }
+    }
+
     // Finalize the DX Library
     DxLib_End();
 
