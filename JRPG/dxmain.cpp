@@ -12,5 +12,9 @@ int WINAPI WinMain(
     (void)lpCmdLine;
     (void)nCmdShow;
 
+    // DX Library Settings
+    // Disable outputting log files
+    SetOutApplicationLogValidFlag(FALSE);
+
     return 0;
 }
