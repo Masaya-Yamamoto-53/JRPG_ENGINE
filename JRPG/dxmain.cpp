@@ -16,5 +16,11 @@ int WINAPI WinMain(
     // Disable outputting log files
     SetOutApplicationLogValidFlag(FALSE);
 
+    // Initialize the DX Library
+    if (DxLib_Init() == -1) return -1;
+
+    // Finalize the DX Library
+    DxLib_End();
+
     return 0;
 }
