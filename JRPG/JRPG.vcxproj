@@ -140,12 +140,19 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dxmain.cpp" />
+    <ClCompile Include="FpsController.cpp" />
+    <ClCompile Include="GameSettings.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="KeyboardInput.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="FpsController.h" />
+    <ClInclude Include="GameSettings.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="KeyboardInput.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="config.ini" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

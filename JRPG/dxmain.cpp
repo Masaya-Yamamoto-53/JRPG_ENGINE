@@ -1,4 +1,6 @@
 #include "DxLib.h"
+#include "GameSettings.h"
+#include "FpsController.h"
 #include "InputManager.h"
 
 int WINAPI WinMain(
@@ -16,9 +18,20 @@ int WINAPI WinMain(
     // DX Library Settings
     // Disable outputting log files
     SetOutApplicationLogValidFlag(FALSE);
+    // Set vertical sync
+    SetWaitVSyncFlag(FALSE);
+    // Always run the application
+    SetAlwaysRunFlag(TRUE);
 
     // Initialize the DX Library
     if (DxLib_Init() == -1) return -1;
+
+    // Load game settings
+    GameSettings gameSettings;
+    gameSettings.load("config.ini");
+   
+    // FPS object to manage the frame rate
+    FpsController fpsController(gameSettings.getTargetFps());
 
     // Main loop
     while (true) {
@@ -26,8 +39,15 @@ int WINAPI WinMain(
         if (ProcessMessage() != 0) {
             break;
         }
+
+        // Update frame timing and calculate FPS
+        fpsController.update();
+
         // Method to update the key input status
         InputManager::instance().update();
+
+        // Method to adjust the frame interval
+        fpsController.wait();
     }
 
     // Finalize the DX Library
