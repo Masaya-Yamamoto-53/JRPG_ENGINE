@@ -140,6 +140,12 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dxmain.cpp" />
+    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="KeyboardInput.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="KeyboardInput.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
