@@ -1,4 +1,5 @@
 #include "DxLib.h"
+#include "InputManager.h"
 
 int WINAPI WinMain(
       _In_ HINSTANCE hInstance
@@ -25,6 +26,8 @@ int WINAPI WinMain(
         if (ProcessMessage() != 0) {
             break;
         }
+        // Method to update the key input status
+        InputManager::instance().update();
     }
 
     // Finalize the DX Library
