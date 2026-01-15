@@ -15,6 +15,10 @@ int WINAPI WinMain(
     (void)lpCmdLine;
     (void)nCmdShow;
 
+    // Load game settings
+    GameSettings gameSettings;
+    gameSettings.load("config.ini");
+
     // DX Library Settings
     // Disable outputting log files
     SetOutApplicationLogValidFlag(FALSE);
@@ -22,14 +26,12 @@ int WINAPI WinMain(
     SetWaitVSyncFlag(FALSE);
     // Always run the application
     SetAlwaysRunFlag(TRUE);
+    // Change to window mode
+    ChangeWindowMode(gameSettings.isWindowMode());
 
     // Initialize the DX Library
     if (DxLib_Init() == -1) return -1;
 
-    // Load game settings
-    GameSettings gameSettings;
-    gameSettings.load("config.ini");
-   
     // FPS object to manage the frame rate
     FpsController fpsController(gameSettings.getTargetFps());
 
