@@ -14,20 +14,8 @@ bool GameSettings::load(const std::string& filePath) {
     // Windows の INI API は相対パスを正しく扱えない場合があるため、絶対パスに変換する
     std::string absPath = toAbsolutePath(filePath);
 
-    // FPS
-    int fpsMode = GetPrivateProfileIntA(
-          "Graphics"    // セクション名
-        , "TargetFps"   // キー名
-        , 1             // デフォルトは60FPS
-        , absPath.c_str()
-    );
-
-    // モード値に応じてFPSを決定
-    if (fpsMode == 0) {
-        m_targetFps = 30;
-    } else {
-        m_targetFps = 60;
-    }
+    // FPSは固定値に変更
+    m_targetFps = 60;
 
     // WindowMode
     int windowMode = GetPrivateProfileIntA(
