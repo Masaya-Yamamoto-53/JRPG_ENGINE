@@ -6,6 +6,27 @@ FieldRenderer::FieldRenderer() {
 }
 
 void FieldRenderer::drawField(const Field& field) {
+    const TileMap& map = field.getTileMap();
+    const TileSet& set = field.getTileSet();
+
+    int tileW = set.getTileWidth();
+    int tileH = set.getTileHeight();
+
+    for (int y = 0; y < map.getHeight(); y++) {
+        for (int x = 0; x < map.getWidth(); x++) {
+            int tileId = map.get(x, y);
+            int img = set.getTileImage(tileId);
+
+            if (img != -1) {
+                DrawGraph(
+                      x * tileW
+                    , y * tileH
+                    , img
+                    , TRUE
+                );
+            }
+        }
+    }
 }
 
 void FieldRenderer::drawCharacter(const FieldCharacter& character) {

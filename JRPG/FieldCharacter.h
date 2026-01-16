@@ -41,7 +41,7 @@ private:
     std::vector<int> m_images;  // “Ç‚İ‚ñ‚¾‰æ‘œƒnƒ“ƒhƒ‹
 
 public:
-    FieldCharacter(std::string id, int spriteWidth, int spriteHeight);
+    FieldCharacter(std::string id);
 
     int getMoveAmount();
 

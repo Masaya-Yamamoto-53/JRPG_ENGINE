@@ -2,6 +2,11 @@
 #include "DxLib.h"
 #include "GameSettings.h"
 
+GameSettings& GameSettings::instance() {
+    static GameSettings instance;
+    return instance;
+}
+
 std::string toAbsolutePath(const std::string& relativePath) {
     char fullPath[_MAX_PATH];
     if (_fullpath(fullPath, relativePath.c_str(), _MAX_PATH) != nullptr) {

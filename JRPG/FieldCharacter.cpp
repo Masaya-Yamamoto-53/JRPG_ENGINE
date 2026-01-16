@@ -1,6 +1,7 @@
 #include <array>
 #include "DxLib.h"
 #include "FieldCharacter.h"
+#include "GameSettings.h"
 
 // Image pattern for animation frames
 static constexpr std::array<int, 32> imgPattern = {
@@ -10,7 +11,7 @@ static constexpr std::array<int, 32> imgPattern = {
      1,  0,  0,  0,  0,  0,  0,  0
 };
 
-FieldCharacter::FieldCharacter(std::string id, int spriteWidth, int spriteHeight)
+FieldCharacter::FieldCharacter(std::string id)
     : m_id(id)
     , m_x(0)
     , m_y(0)
@@ -19,8 +20,8 @@ FieldCharacter::FieldCharacter(std::string id, int spriteWidth, int spriteHeight
     , m_frame(0)
     , m_runCounter(0)
     , m_animIndex(1)
-    , m_spriteWidth(spriteWidth)
-    , m_spriteHeight(spriteHeight)
+    , m_spriteWidth(GameSettings::instance().getSpriteWidth())
+    , m_spriteHeight(GameSettings::instance().getSpriteHeight())
 {
     loadImages();
 }

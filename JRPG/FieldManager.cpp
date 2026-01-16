@@ -4,7 +4,8 @@
 #include "FieldCharacter.h"
 
 FieldManager::FieldManager()
-    : m_character(nullptr)
+    : m_field()
+    , m_character(nullptr)
 {
 }
 
@@ -63,7 +64,24 @@ void FieldManager::update() {
 }
 
 void FieldManager::draw() {
+    // フィールドの描画
+    m_renderer.drawField(m_field);
+
+    // キャラクターの描画
     if (m_character) {
         m_renderer.drawCharacter(*m_character);
     }
+}
+
+void FieldManager::load() {
+    // タイルセット読み込み
+    std::vector<std::string> tileFiles = {
+          "assets\\feild\\00.bmp"
+        , "assets\\feild\\01.bmp"
+    };
+
+    // マップ読み込み
+    std::string mapFile = "assets\\map\\dungeon.csv";
+
+    bool result = m_field.load(tileFiles, mapFile);
 }

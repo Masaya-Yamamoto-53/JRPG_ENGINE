@@ -5,6 +5,7 @@
 
 class FieldManager {
 private:
+    Field m_field;
     FieldCharacter* m_character;
     FieldRenderer m_renderer;
 public:
@@ -14,4 +15,6 @@ public:
 
     void update();
     void draw();
+
+    void load();
 };

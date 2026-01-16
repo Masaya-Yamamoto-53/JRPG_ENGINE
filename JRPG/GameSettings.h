@@ -17,6 +17,9 @@ private:
     int m_colorBitDepth = 32;
 
 public:
+    // シングルトンとして利用するための取得関数
+    static GameSettings& instance();
+
     // 設定ファイルを読み込む
     bool load(const std::string& filePath);
 

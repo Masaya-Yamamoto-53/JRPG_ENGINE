@@ -149,6 +149,8 @@
     <ClCompile Include="GameSettings.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="KeyboardInput.cpp" />
+    <ClCompile Include="TileMap.cpp" />
+    <ClCompile Include="TileSet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="DebugManager.h" />
@@ -160,6 +162,8 @@
     <ClInclude Include="GameSettings.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="KeyboardInput.h" />
+    <ClInclude Include="TileMap.h" />
+    <ClInclude Include="TileSet.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="config.ini" />
