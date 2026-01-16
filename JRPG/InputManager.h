@@ -15,6 +15,8 @@ public:
 
     bool isKeyTriggered(int keyIndex) const;
 
+    int getKeyHoldFrames(int keyIndex) const;
+
 private:
     //コンストラクタをprivateにしてシングルトン化
     InputManager();

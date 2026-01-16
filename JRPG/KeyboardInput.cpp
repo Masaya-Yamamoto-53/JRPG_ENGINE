@@ -38,6 +38,15 @@ bool KeyboardInput::isTriggered(int keyIndex) const {
 	return (m_keyHoldFrames[keyIndex] == 1);
 }
 
+int KeyboardInput::getHoldFrames(int keyIndex) const {
+    // キーインデックスが無効の場合はフレーム数を-1にする
+	if (!isValidIndex(keyIndex)) {
+		return -1;
+	}
+    // キーが押され続けているフレーム数を返す
+	return m_keyHoldFrames[keyIndex];
+}
+
 bool KeyboardInput::isValidIndex(int keyIndex) const {
     // キーインデックスが有効か確認する
 	return (keyIndex >= 0 && keyIndex < KeyKindMax);

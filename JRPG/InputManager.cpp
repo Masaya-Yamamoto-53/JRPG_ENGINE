@@ -17,3 +17,7 @@ void InputManager::update() {
 bool InputManager::isKeyTriggered(int keyIndex) const {
     return m_keyboard.isTriggered(keyIndex);
 }
+
+int InputManager::getKeyHoldFrames(int keyIndex) const {
+    return m_keyboard.getHoldFrames(keyIndex);
+}

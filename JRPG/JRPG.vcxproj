@@ -140,12 +140,20 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="dxmain.cpp" />
+    <ClCompile Include="Field.cpp" />
+    <ClCompile Include="FieldCharacter.cpp" />
+    <ClCompile Include="FieldManager.cpp" />
+    <ClCompile Include="FieldRenderer.cpp" />
     <ClCompile Include="FpsController.cpp" />
     <ClCompile Include="GameSettings.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="KeyboardInput.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Field.h" />
+    <ClInclude Include="FieldCharacter.h" />
+    <ClInclude Include="FieldManager.h" />
+    <ClInclude Include="FieldRenderer.h" />
     <ClInclude Include="FpsController.h" />
     <ClInclude Include="GameSettings.h" />
     <ClInclude Include="InputManager.h" />
