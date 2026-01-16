@@ -4,8 +4,8 @@
 
 class TileMap {
 private:
-    int m_width = 0;
-    int m_height = 0;
+    int m_tileWidthNum = 0;
+    int m_tileHeightNum = 0;
     std::vector<std::vector<int>> m_tiles;
 
 public:
@@ -17,6 +17,6 @@ public:
     // ƒ^ƒCƒ‹ID‚ðŽæ“¾
     int get(int x, int y) const;
 
-    int getWidth() const { return m_width; }
-    int getHeight() const { return m_height; }
+    int getTileWidthNum() const { return m_tileWidthNum; }
+    int getTileHeightNum() const { return m_tileHeightNum; }
 };

@@ -3,6 +3,7 @@
 #include "FieldCharacter.h"
 
 class FieldRenderer {
+private:
 public:
     FieldRenderer();
 

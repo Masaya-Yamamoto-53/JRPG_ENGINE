@@ -1,28 +1,44 @@
 #include "DxLib.h"
 #include "FieldRenderer.h"
+#include "GameSettings.h"
 #include "DebugManager.h"
 
-FieldRenderer::FieldRenderer() {
+FieldRenderer::FieldRenderer()
+{
 }
 
 void FieldRenderer::drawField(const Field& field) {
     const TileMap& map = field.getTileMap();
     const TileSet& set = field.getTileSet();
 
-    int tileW = set.getTileWidth();
     int tileH = set.getTileHeight();
+    int tileW = set.getTileWidth();
 
-    for (int y = 0; y < map.getHeight(); y++) {
-        for (int x = 0; x < map.getWidth(); x++) {
+    // タイルのSTART位置を算出
+    int startY = field.getViewOffsetY() / tileH;
+    int startX = field.getViewOffsetX() / tileW;
+
+    int endY = GameSettings::instance().getWindowHeight() / tileH;
+    int endX = GameSettings::instance().getWindowWidth()  / tileW;
+
+    // Calculate the coordinates of the image positioned at the screen's origin (x, y = 0, 0).
+    // startPixelY and startPixelX represent the coordinates of the image located at the screen’s origin.
+    // PixelSize - 1 is used to perform rounding up, equivalent to the ceil function.
+    // Finally, dividing by PixelSize determines the size of the image to be loaded.
+    int offsetY = (field.getViewOffsetY() + tileH - 1) / tileH;
+    int offsetX = (field.getViewOffsetX() + tileW - 1) / tileW;
+
+    for (int y = startY ; y < endY + offsetY; y++) {
+        for (int x = startX; x < endX + offsetX; x++) {
             int tileId = map.get(x, y);
             int img = set.getTileImage(tileId);
 
             if (img != -1) {
                 DrawGraph(
-                      x * tileW
-                    , y * tileH
+                      (x * tileW) - field.getViewOffsetX()
+                    , (y * tileH) - field.getViewOffsetY()
                     , img
-                    , TRUE
+                    , FALSE
                 );
             }
         }
@@ -57,6 +73,25 @@ void FieldRenderer::drawCharacter(const FieldCharacter& character) {
               x + 32, y + spriteHeight / 2
             , x + spriteWidth - 32, y + spriteHeight
             , GetColor(0, 255, 0), FALSE
+        );
+
+        // 画面の中心線
+        DrawLine(
+              GameSettings::instance().getWindowWidth() / 2
+            , 0
+            , GameSettings::instance().getWindowWidth() / 2
+            , GameSettings::instance().getWindowHeight()
+            , GetColor(0, 0, 0)
+            , FALSE
+        );
+
+        DrawLine(
+              0
+            , GameSettings::instance().getWindowHeight() / 2
+            , GameSettings::instance().getWindowWidth()
+            , GameSettings::instance().getWindowHeight() / 2
+            , GetColor(0, 0, 0)
+            , FALSE
         );
     }
 }

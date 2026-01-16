@@ -30,8 +30,8 @@ bool GameSettings::load(const std::string& filePath) {
     m_windowMode = windowMode != 0;
 
     // ウィンドウサイズ
-    m_windowWidth  = m_fieldTileWidth * 25;
-    m_windowHeight = m_fieldTileHeight * 16;
+    m_windowWidth  = m_fieldTileWidth * m_tileCountX;
+    m_windowHeight = m_fieldTileHeight * m_tileCountY;
 
     return true;
 }

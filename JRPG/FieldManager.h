@@ -8,6 +8,7 @@ private:
     Field m_field;
     FieldCharacter* m_character;
     FieldRenderer m_renderer;
+
 public:
     FieldManager();
 
