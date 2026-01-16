@@ -14,9 +14,6 @@ bool GameSettings::load(const std::string& filePath) {
     // Windows の INI API は相対パスを正しく扱えない場合があるため、絶対パスに変換する
     std::string absPath = toAbsolutePath(filePath);
 
-    // FPSは固定値に変更
-    m_targetFps = 60;
-
     // WindowMode
     int windowMode = GetPrivateProfileIntA(
           "Graphics"    // セクション名
@@ -26,6 +23,10 @@ bool GameSettings::load(const std::string& filePath) {
     );
 
     m_windowMode = windowMode != 0;
+
+    // ウィンドウサイズ
+    m_windowWidth  = m_fieldTileWidth * 25;
+    m_windowHeight = m_fieldTileHeight * 16;
 
     return true;
 }

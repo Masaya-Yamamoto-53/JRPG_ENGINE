@@ -6,6 +6,16 @@ private:
     int m_targetFps = 60;
     bool m_windowMode = true;
 
+    int m_spriteWidth  = 128;
+    int m_spriteHeight = 128;
+
+    int m_fieldTileWidth = 64;
+    int m_fieldTileHeight = 64;
+
+    int m_windowWidth;
+    int m_windowHeight;
+    int m_colorBitDepth = 32;
+
 public:
     // 設定ファイルを読み込む
     bool load(const std::string& filePath);
@@ -14,4 +24,21 @@ public:
     int getTargetFps() const { return m_targetFps; }
     // ウィンドウモードを取得
     bool isWindowMode() const { return m_windowMode; }
+
+    // スプライト幅（ピクセル単位）を取得する
+    int getSpriteWidth() const { return m_spriteWidth; }
+    // スプライト高さ（ピクセル単位）を取得する
+    int getSpriteHeight() const { return m_spriteHeight; }
+
+    // フィールドタイル幅（ピクセル単位）を取得する
+    int getFieldTileWidth() const { return m_fieldTileWidth; }
+    // フィールドタイル高さ（ピクセル単位）を取得する
+    int getFieldTileHeight() const { return m_fieldTileHeight; }
+
+    // ウィンドウの幅（ピクセル単位）を取得
+    int getWindowWidth() const { return m_windowWidth; }
+    // ウィンドウの高さ（ピクセル単位）を取得する
+    int getWindowHeight() const { return m_windowHeight; }
+    // カラービット深度を取得する
+    int getColorBitDepth() const { return m_colorBitDepth; }
 };

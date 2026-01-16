@@ -25,6 +25,12 @@ int WINAPI WinMain(
     // DX Library Settings
     // Disable outputting log files
     SetOutApplicationLogValidFlag(FALSE);
+    // Set screen mode (resolution and color bit depth)
+    SetGraphMode(
+          gameSettings.getWindowWidth()
+        , gameSettings.getWindowHeight()
+        , gameSettings.getColorBitDepth()
+    );
     // Expand the window size by 1 times.
     SetWindowSizeExtendRate(1.0);
     // Set vertical sync
