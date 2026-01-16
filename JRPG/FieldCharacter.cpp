@@ -95,6 +95,8 @@ void FieldCharacter::update(
 
 int FieldCharacter::getX() const { return m_x; }
 int FieldCharacter::getY() const { return m_y; }
+int FieldCharacter::getSpriteWidth() const { return m_spriteWidth; }
+int FieldCharacter::getSpriteHeight() const { return m_spriteHeight; }
 int FieldCharacter::getCurrentFrame() const { return m_animIndex; }
 const std::vector<int>& FieldCharacter::getImages() const { return m_images; }
 

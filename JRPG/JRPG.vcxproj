@@ -139,6 +139,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="DebugManager.cpp" />
     <ClCompile Include="dxmain.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="FieldCharacter.cpp" />
@@ -150,6 +151,7 @@
     <ClCompile Include="KeyboardInput.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="DebugManager.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="FieldCharacter.h" />
     <ClInclude Include="FieldManager.h" />

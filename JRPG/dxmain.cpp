@@ -2,6 +2,7 @@
 #include "GameSettings.h"
 #include "FpsController.h"
 #include "InputManager.h"
+#include "DebugManager.h""
 #include "FieldCharacter.h" // 暫定対応
 #include "FieldManager.h"   // 暫定対応
 
@@ -60,6 +61,11 @@ int WINAPI WinMain(
 
         // Method to update the key input status
         InputManager::instance().update();
+
+        // デバッグモード切替
+        if (InputManager::instance().isKeyTriggered(KEY_INPUT_ESCAPE)) {
+            DebugManager::instance().toggle();
+        }
 
         // 暫定対応
         fieldManager.setCharacter(&fieldCharacter);

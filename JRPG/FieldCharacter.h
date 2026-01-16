@@ -53,6 +53,9 @@ public:
     int getX() const;
     int getY() const;
 
+    int getSpriteWidth() const;
+    int getSpriteHeight() const;
+
     int getCurrentFrame() const;
     const std::vector<int>& getImages() const;
 
