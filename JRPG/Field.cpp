@@ -53,8 +53,6 @@ bool Field::isWallLt(int absCharaX, int absCharaY, int tileSizeX, int tileSizeY)
     // キャラの体（leftX）が、画面に表示されるタイル数（0）
     // を超えてしまった場合は、画面外＋マップの外い出ていると判断して壁扱いにする。
     if (leftX <= 0) return true;
-    //return m_fieldArray[leftTopY * m_FieldArraySizeX + (leftX - 1)] != 0
-    //    || m_fieldArray[leftBtmY * m_FieldArraySizeX + (leftX - 1)] != 0;
 
     leftX     = (absCharaX + GameSettings::instance().getSpriteWidth() / 4) / tileSizeX;
     return m_tileMap.get(leftX, leftTopY) != 0
@@ -69,8 +67,6 @@ bool Field::isWallRt(int absCharaX, int absCharaY, int tileSizeX, int tileSizeY)
     int screenTileCountX = m_tileMap.getTileWidthNum();
 
     if (rightX >= screenTileCountX - 1) return true;
-    //return m_fieldArray[rightTopY * m_FieldArraySizeX + (rightX + 1)] != 0
-    //    || m_fieldArray[rightBtmY * m_FieldArraySizeX + (rightX + 1)] != 0;
 
     rightX    = (absCharaX - 1 + tileSizeX + GameSettings::instance().getSpriteWidth() / 4) / tileSizeX;
     return m_tileMap.get(rightX, rightTopY) != 0
@@ -105,8 +101,8 @@ void Field::move(
     ) {
 
     // タイルのサイズ（1タイルのピクセル幅・高さ）
-    int tileSizeY = GameSettings::instance().getFieldTileWidth();
-    int tileSizeX = GameSettings::instance().getFieldTileHeight();
+    int tileSizeY = GameSettings::instance().getFieldTileHeight();
+    int tileSizeX = GameSettings::instance().getFieldTileWidth();
 
     // 下方向・右方向に動いた場合に、画面上端がどのタイルに位置するかを計算
     // （タイル教会を跨ぐかどうかの判定に使用）
