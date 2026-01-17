@@ -119,7 +119,7 @@ void Field::move(
     moveDirection(
           downMoveAmount
         , m_viewOffsetY
-        , screenTileCountY + nextTopTileY <= m_tileMap.getTileWidthNum()
+        , screenTileCountY + nextTopTileY <= m_tileMap.getTileHeightNum()
         , absCharaY >= charaYMax
         , +1
     );
@@ -146,7 +146,7 @@ void Field::move(
     moveDirection(
           rightMoveAmount
         , m_viewOffsetX
-        , screenTileCountX + nextTopTileX <= m_tileMap.getTileHeightNum()
+        , screenTileCountX + nextTopTileX <= m_tileMap.getTileWidthNum()
         , absCharaX >= charaXMax
         , +1
     );
