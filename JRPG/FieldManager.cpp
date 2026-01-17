@@ -14,6 +14,24 @@ void FieldManager::setCharacter(FieldCharacter* character) {
     m_character = character;
 }
 
+bool FieldManager::checkMove(int& move, bool& flag, int baseX, int baseY, int deltaX, int deltaY,
+    std::function<bool(int, int, int, int)> isWallFunc) {
+    int pixelXSize = GameSettings::instance().getFieldTileWidth();
+    int pixelYSize = GameSettings::instance().getFieldTileHeight();
+    move = m_character->getMoveAmount();
+
+    while (move > 0) {
+        int nextX = baseX + deltaX * move;
+        int nextY = baseY + deltaY * move;
+        if (!isWallFunc(nextX, nextY, pixelXSize, pixelYSize)) {
+            flag = true;
+            return true;
+        }
+        move--;
+    }
+    return false;
+}
+
 void FieldManager::update() {
     InputManager& inputManager = InputManager::instance();
 
@@ -42,24 +60,29 @@ void FieldManager::update() {
     // キー入力の調停処理
     if (durationS > durationW) {
         direction = Direction::Up;
-        upMoveAmount = m_character->getMoveAmount();
-        upFlag = true;
+        checkMove(upMoveAmount, upFlag, absCharaX, absCharaY,  0, -1,
+            [&](int x, int y, int w, int h) { return m_field.isWallUp(x, y, w, h); });
     }
     if (durationS < durationW) {
         direction = Direction::Down;
-        dwMoveAmount = m_character->getMoveAmount();
-        dwFlag = true;
+        checkMove(dwMoveAmount, dwFlag, absCharaX, absCharaY,  0, +1,
+            [&](int x, int y, int w, int h) { return m_field.isWallDw(x, y, w, h); });
     }
     if (durationA > durationD) {
         direction = Direction::Left;
-        ltMoveAmount = m_character->getMoveAmount();
-        ltFlag = true;
+        checkMove(ltMoveAmount, ltFlag, absCharaX, absCharaY, -1,  0,
+            [&](int x, int y, int w, int h) { return m_field.isWallLt(x, y, w, h); });
     }
     if (durationA < durationD) {
         direction = Direction::Right;
-        rtMoveAmount = m_character->getMoveAmount();
-        rtFlag = true;
+        checkMove(rtMoveAmount, rtFlag, absCharaX, absCharaY,  1,  0,
+            [&](int x, int y, int w, int h) { return m_field.isWallRt(x, y, w, h); });
     }
+
+    if (dwMoveAmount > 0) { direction = Direction::Down;  }
+    if (upMoveAmount > 0) { direction = Direction::Up;    }
+    if (ltMoveAmount > 0) { direction = Direction::Left;  }
+    if (rtMoveAmount > 0) { direction = Direction::Right; }
 
     // 画面の中央（ピクセル）
     int screenCenterX = GameSettings::instance().getWindowWidth()  / 2;
@@ -85,6 +108,8 @@ void FieldManager::update() {
             , upFlag, dwFlag, ltFlag, rtFlag
             , direction);
     }
+    //printf("up:%d, dw:%d, l:%d, r:%d\n", upFlag, dwFlag, ltFlag, rtFlag);
+
 }
 
 void FieldManager::draw() {

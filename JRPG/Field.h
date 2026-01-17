@@ -12,13 +12,11 @@ private:
 public:
     Field();
 
-    void moveDirection(
-          int& moveCount
-        , int& startPixel
-        , int limitCondition
-        , int charaCondition
-        , int step
-    );
+    bool isWallUp(int absCharaX, int absCharaY, int pixelXSize, int pixelYSize);
+    bool isWallDw(int absCharaX, int absCharaY, int pixelXSize, int pixelYSize);
+    bool isWallLt(int absCharaX, int absCharaY, int pixelXSize, int pixelYSize);
+    bool isWallRt(int absCharaX, int absCharaY, int pixelXSize, int pixelYSize);
+
     void move(
           int& upMove
         , int& downMove
@@ -39,4 +37,13 @@ public:
 
     const TileSet& getTileSet() const { return m_tileSet; }
     const TileMap& getTileMap() const { return m_tileMap; }
+
+private:
+    void moveDirection(
+          int& moveCount
+        , int& startPixel
+        , int limitCondition
+        , int charaCondition
+        , int step
+    );
 };

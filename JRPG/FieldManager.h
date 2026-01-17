@@ -1,4 +1,5 @@
 #pragma once
+#include <functional>
 #include "Field.h"
 #include "FieldCharacter.h"
 #include "FieldRenderer.h"
@@ -18,4 +19,11 @@ public:
     void draw();
 
     void load();
+private:
+    bool checkMove(
+          int& move, bool& flag
+        , int baseX, int baseY
+        , int deltaX, int deltaY
+        , std::function<bool(int, int, int, int)> isWallFunc
+    );
 };
