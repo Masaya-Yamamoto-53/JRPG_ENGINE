@@ -1,4 +1,5 @@
 #pragma once
+#include "common.h"
 #include "TileSet.h"
 #include "TileMap.h"
 
@@ -12,10 +13,7 @@ private:
 public:
     Field();
 
-    bool isWallUp(int absCharaX, int absCharaY, int pixelXSize, int pixelYSize);
-    bool isWallDw(int absCharaX, int absCharaY, int pixelXSize, int pixelYSize);
-    bool isWallLt(int absCharaX, int absCharaY, int pixelXSize, int pixelYSize);
-    bool isWallRt(int absCharaX, int absCharaY, int pixelXSize, int pixelYSize);
+    bool isWall(Direction dir, int absCharaX, int absCharaY, int tileSizeX, int tileSizeY);
 
     void move(
           int& upMove

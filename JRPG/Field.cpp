@@ -9,68 +9,49 @@ Field::Field()
 {
 }
 
-bool Field::isWallUp(int absCharaX, int absCharaY, int tileSizeX, int tileSizeY) {
-    int topRightX = (absCharaX + GameSettings::instance().getSpriteWidth() / 4) / tileSizeX;
-    int topLeftX  = (absCharaX + GameSettings::instance().getSpriteWidth() - GameSettings::instance().getSpriteWidth() / 4 - 1) / tileSizeX;
-    int topY      = (absCharaY + tileSizeY + GameSettings::instance().getFieldTileHeight() / 2 - 1) / tileSizeY;
+bool Field::isWall(Direction dir, int absCharaX, int absCharaY, int tileSizeX, int tileSizeY)
+{
+    const int spriteW = GameSettings::instance().getSpriteWidth();
+    const int spriteH = GameSettings::instance().getSpriteHeight();
 
-    if (((absCharaY + tileSizeY) / tileSizeY) <= 0) return true;
+    int rightX = (absCharaX + spriteW / 4) / tileSizeX;
+    int leftX  = (absCharaX + spriteW - spriteW / 4 - 1) / tileSizeX;
 
-    return m_tileMap.get(topRightX, topY) != 0   // 左端
-        || m_tileMap.get(topLeftX, topY)  != 0;  // 右端
-}
-
-bool Field::isWallDw(int absCharaX, int absCharaY, int tileSizeX, int tileSizeY) {
-    int btmRightX = (absCharaX + GameSettings::instance().getSpriteWidth() / 4) / tileSizeX;
-    int btmLeftX  = (absCharaX + GameSettings::instance().getSpriteWidth() - GameSettings::instance().getSpriteWidth() / 4 - 1) / tileSizeX;
-
-                    // キャラクタの上端（absCharaY）が属するタイルYを求める
-                    // -1 しているのは、ちょうどタイル境界に乗ったときの off-by-one を防ぐため
-    int btmY      = (absCharaY - 1) / tileSizeY
-                    // キャラクタのスプライトの高さを「タイル何個分か」に変換して加算する
-                    // これにより、キャラの下端（足元）が属するタイルYが求まる
-                  + GameSettings::instance().getSpriteHeight() / tileSizeY;
+    int topY  = (absCharaY + tileSizeY + spriteH / 4) / tileSizeY;
+    int btmY  = (absCharaY - 1) / tileSizeY + spriteH / tileSizeY;
 
     int screenTileCountY = m_tileMap.getTileHeightNum();
-
-    // キャラの足元（btmY）が、画面に表示されるタイル数（screenTileCountY）
-    // を超えてしまった場合は、画面外＋マップ外に出ていると判断して壁扱いにする。
-    if (btmY >= screenTileCountY) return true;
-
-    return m_tileMap.get(btmRightX, btmY) != 0   // 左端
-        || m_tileMap.get(btmLeftX, btmY)  != 0;  // 右端
-}
-
-bool Field::isWallLt(int absCharaX, int absCharaY, int tileSizeX, int tileSizeY) {
-    int leftTopY  = (absCharaY + tileSizeY + GameSettings::instance().getFieldTileHeight() / 2 - 1) / tileSizeY;
-    int leftBtmY  = (absCharaY - 1) / tileSizeY
-                  + GameSettings::instance().getSpriteHeight() / tileSizeY;
-
-    // キャラクタの胴体付近に調整する
-    // + GameSettings::instance().getSpriteWidth() / 4
-    int leftX     = (absCharaX + tileSizeX + GameSettings::instance().getSpriteWidth() / 4) / tileSizeX;
-
-    // キャラの体（leftX）が、画面に表示されるタイル数（0）
-    // を超えてしまった場合は、画面外＋マップの外い出ていると判断して壁扱いにする。
-    if (leftX <= 0) return true;
-
-    leftX     = (absCharaX + GameSettings::instance().getSpriteWidth() / 4) / tileSizeX;
-    return m_tileMap.get(leftX, leftTopY) != 0
-        || m_tileMap.get(leftX, leftBtmY) != 0;
-}
-
-bool Field::isWallRt(int absCharaX, int absCharaY, int tileSizeX, int tileSizeY) {
-    int rightX    = (absCharaX - 1 + GameSettings::instance().getSpriteWidth() / 4) / tileSizeX;
-    int rightTopY = (absCharaY + tileSizeY + GameSettings::instance().getFieldTileHeight() / 2 - 1) / tileSizeY;
-    int rightBtmY = (absCharaY - 1) / tileSizeY
-                  + GameSettings::instance().getSpriteHeight() / tileSizeY;
     int screenTileCountX = m_tileMap.getTileWidthNum();
 
-    if (rightX >= screenTileCountX - 1) return true;
+    int lx, rx;
 
-    rightX    = (absCharaX - 1 + tileSizeX + GameSettings::instance().getSpriteWidth() / 4) / tileSizeX;
-    return m_tileMap.get(rightX, rightTopY) != 0
-        || m_tileMap.get(rightX, rightBtmY) != 0;
+    switch (dir) {
+    case Direction::Up:
+        if (static_cast<int>((absCharaY + tileSizeY) / tileSizeY) <= 0) return true;
+        return m_tileMap.get(rightX, topY) != 0
+            || m_tileMap.get(leftX, topY)  != 0;
+
+    case Direction::Down:
+        if (btmY >= screenTileCountY) return true;
+        return m_tileMap.get(rightX, btmY) != 0 
+            || m_tileMap.get(leftX, btmY)  != 0;
+
+    case Direction::Left: 
+        if (static_cast<int>((absCharaX + tileSizeX + spriteW / 4) / tileSizeX) <= 0) return true;
+
+        lx = (absCharaX + spriteW / 4) / tileSizeX;
+        return m_tileMap.get(lx, topY) != 0
+            || m_tileMap.get(lx, btmY) != 0;
+
+    case Direction::Right:
+        if (static_cast<int>((absCharaX - 1 + spriteW / 4) / tileSizeX) >= screenTileCountX - 1) return true;
+
+        rx  = (absCharaX  + tileSizeX + spriteW / 4) / tileSizeX;
+        return m_tileMap.get(rx, topY) != 0
+            || m_tileMap.get(rx, btmY) != 0;
+
+    return false;
+    }
 }
 
 void Field::moveDirection(

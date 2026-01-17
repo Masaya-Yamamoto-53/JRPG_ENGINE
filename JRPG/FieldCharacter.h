@@ -1,14 +1,7 @@
 #pragma once
 #include <string>
 #include <vector>
-
-enum class Direction {
-      None
-    , Up
-    , Down
-    , Left
-    , Right
-};
+#include "common.h"
 
 class FieldCharacter {
 private:

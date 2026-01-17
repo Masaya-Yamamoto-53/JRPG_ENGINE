@@ -61,22 +61,22 @@ void FieldManager::update() {
     if (durationS > durationW) {
         direction = Direction::Up;
         checkMove(upMoveAmount, upFlag, absCharaX, absCharaY,  0, -1,
-            [&](int x, int y, int w, int h) { return m_field.isWallUp(x, y, w, h); });
+            [&](int x, int y, int w, int h) { return m_field.isWall(direction, x, y, w, h); });
     }
     if (durationS < durationW) {
         direction = Direction::Down;
         checkMove(dwMoveAmount, dwFlag, absCharaX, absCharaY,  0, +1,
-            [&](int x, int y, int w, int h) { return m_field.isWallDw(x, y, w, h); });
+            [&](int x, int y, int w, int h) { return m_field.isWall(direction, x, y, w, h); });
     }
     if (durationA > durationD) {
         direction = Direction::Left;
         checkMove(ltMoveAmount, ltFlag, absCharaX, absCharaY, -1,  0,
-            [&](int x, int y, int w, int h) { return m_field.isWallLt(x, y, w, h); });
+            [&](int x, int y, int w, int h) { return m_field.isWall(direction, x, y, w, h); });
     }
     if (durationA < durationD) {
         direction = Direction::Right;
         checkMove(rtMoveAmount, rtFlag, absCharaX, absCharaY,  1,  0,
-            [&](int x, int y, int w, int h) { return m_field.isWallRt(x, y, w, h); });
+            [&](int x, int y, int w, int h) { return m_field.isWall(direction, x, y, w, h); });
     }
 
     if (dwMoveAmount > 0) { direction = Direction::Down;  }
