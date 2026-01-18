@@ -38,8 +38,6 @@ int WINAPI WinMain(
     // Expand the window size by 1 times.
     SetWindowSizeExtendRate(1.0);
     // Set vertical sync
-    SetWaitVSyncFlag(TRUE);
-    // Set vertical sync
     SetWaitVSyncFlag(FALSE);
     // Always run the application
     SetAlwaysRunFlag(TRUE);
