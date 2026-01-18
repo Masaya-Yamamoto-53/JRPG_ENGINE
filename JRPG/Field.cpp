@@ -50,8 +50,8 @@ bool Field::isWall(Direction dir, int absCharaX, int absCharaY, int tileSizeX, i
         return m_tileMap.get(rx, topY) != 0
             || m_tileMap.get(rx, btmY) != 0;
 
-    return false;
     }
+    return false;
 }
 
 void Field::moveDirection(
