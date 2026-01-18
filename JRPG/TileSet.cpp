@@ -28,3 +28,11 @@ int TileSet::getTileImage(int tileId) const {
     }
     return m_tileImages[tileId];
 }
+
+int TileSet::getTileWidth() const {
+    return m_tileWidth;
+}
+
+int TileSet::getTileHeight() const {
+    return m_tileHeight;
+}
