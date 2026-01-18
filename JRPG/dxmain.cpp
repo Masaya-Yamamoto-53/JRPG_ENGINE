@@ -2,7 +2,7 @@
 #include "GameSettings.h"
 #include "FpsController.h"
 #include "InputManager.h"
-#include "DebugManager.h""
+#include "DebugManager.h"
 #include "FieldCharacter.h" // Žb’è‘Î‰ž
 #include "FieldManager.h"   // Žb’è‘Î‰ž
 
