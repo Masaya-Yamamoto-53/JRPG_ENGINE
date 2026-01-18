@@ -61,7 +61,7 @@ int WINAPI WinMain(
 
     // Main loop
     while (true) {
-        // Break the loop when a quit message (WM_QUIT) is received
+        // DxLib‚ªC—¹—v‹‚ğ•Ô‚µ‚½‚çƒ‹[ƒv‚ğ”²‚¯‚é
         if (ProcessMessage() != 0) {
             break;
         }
