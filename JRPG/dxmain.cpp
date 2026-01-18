@@ -24,16 +24,17 @@ int WINAPI WinMain(
     freopen_s(&out, "CON", "w", stdout);
 
     // Load game settings
-    GameSettings::instance().load("config.ini");
+    auto & settings = GameSettings::instance();
+    settings.load("config.ini");
 
     // DX Library Settings
     // Disable outputting log files
     SetOutApplicationLogValidFlag(FALSE);
     // Set screen mode (resolution and color bit depth)
     SetGraphMode(
-          GameSettings::instance().getWindowWidth()
-        , GameSettings::instance().getWindowHeight()
-        , GameSettings::instance().getColorBitDepth()
+          settings.getWindowWidth()
+        , settings.getWindowHeight()
+        , settings.getColorBitDepth()
     );
     // Expand the window size by 1 times.
     SetWindowSizeExtendRate(1.0);
@@ -42,7 +43,7 @@ int WINAPI WinMain(
     // Always run the application
     SetAlwaysRunFlag(TRUE);
     // Change to window mode
-    ChangeWindowMode(GameSettings::instance().isWindowMode());
+    ChangeWindowMode(settings.isWindowMode());
 
     // Initialize the DX Library
     if (DxLib_Init() == -1) return -1;
@@ -51,7 +52,7 @@ int WINAPI WinMain(
     SetDrawScreen(DX_SCREEN_BACK);
 
     // FPS object to manage the frame rate
-    FpsController fpsController(GameSettings::instance().getTargetFps());
+    FpsController fpsController(settings.getTargetFps());
 
     // Žb’è‘Î‰ž
     FieldCharacter fieldCharacter("00");
