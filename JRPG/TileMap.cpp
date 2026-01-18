@@ -2,7 +2,10 @@
 #include <sstream>
 #include "TileMap.h"
 
-TileMap::TileMap() {
+TileMap::TileMap() 
+    : m_tileWidthNum(0)
+    , m_tileHeightNum(0)
+{
 }
 
 bool TileMap::load(const std::string& filePath) {
@@ -17,27 +20,52 @@ bool TileMap::load(const std::string& filePath) {
 
     std::string line;
     while (std::getline(ifs, line)) {
-        if (line.empty()) continue;
+        // 空白行をスキップ
+        if (line.find_first_not_of(" \t\r\n") == std::string::npos) {
+            continue;
+        }
 
         std::stringstream ss(line);
         std::string cell;
-
         std::vector<int> row;
 
         while (std::getline(ss, cell, ',')) {
-            row.push_back(std::stoi(cell));
+            try {
+                row.push_back(std::stoi(cell));
+            }
+            catch (const std::invalid_argument&) {
+                return false;
+            }
+            catch (const std::out_of_range&) {
+                return false;
+            }
+
         }
+        // 1行目で列数を確定
         if (m_tileWidthNum == 0) {
             m_tileWidthNum = static_cast<int>(row.size());
+        }
+        else if (static_cast<int>(row.size()) != m_tileWidthNum) {
+            return false;
         }
         m_tiles.push_back(row);
     }
     m_tileHeightNum = static_cast<int>(m_tiles.size());
-    return true;
+
+    // 空ファイルは不正
+    return m_tileHeightNum > 0;
 }
 
 int TileMap::get(int x, int y) const {
     if (y < 0 || y >= m_tileHeightNum) return -1;
     if (x < 0 || x >= m_tileWidthNum) return -1;
     return m_tiles[y][x];
+}
+
+int TileMap::getTileWidthNum() const {
+    return m_tileWidthNum;
+}
+
+int TileMap::getTileHeightNum() const {
+    return m_tileHeightNum;
 }

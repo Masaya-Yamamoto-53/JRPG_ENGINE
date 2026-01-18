@@ -10,9 +10,12 @@ private:
 
 public:
     TileSet();
+    ~TileSet();
 
     // タイル画像を読み込む
     bool load(const std::vector<std::string>& filePaths);
+    // 読み込んだ全タイル画像を開放
+    void unload();
     // 指定したtileIdの画像ハンドルを取得する
     int getTileImage(int tileId) const;
     // タイル1枚の幅を取得
