@@ -162,6 +162,7 @@
     <ClInclude Include="FpsController.h" />
     <ClInclude Include="GameSettings.h" />
     <ClInclude Include="InputManager.h" />
+    <ClInclude Include="json.hpp" />
     <ClInclude Include="KeyboardInput.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TileSet.h" />

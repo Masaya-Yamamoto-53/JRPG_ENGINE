@@ -9,8 +9,8 @@ private:
     static constexpr int CharacterSpriteNum = 27;
     static constexpr int RunStartFrame      = 30;
 
-    static constexpr int WalkSpeed = 4;  // 歩行時の速度
-    static constexpr int RunSpeed  = 8;  // 走行時の速度
+    static constexpr int WalkSpeed = 2;  // 歩行時の速度
+    static constexpr int RunSpeed  = 4;  // 走行時の速度
 
     // Identity
     std::string m_id;

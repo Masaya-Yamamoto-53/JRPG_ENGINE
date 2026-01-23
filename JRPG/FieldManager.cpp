@@ -108,8 +108,6 @@ void FieldManager::update() {
             , upFlag, dwFlag, ltFlag, rtFlag
             , direction);
     }
-    //printf("up:%d, dw:%d, l:%d, r:%d\n", upFlag, dwFlag, ltFlag, rtFlag);
-
 }
 
 void FieldManager::draw() {
@@ -124,13 +122,14 @@ void FieldManager::draw() {
 
 void FieldManager::load() {
     // タイルセット読み込み
-    std::vector<std::string> tileFiles = {
-          "assets\\feild\\00.bmp"
-        , "assets\\feild\\01.bmp"
+    std::vector<std::string> jsonFiles = {
+          "assets\\feild\\Tile00.json"
+        , "assets\\feild\\Tile01.json"
+        , "assets\\feild\\Tile02.json"
     };
 
     // マップ読み込み
     std::string mapFile = "assets\\map\\dungeon.csv";
 
-    bool result = m_field.load(tileFiles, mapFile);
+    bool result = m_field.load(jsonFiles, mapFile);
 }

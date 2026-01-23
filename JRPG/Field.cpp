@@ -28,28 +28,27 @@ bool Field::isWall(Direction dir, int absCharaX, int absCharaY, int tileSizeX, i
     switch (dir) {
     case Direction::Up:
         if (static_cast<int>((absCharaY + tileSizeY) / tileSizeY) <= 0) return true;
-        return m_tileMap.get(rightX, topY) != 0
-            || m_tileMap.get(leftX, topY)  != 0;
+        return m_tileSet.isWall(m_tileMap.get(rightX, topY))
+            || m_tileSet.isWall(m_tileMap.get(leftX, topY));
 
     case Direction::Down:
         if (btmY >= screenTileCountY) return true;
-        return m_tileMap.get(rightX, btmY) != 0 
-            || m_tileMap.get(leftX, btmY)  != 0;
+        return m_tileSet.isWall(m_tileMap.get(rightX, btmY))
+            || m_tileSet.isWall(m_tileMap.get(leftX, btmY));
 
     case Direction::Left: 
         if (static_cast<int>((absCharaX + tileSizeX + spriteW / 4) / tileSizeX) <= 0) return true;
 
         lx = (absCharaX + spriteW / 4) / tileSizeX;
-        return m_tileMap.get(lx, topY) != 0
-            || m_tileMap.get(lx, btmY) != 0;
+        return m_tileSet.isWall(m_tileMap.get(lx, topY))
+            || m_tileSet.isWall(m_tileMap.get(lx, btmY));
 
     case Direction::Right:
         if (static_cast<int>((absCharaX - 1 + spriteW / 4) / tileSizeX) >= screenTileCountX - 1) return true;
 
         rx  = (absCharaX  + tileSizeX + spriteW / 4) / tileSizeX;
-        return m_tileMap.get(rx, topY) != 0
-            || m_tileMap.get(rx, btmY) != 0;
-
+        return m_tileSet.isWall(m_tileMap.get(rx, topY))
+            || m_tileSet.isWall(m_tileMap.get(rx, btmY));
     }
     return false;
 }
@@ -136,16 +135,18 @@ void Field::move(
 int Field::getViewOffsetX() const { return m_viewOffsetX; }
 int Field::getViewOffsetY() const { return m_viewOffsetY; }
 
-bool Field::load(const std::vector<std::string>& tileFiles
+bool Field::load(const std::vector<std::string>& jsonFiles
                , const std::string& mapFile
                ) {
     // タイルセット読み込み
-    if (!m_tileSet.load(tileFiles)) {
+    if (!m_tileSet.loadFromJson(jsonFiles)) {
+        printf("Error: TileSet load failed\n");
         return false;
     }
 
     // マップ読み込み
     if (!m_tileMap.load(mapFile)) {
+        printf("Error: TileMap load failed\n");
         return false;
     }
 

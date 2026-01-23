@@ -30,7 +30,7 @@ public:
     int getViewOffsetY() const;
 
     // ステージデータを読み込む
-    bool load(const std::vector<std::string>& tileFiles
+    bool load(const std::vector<std::string>& jsonFiles
             , const std::string& mapFile);
 
     const TileSet& getTileSet() const { return m_tileSet; }

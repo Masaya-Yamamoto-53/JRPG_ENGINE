@@ -70,8 +70,8 @@ void FieldRenderer::drawCharacter(const FieldCharacter& character) {
         );
         // 当たり判定の閾値の目標位置を緑枠で表示
         DrawBox(
-              x + 32, y + (spriteHeight / 4) * 3
-            , x + spriteWidth - 32, y + spriteHeight
+              x + (spriteWidth / 4), y + (spriteHeight / 4) * 3
+            , x + spriteWidth - (spriteWidth / 4), y + spriteHeight
             , GetColor(0, 255, 0), FALSE
         );
 

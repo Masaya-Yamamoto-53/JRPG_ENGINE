@@ -6,11 +6,11 @@ private:
     int m_targetFps = 60;
     bool m_windowMode = true;
 
-    int m_spriteWidth  = 128;
-    int m_spriteHeight = 128;
+    int m_spriteWidth  = 64;
+    int m_spriteHeight = 64;
 
-    int m_fieldTileWidth = 64;
-    int m_fieldTileHeight = 64;
+    int m_fieldTileWidth = 32;
+    int m_fieldTileHeight = 32;
 
     int m_tileCountX = 25;
     int m_tileCountY = 16;
