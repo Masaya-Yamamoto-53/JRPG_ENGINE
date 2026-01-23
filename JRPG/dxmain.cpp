@@ -36,8 +36,8 @@ int WINAPI WinMain(
         , settings.getWindowHeight()
         , settings.getColorBitDepth()
     );
-    // Expand the window size by 1 times.
-    SetWindowSizeExtendRate(1.0);
+    // Expand the window size by 2 times.
+    SetWindowSizeExtendRate(2.0);
     // Set vertical sync
     SetWaitVSyncFlag(FALSE);
     // Always run the application
