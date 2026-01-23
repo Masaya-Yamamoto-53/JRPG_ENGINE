@@ -3,12 +3,16 @@
 #include <string>
 
 struct TileDef {
-    std::string image;
     int x;
     int y;
     int w;
     int h;
     bool wall;
+};
+
+struct TileFrame {
+    std::string image;
+    std::vector<TileDef> frame;
 };
 
 class TileSet {

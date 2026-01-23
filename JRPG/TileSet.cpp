@@ -16,46 +16,47 @@ TileSet::~TileSet() {
     unload(); // 保持している画像ハンドルを全て開放
 }
 
-std::vector<TileDef> parseJson(const std::string& jsonPath) {
+std::vector<TileFrame> parseJson(const std::string& jsonPath) {
     std::ifstream ifs(jsonPath);
     json j;
     ifs >> j;
 
-    std::vector<TileDef> result;
+    std::vector<TileFrame> frame;
 
     // "frames"が存在するかチェック
     if (!j.contains("frames")) {
         printf("JSON error: 'frames' not found\n");
-        return result;
+        return frame;
     }
 
-    for (auto& frame : j["frames"]) {
+    for (auto& f : j["frames"]) {
 
         // imageファイル名を取得
-        if (!frame.contains("image")) {
+        if (!f.contains("image")) {
             printf("JSON error: 'image' not found in frame\n");
             continue;
         }
-        std::string imageFile = frame["image"];
+        TileFrame frameDef;
+        frameDef.image = f["image"];
 
         // "Tiles"が存在するかチェック
-        if (!frame.contains("tiles")) {
+        if (!f.contains("tiles")) {
             printf("JSON error: 'tiles' not found in frame\n");
             continue;
         }
 
-        for (auto& item : frame["tiles"]) {
+        for (auto& item : f["tiles"]) {
             TileDef def;
-            def.image = imageFile;
             def.x = item["x"];
             def.y = item["y"];
             def.w = item["width"];
             def.h = item["height"];
             def.wall = item["wall"];
-            result.push_back(def);
+            frameDef.frame.push_back(def);
         }
+        frame.push_back(frameDef);
     }
-    return result;
+    return frame;
 }
 
 bool TileSet::loadFromJson(const std::vector<std::string>& jsonPaths) {
@@ -64,22 +65,15 @@ bool TileSet::loadFromJson(const std::vector<std::string>& jsonPaths) {
     for (const auto& jsonPath : jsonPaths) {
 
         // JSONファイルを解析してタイル定義を取得
-        std::vector<TileDef> defs = parseJson(jsonPath);
+        std::vector<TileFrame> defs = parseJson(jsonPath);
         // defsが空なら次へ
         if (defs.empty()) { continue; }
 
         // jsonのあるディレクトリを基準に画像パスを生成
         std::string baseDir = jsonPath.substr(0, jsonPath.find_last_of("\\/") + 1);
 
-        // imageごとにまとめる
-        std::map<std::string, std::vector<TileDef>> grouped;
-
         for (auto& def : defs) {
-            grouped[def.image].push_back(def);
-        }
-
-        for (auto& pair : grouped) {
-            std::string imagePath = baseDir + pair.first;
+            std::string imagePath = baseDir + def.image;
 
             int tileset = LoadGraph(imagePath.c_str());
             if (tileset == -1) {
@@ -89,7 +83,7 @@ bool TileSet::loadFromJson(const std::vector<std::string>& jsonPaths) {
             }
 
             // タイル画像を切り出して登録
-            for (const auto& d : pair.second) {
+            for (const auto& d : def.frame) {
                 int tile = DerivationGraph(d.x, d.y, d.w, d.h, tileset);
                 if (tile == -1) {
                     unload();
