@@ -6,14 +6,14 @@ class TileMap {
 private:
     int m_tileWidthNum;   // マップの横方向のタイル数
     int m_tileHeightNum;  // マップの縦方向のタイル数
-    std::vector<std::vector<int>> m_tiles;
+    std::vector<std::vector<std::pair<int, int>>> m_tiles;
 
 public:
     TileMap();
     // マップを読み込む
     bool load(const std::string& filePath);
     // タイルIDを取得
-    int get(int x, int y) const;
+    std::pair<int, int> get(int x, int y) const;
     //マップの横方向のタイル数を取得
     int getTileWidthNum() const;
     //マップの縦方向のタイル数を取得

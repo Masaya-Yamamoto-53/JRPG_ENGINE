@@ -7,6 +7,8 @@
 FieldManager::FieldManager()
     : m_field()
     , m_character(nullptr)
+    , m_frameCount(0)
+    , m_animationCounter(0)
 {
 }
 
@@ -108,11 +110,16 @@ void FieldManager::update() {
             , upFlag, dwFlag, ltFlag, rtFlag
             , direction);
     }
+    // アニメーションカウンタ更新
+    m_frameCount++;
+    if (m_frameCount % 20 == 0) {
+        m_animationCounter++;
+    }
 }
 
 void FieldManager::draw() {
     // フィールドの描画
-    m_renderer.drawField(m_field);
+    m_renderer.drawField(m_field, m_animationCounter);
 
     // キャラクターの描画
     if (m_character) {

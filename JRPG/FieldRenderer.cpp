@@ -7,7 +7,7 @@ FieldRenderer::FieldRenderer()
 {
 }
 
-void FieldRenderer::drawField(const Field& field) {
+void FieldRenderer::drawField(const Field& field, int counter) {
     const TileMap& map = field.getTileMap();
     const TileSet& set = field.getTileSet();
 
@@ -30,8 +30,8 @@ void FieldRenderer::drawField(const Field& field) {
 
     for (int y = startY ; y < endY + offsetY; y++) {
         for (int x = startX; x < endX + offsetX; x++) {
-            int tileId = map.get(x, y);
-            int img = set.getTileImage(tileId);
+            auto index = map.get(x, y);
+            int img = set.getTileImage(index.first, index.second, counter);
 
             if (img != -1) {
                 DrawGraph(

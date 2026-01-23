@@ -9,7 +9,8 @@ private:
     Field m_field;
     FieldCharacter* m_character;
     FieldRenderer m_renderer;
-
+    int m_frameCount;
+    int m_animationCounter;
 public:
     FieldManager();
 

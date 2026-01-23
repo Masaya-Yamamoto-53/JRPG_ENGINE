@@ -7,6 +7,6 @@ private:
 public:
     FieldRenderer();
 
-    void drawField(const Field& field);
+    void drawField(const Field& field, int counter);
     void drawCharacter(const FieldCharacter& character);
 };

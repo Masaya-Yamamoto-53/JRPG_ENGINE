@@ -27,11 +27,17 @@ bool TileMap::load(const std::string& filePath) {
 
         std::stringstream ss(line);
         std::string cell;
-        std::vector<int> row;
+        std::vector<std::pair<int, int>> row;
 
         while (std::getline(ss, cell, ',')) {
             try {
-                row.push_back(std::stoi(cell));
+                int pos = cell.find('-');
+                if (pos != std::string::npos) {
+                }
+                int pngIndex = std::stoi(cell.substr(0, pos));
+                int tileIndex = std::stoi(cell.substr(pos + 1));
+
+                row.push_back(std::make_pair(pngIndex, tileIndex));
             }
             catch (const std::invalid_argument&) {
                 return false;
@@ -56,9 +62,9 @@ bool TileMap::load(const std::string& filePath) {
     return m_tileHeightNum > 0;
 }
 
-int TileMap::get(int x, int y) const {
-    if (y < 0 || y >= m_tileHeightNum) return -1;
-    if (x < 0 || x >= m_tileWidthNum) return -1;
+std::pair<int, int> TileMap::get(int x, int y) const {
+    if (y < 0 || y >= m_tileHeightNum) { return std::make_pair(-1, -1); }
+    if (x < 0 || x >= m_tileWidthNum)  { return std::make_pair(-1, -1); }
     return m_tiles[y][x];
 }
 

@@ -56,6 +56,10 @@ std::vector<TileFrame> parseJson(const std::string& jsonPath) {
         }
         frame.push_back(frameDef);
     }
+    printf("Debug: Loaded %2zu frame definitions from %s\n", frame.size(), jsonPath.c_str());
+    for (const auto& frameDef : frame) {
+        printf("Debug: Loaded %2zu tiles from %s\n", frameDef.frame.size(), frameDef.image.c_str());
+    }
     return frame;
 }
 
@@ -72,6 +76,9 @@ bool TileSet::loadFromJson(const std::vector<std::string>& jsonPaths) {
         // jsonのあるディレクトリを基準に画像パスを生成
         std::string baseDir = jsonPath.substr(0, jsonPath.find_last_of("\\/") + 1);
 
+        // フレームごとにタイル画像を読み込み
+        std::vector<std::vector<int>> tileHandlesFrame;
+        std::vector<std::vector<bool>> wallFlagsFrame;
         for (auto& def : defs) {
             std::string imagePath = baseDir + def.image;
 
@@ -83,6 +90,8 @@ bool TileSet::loadFromJson(const std::vector<std::string>& jsonPaths) {
             }
 
             // タイル画像を切り出して登録
+            std::vector<int> tileHandles;
+            std::vector<bool> wallFlags;
             for (const auto& d : def.frame) {
                 int tile = DerivationGraph(d.x, d.y, d.w, d.h, tileset);
                 if (tile == -1) {
@@ -90,35 +99,54 @@ bool TileSet::loadFromJson(const std::vector<std::string>& jsonPaths) {
                     DeleteGraph(tileset);
                     return false;
                 }
-                m_tileImages.push_back(tile);
-                m_isWall.push_back(d.wall);
+                tileHandles.push_back(tile);
+                wallFlags.push_back(d.wall);
             }
             DeleteGraph(tileset);
+            tileHandlesFrame.push_back(tileHandles);
+            wallFlagsFrame.push_back(wallFlags);
         }
+        m_tileImages.push_back(tileHandlesFrame);
+        m_isWall.push_back(wallFlagsFrame);
     }
     return true;
 }
 
-bool TileSet::isWall(int tileId) const {
-    if (tileId < 0 || tileId >= m_isWall.size()) return false;
-    return m_isWall[tileId];
+bool TileSet::isWall(int pngId, int tileId) const {
+    if (pngId < 0 || pngId >= static_cast<int>(m_isWall.size())) {
+        return false;
+    }
+    if (tileId < 0 || tileId >= m_isWall[pngId][0].size()) {
+        return false;
+    }
+    return m_isWall[pngId][0][tileId];
 }
 
 void TileSet::unload() {
-    for (int handle : m_tileImages) {
-        if (handle != -1) {
-            // 保持している画像ハンドルを開放
-            DeleteGraph(handle);
+    for (int i = 0; i < m_tileImages.size(); i++) {
+        for (int j = 0; j < m_tileImages[i].size(); j++) {
+            for (int handle : m_tileImages[i][j]) {
+                if (handle != -1) {
+                    // 保持している画像ハンドルを開放
+                    DeleteGraph(handle);
+                }
+            }
+            m_tileImages[i][j].clear();
         }
+        m_tileImages[i].clear();
     }
     m_tileImages.clear();
 }
 
-int TileSet::getTileImage(int tileId) const {
-    if (tileId < 0 || tileId >= static_cast<int>(m_tileImages.size())) {
+int TileSet::getTileImage(int pngId, int tileId, int counter) const {
+    if (pngId < 0 || pngId >= static_cast<int>(m_tileImages.size())) {
         return -1;
     }
-    return m_tileImages[tileId];
+    if (tileId < 0 || tileId >= static_cast<int>(m_tileImages[pngId][0].size())) {
+        return -1;
+    }
+    int animationFrames = counter % static_cast<int>(m_tileImages[pngId].size());
+    return m_tileImages[pngId][animationFrames][tileId];
 }
 
 int TileSet::getTileWidth() const {

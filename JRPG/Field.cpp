@@ -24,31 +24,40 @@ bool Field::isWall(Direction dir, int absCharaX, int absCharaY, int tileSizeX, i
     int screenTileCountX = m_tileMap.getTileWidthNum();
 
     int lx, rx;
+    std::pair<int, int> right, left, top, btm;
 
     switch (dir) {
     case Direction::Up:
         if (static_cast<int>((absCharaY + tileSizeY) / tileSizeY) <= 0) return true;
-        return m_tileSet.isWall(m_tileMap.get(rightX, topY))
-            || m_tileSet.isWall(m_tileMap.get(leftX, topY));
+        right = m_tileMap.get(rightX, topY);
+        left  = m_tileMap.get(leftX, topY);
+        return m_tileSet.isWall(right.first, right.second)
+            || m_tileSet.isWall(left.first, right.second);
 
     case Direction::Down:
         if (btmY >= screenTileCountY) return true;
-        return m_tileSet.isWall(m_tileMap.get(rightX, btmY))
-            || m_tileSet.isWall(m_tileMap.get(leftX, btmY));
+        right = m_tileMap.get(rightX, topY);
+        left  = m_tileMap.get(leftX, topY);
+        return m_tileSet.isWall(right.first, right.second)
+            || m_tileSet.isWall(left.first, right.second);
 
     case Direction::Left: 
         if (static_cast<int>((absCharaX + tileSizeX + spriteW / 4) / tileSizeX) <= 0) return true;
 
         lx = (absCharaX + spriteW / 4) / tileSizeX;
-        return m_tileSet.isWall(m_tileMap.get(lx, topY))
-            || m_tileSet.isWall(m_tileMap.get(lx, btmY));
+        top = m_tileMap.get(lx, topY);
+        btm = m_tileMap.get(lx, btmY);
+        return m_tileSet.isWall(top.first, top.second)
+            || m_tileSet.isWall(btm.first, btm.second);
 
     case Direction::Right:
         if (static_cast<int>((absCharaX - 1 + spriteW / 4) / tileSizeX) >= screenTileCountX - 1) return true;
 
         rx  = (absCharaX  + tileSizeX + spriteW / 4) / tileSizeX;
-        return m_tileSet.isWall(m_tileMap.get(rx, topY))
-            || m_tileSet.isWall(m_tileMap.get(rx, btmY));
+        top = m_tileMap.get(rx, topY);
+        btm = m_tileMap.get(rx, btmY);
+        return m_tileSet.isWall(top.first, top.second)
+            || m_tileSet.isWall(btm.first, btm.second);
     }
     return false;
 }
