@@ -39,7 +39,7 @@ private:
     // 移動可能量の計算
     MoveAmounts computeAmounts(const DurationInputs& durations, int absCharaX, int absCharaY);
     // 移動方向の決定
-    Direction computeDirection(const DurationInputs& durations);
+    Direction computeDirection(const DurationInputs& durations, const MoveAmounts& amounts);
     // アニメーション更新
     void updateAnimation();
 };

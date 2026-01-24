@@ -75,10 +75,11 @@ MoveAmounts FieldManager::computeAmounts(const DurationInputs& durations, int ab
     return amounts;
 }
 
-Direction FieldManager::computeDirection(const DurationInputs& durations) {
+Direction FieldManager::computeDirection(const DurationInputs& durations, const MoveAmounts& amounts) {
     Direction direction = Direction::None;
 
 
+    // キャラクタが静止している場合、最後の向きを維持する
     direction = Direction::None;
     if (durations.up > durations.down) {
         direction = Direction::Up;
@@ -92,6 +93,12 @@ Direction FieldManager::computeDirection(const DurationInputs& durations) {
     if (durations.left < durations.right) {
         direction = Direction::Right;
     }
+
+    // 移動した方向を優先する
+    if (amounts.up       > 0) { direction = Direction::Up;    }
+    if (amounts.downFlag > 0) { direction = Direction::Down;  }
+    if (amounts.left     > 0) { direction = Direction::Left;  }
+    if (amounts.right    > 0) { direction = Direction::Right; }
 
     return direction;
 }
@@ -117,7 +124,7 @@ void FieldManager::update() {
     MoveAmounts amounts = computeAmounts(durations, absCharaX, absCharaY);
 
     // 移動方向の決定(キャラクタの向きに使用)
-    Direction direction = computeDirection(durations);
+    Direction direction = computeDirection(durations, amounts);
 
     // 画面の中央（ピクセル）
     int screenCenterX = GameSettings::instance().getWindowWidth()  / 2;
