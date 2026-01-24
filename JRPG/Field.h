@@ -8,13 +8,15 @@ private:
     TileSet m_tileSet;
     TileMap m_tileMap;
 
-    int m_viewOffsetX;  // 開始位置
-    int m_viewOffsetY;  // 開始位置
+    int m_viewOffsetX;  // マップ内における画面左上のX座標（カメラ位置）
+    int m_viewOffsetY;  // マップ内における画面左上のY座標（カメラ位置）
+
 public:
     Field();
 
+    // 指定方向に壁があるかどうかを判定
     bool isWall(Direction dir, int absCharaX, int absCharaY, int tileSizeX, int tileSizeY);
-
+    // ローカル座標を絶対座標に変換
     std::pair<int, int> toAbsolute(int localX, int localY) const;
 
     MoveAmounts move(
