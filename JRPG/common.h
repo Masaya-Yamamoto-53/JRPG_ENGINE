@@ -8,3 +8,14 @@ enum class Direction {
     , Right
 };
 
+struct MoveAmounts {
+    int up;
+    int down;
+    int left;
+    int right;
+    bool upFlag;
+    bool downFlag;
+    bool leftFlag;
+    bool rightFlag;
+};
+

@@ -31,25 +31,22 @@ int FieldCharacter::getMoveAmount() {
 }
 
 void FieldCharacter::update(
-      int upMoveAmount
-    , int dwMoveAmount
-    , int ltMoveAmount
-    , int rtMoveAmount
-    , bool upFlag
-    , bool dwFlag
-    , bool ltFlag
-    , bool rtFlag
+      const MoveAmounts& amounts
     , Direction direction
     ) {
     // Movement amount
-    int coordinateUpDw = (dwFlag ?  dwMoveAmount : 0)
-                       + (upFlag ? -upMoveAmount : 0);
+    int coordinateUpDw = (amounts.downFlag ?  amounts.down : 0)
+                       + (amounts.upFlag   ? -amounts.up   : 0);
 
-    int coordinateLtRt = (ltFlag ? -ltMoveAmount : 0)
-                       + (rtFlag ?  rtMoveAmount : 0);
+    int coordinateLtRt = (amounts.leftFlag  ? -amounts.left  : 0)
+                       + (amounts.rightFlag ?  amounts.right : 0);
 
     // Update the animation counter based on the movement state
-    const bool isMoving = (dwFlag || upFlag || ltFlag || rtFlag);
+    const bool isMoving = (amounts.downFlag
+                        || amounts.upFlag
+                        || amounts.leftFlag
+                        || amounts.rightFlag
+                        );
     if (isMoving) {
         m_runCounter++;
         if (m_runCounter >= RunStartFrame) {

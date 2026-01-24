@@ -32,14 +32,14 @@ bool Field::isWall(Direction dir, int absCharaX, int absCharaY, int tileSizeX, i
         right = m_tileMap.get(rightX, topY);
         left  = m_tileMap.get(leftX, topY);
         return m_tileSet.isWall(right.first, right.second)
-            || m_tileSet.isWall(left.first, right.second);
+            || m_tileSet.isWall(left.first, left.second);
 
     case Direction::Down:
         if (btmY >= screenTileCountY) return true;
-        right = m_tileMap.get(rightX, topY);
-        left  = m_tileMap.get(leftX, topY);
+        right = m_tileMap.get(rightX, btmY);
+        left  = m_tileMap.get(leftX, btmY);
         return m_tileSet.isWall(right.first, right.second)
-            || m_tileSet.isWall(left.first, right.second);
+            || m_tileSet.isWall(left.first, left.second);
 
     case Direction::Left: 
         if (static_cast<int>((absCharaX + tileSizeX + spriteW / 4) / tileSizeX) <= 0) return true;
@@ -62,6 +62,7 @@ bool Field::isWall(Direction dir, int absCharaX, int absCharaY, int tileSizeX, i
     return false;
 }
 
+// ローカル座標を絶対座標に変換
 std::pair<int, int> Field::toAbsolute(int localX, int localY) const {
     return {
           localX + m_viewOffsetX
@@ -69,29 +70,8 @@ std::pair<int, int> Field::toAbsolute(int localX, int localY) const {
     };
 }
 
-void Field::moveDirection(
-      int& moveCount
-    , int& startPixel
-    , int limitCondition
-    , int charaCondition
-    , int direction
-    ) {
-    int move = moveCount;
-    while (move > 0) {
-        if (limitCondition && charaCondition) {
-            startPixel += direction * move;
-            moveCount -= move;
-            break;
-        }
-        move--;
-    }
-}
-
-void Field::move(
-      int& upMoveAmount
-    , int& downMoveAmount
-    , int& leftMoveAmount
-    , int& rightMoveAmount
+MoveAmounts Field::move(
+      const MoveAmounts& amounts
     , int absCharaX, int absCharaY
     , int charaXMax, int charaYMax
     ) {
@@ -101,51 +81,47 @@ void Field::move(
     int tileSizeX = GameSettings::instance().getFieldTileWidth();
 
     // 下方向・右方向に動いた場合に、画面上端がどのタイルに位置するかを計算
-    // （タイル教会を跨ぐかどうかの判定に使用）
+    // （タイル境界を跨ぐかどうかの判定に使用）
     int nextTopTileY =
-        ((m_viewOffsetY +  downMoveAmount + tileSizeY - 1) / tileSizeY);
+        ((m_viewOffsetY +  amounts.down + tileSizeY - 1) / tileSizeY);
     int nextTopTileX =
-        ((m_viewOffsetX + rightMoveAmount + tileSizeX - 1) / tileSizeX);
+        ((m_viewOffsetX + amounts.right + tileSizeX - 1) / tileSizeX);
 
     // 画面に表示されるタイル数
     int screenTileCountY = GameSettings::instance().getTileCountY();
     int screenTileCountX = GameSettings::instance().getTileCountX();
 
+    MoveAmounts results = amounts;
+
     // 下方向スクロール処理
-    moveDirection(
-          downMoveAmount
-        , m_viewOffsetY
-        , screenTileCountY + nextTopTileY <= m_tileMap.getTileHeightNum()
-        , absCharaY >= charaYMax
-        , +1
-    );
+    if ((screenTileCountY + nextTopTileY <= m_tileMap.getTileHeightNum())
+     && (absCharaY >= charaYMax)) {
+        m_viewOffsetY += amounts.down;
+        results.down = 0;
+    }
 
     // 上方向スクロール処理
-    moveDirection(
-          upMoveAmount
-        , m_viewOffsetY
-        , m_viewOffsetY - upMoveAmount >= 0
-        , absCharaY <= charaYMax
-        , -1
-    );
+    if ((m_viewOffsetY - amounts.up >= 0)
+        && (absCharaY <= charaYMax)) {
+        m_viewOffsetY -= amounts.up;
+        results.up = 0;
+    }
 
     // 左方向スクロール処理
-    moveDirection(
-          leftMoveAmount
-        , m_viewOffsetX
-        , m_viewOffsetX - leftMoveAmount >= 0
-        , absCharaX <= charaXMax
-        , -1
-    );
+    if ((m_viewOffsetX - amounts.left>= 0)
+     && (absCharaX <= charaXMax)) {
+        m_viewOffsetX -= amounts.left;
+        results.left = 0;
+    }
 
     // 右方向スクロール処理
-    moveDirection(
-          rightMoveAmount
-        , m_viewOffsetX
-        , screenTileCountX + nextTopTileX <= m_tileMap.getTileWidthNum()
-        , absCharaX >= charaXMax
-        , +1
-    );
+    if ((screenTileCountX + nextTopTileX <= m_tileMap.getTileWidthNum())
+     && (absCharaX >= charaXMax)) {
+        m_viewOffsetX += amounts.right;
+        results.right = 0;
+    }
+
+    return results;
 }
 
 int Field::getViewOffsetX() const { return m_viewOffsetX; }

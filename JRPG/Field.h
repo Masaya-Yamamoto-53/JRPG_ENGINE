@@ -17,11 +17,8 @@ public:
 
     std::pair<int, int> toAbsolute(int localX, int localY) const;
 
-    void move(
-          int& upMove
-        , int& downMove
-        , int& leftMove
-        , int& rightMove
+    MoveAmounts move(
+          const MoveAmounts& amounts
         , int nextCharaX
         , int nextCharaY
         , int charaXMax
@@ -37,13 +34,4 @@ public:
 
     const TileSet& getTileSet() const { return m_tileSet; }
     const TileMap& getTileMap() const { return m_tileMap; }
-
-private:
-    void moveDirection(
-          int& moveCount
-        , int& startPixel
-        , int limitCondition
-        , int charaCondition
-        , int step
-    );
 };

@@ -11,11 +11,6 @@ struct DurationInputs {
     int right;
 };
 
-struct MoveAmounts {
-    int up, down, left, right;
-    bool upFlag, downFlag, leftFlag, rightFlag;
-};
-
 class FieldManager {
 private:
     Field m_field;

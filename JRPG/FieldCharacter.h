@@ -39,8 +39,7 @@ public:
     int getMoveAmount();
 
     void update(
-          int upMoveAmount, int dwMoveAmount, int ltMoveAmount, int rtMoveAmount
-        , bool upFlag, bool dwFlag, bool ltFlag, bool rtFlag
+          const MoveAmounts & amounts
         , Direction direction);
 
     int getX() const;

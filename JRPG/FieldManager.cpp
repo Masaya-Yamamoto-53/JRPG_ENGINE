@@ -123,8 +123,8 @@ void FieldManager::update() {
     int charaYMax = screenCenterY - charaHalfHeight + m_field.getViewOffsetY(); 
 
     // フィールド移動処理
-    m_field.move(
-          amounts.up, amounts.down, amounts.left, amounts.right
+    MoveAmounts charaAmounts = m_field.move(
+          amounts
         , absCharaX, absCharaY
         , charaXMax, charaYMax
     );
@@ -132,8 +132,7 @@ void FieldManager::update() {
     // キャラクタ更新
     if (m_character) {
         m_character->update(
-              amounts.up, amounts.down, amounts.left, amounts.right
-            , amounts.upFlag, amounts.downFlag, amounts.leftFlag, amounts.rightFlag
+              charaAmounts
             , direction);
     }
 
