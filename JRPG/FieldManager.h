@@ -37,9 +37,9 @@ private:
         , std::function<bool(int, int, int, int)> isWallFunc
     );
     // 移動可能量の計算
-    MoveAmounts computeAmounts(DurationInputs durations, int absCharaX, int absCharaY);
+    MoveAmounts computeAmounts(const DurationInputs& durations, int absCharaX, int absCharaY);
     // 移動方向の決定
-    Direction computeDirection(const MoveAmounts& amounts);
+    Direction computeDirection(const DurationInputs& durations);
     // アニメーション更新
     void updateAnimation();
 };

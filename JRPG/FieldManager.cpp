@@ -45,7 +45,7 @@ int FieldManager::computeMoveAmount(int baseX, int baseY, int deltaX, int deltaY
     return 0;
 }
 
-MoveAmounts FieldManager::computeAmounts(DurationInputs durations, int absCharaX, int absCharaY) {
+MoveAmounts FieldManager::computeAmounts(const DurationInputs& durations, int absCharaX, int absCharaY) {
     MoveAmounts amounts = { 0, 0, 0, 0, false, false, false, false };
 
     // キー入力の調停処理
@@ -67,22 +67,31 @@ MoveAmounts FieldManager::computeAmounts(DurationInputs durations, int absCharaX
     }
 
     // 移動フラグ
-    amounts.upFlag    = (amounts.up    > 0);
-    amounts.downFlag  = (amounts.down  > 0);
-    amounts.leftFlag  = (amounts.left  > 0);
-    amounts.rightFlag = (amounts.right > 0);
+    amounts.upFlag    = amounts.up > 0;
+    amounts.downFlag  = amounts.down  > 0;
+    amounts.leftFlag  = amounts.left > 0;
+    amounts.rightFlag = amounts.right > 0;
 
     return amounts;
 }
 
-Direction FieldManager::computeDirection(const MoveAmounts& amounts) {
+Direction FieldManager::computeDirection(const DurationInputs& durations) {
     Direction direction = Direction::None;
 
-    if      (amounts.left  > 0) { direction = Direction::Left;  }
-    else if (amounts.right > 0) { direction = Direction::Right; }
-    else if (amounts.down  > 0) { direction = Direction::Down;  }
-    else if (amounts.up    > 0) { direction = Direction::Up;    }
-    else                        { direction = Direction::None;  }
+
+    direction = Direction::None;
+    if (durations.up > durations.down) {
+        direction = Direction::Up;
+    }
+    if (durations.up < durations.down) {
+        direction = Direction::Down;
+    }
+    if (durations.left > durations.right) {
+        direction = Direction::Left;
+    }
+    if (durations.left < durations.right) {
+        direction = Direction::Right;
+    }
 
     return direction;
 }
@@ -108,7 +117,7 @@ void FieldManager::update() {
     MoveAmounts amounts = computeAmounts(durations, absCharaX, absCharaY);
 
     // 移動方向の決定(キャラクタの向きに使用)
-    Direction direction = computeDirection(amounts);
+    Direction direction = computeDirection(durations);
 
     // 画面の中央（ピクセル）
     int screenCenterX = GameSettings::instance().getWindowWidth()  / 2;
