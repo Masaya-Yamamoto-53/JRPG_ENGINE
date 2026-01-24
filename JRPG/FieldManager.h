@@ -4,6 +4,18 @@
 #include "FieldCharacter.h"
 #include "FieldRenderer.h"
 
+struct DurationInputs {
+    int up;
+    int down;
+    int left;
+    int right;
+};
+
+struct MoveAmounts {
+    int up, down, left, right;
+    bool upFlag, downFlag, leftFlag, rightFlag;
+};
+
 class FieldManager {
 private:
     Field m_field;
@@ -21,10 +33,18 @@ public:
 
     void load();
 private:
-    bool checkMove(
-          int& move, bool& flag
-        , int baseX, int baseY
+    // 入力継続時間の取得
+    DurationInputs computeDurationInputs();
+    // 衝突判定と移動可能量の計算
+    int computeMoveAmount(
+          int baseX, int baseY
         , int deltaX, int deltaY
         , std::function<bool(int, int, int, int)> isWallFunc
     );
+    // 移動可能量の計算
+    MoveAmounts computeAmounts(DurationInputs durations, int absCharaX, int absCharaY);
+    // 移動方向の決定
+    Direction computeDirection(const MoveAmounts& amounts);
+    // アニメーション更新
+    void updateAnimation();
 };

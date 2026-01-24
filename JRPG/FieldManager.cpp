@@ -16,75 +16,99 @@ void FieldManager::setCharacter(FieldCharacter* character) {
     m_character = character;
 }
 
-bool FieldManager::checkMove(int& move, bool& flag, int baseX, int baseY, int deltaX, int deltaY,
+DurationInputs  FieldManager::computeDurationInputs() {
+    InputManager& inputManager = InputManager::instance();
+
+    DurationInputs durations;
+    durations.up    = inputManager.getKeyHoldFrames(KEY_INPUT_W);
+    durations.down  = inputManager.getKeyHoldFrames(KEY_INPUT_S);
+    durations.left  = inputManager.getKeyHoldFrames(KEY_INPUT_A);
+    durations.right = inputManager.getKeyHoldFrames(KEY_INPUT_D);
+
+    return durations;
+}
+
+int FieldManager::computeMoveAmount(int baseX, int baseY, int deltaX, int deltaY,
     std::function<bool(int, int, int, int)> isWallFunc) {
+    int maxMove = m_character->getMoveAmount();
     int pixelXSize = GameSettings::instance().getFieldTileWidth();
     int pixelYSize = GameSettings::instance().getFieldTileHeight();
-    move = m_character->getMoveAmount();
 
-    while (move > 0) {
-        int nextX = baseX + deltaX * move;
-        int nextY = baseY + deltaY * move;
+    while (maxMove > 0) {
+        int nextX = baseX + deltaX * maxMove;
+        int nextY = baseY + deltaY * maxMove;
         if (!isWallFunc(nextX, nextY, pixelXSize, pixelYSize)) {
-            flag = true;
-            return true;
+            return maxMove;  // 移動可能量を返す
         }
-        move--;
+        maxMove--;
     }
-    return false;
+    return 0;
+}
+
+MoveAmounts FieldManager::computeAmounts(DurationInputs durations, int absCharaX, int absCharaY) {
+    MoveAmounts amounts = { 0, 0, 0, 0, false, false, false, false };
+
+    // キー入力の調停処理
+    if (durations.up > durations.down) {
+        amounts.up    = computeMoveAmount(absCharaX, absCharaY,  0, -1,
+            [&](int x, int y, int w, int h) { return m_field.isWall(Direction::Up,    x, y, w, h); });
+    }
+    if (durations.up < durations.down) {
+        amounts.down  = computeMoveAmount(absCharaX, absCharaY,  0, +1,
+            [&](int x, int y, int w, int h) { return m_field.isWall(Direction::Down,  x, y, w, h); });
+    }
+    if (durations.left > durations.right) {
+        amounts.left  = computeMoveAmount(absCharaX, absCharaY, -1,  0,
+            [&](int x, int y, int w, int h) { return m_field.isWall(Direction::Left,  x, y, w, h); });
+    }
+    if (durations.left < durations.right) {
+        amounts.right = computeMoveAmount(absCharaX, absCharaY,  1,  0,
+            [&](int x, int y, int w, int h) { return m_field.isWall(Direction::Right, x, y, w, h); });
+    }
+
+    // 移動フラグ
+    amounts.upFlag    = (amounts.up    > 0);
+    amounts.downFlag  = (amounts.down  > 0);
+    amounts.leftFlag  = (amounts.left  > 0);
+    amounts.rightFlag = (amounts.right > 0);
+
+    return amounts;
+}
+
+Direction FieldManager::computeDirection(const MoveAmounts& amounts) {
+    Direction direction = Direction::None;
+
+    if      (amounts.left  > 0) { direction = Direction::Left;  }
+    else if (amounts.right > 0) { direction = Direction::Right; }
+    else if (amounts.down  > 0) { direction = Direction::Down;  }
+    else if (amounts.up    > 0) { direction = Direction::Up;    }
+    else                        { direction = Direction::None;  }
+
+    return direction;
+}
+
+void FieldManager::updateAnimation() {
+    // アニメーションカウンタ更新
+    m_frameCount++;
+    if (m_frameCount % 20 == 0) {
+        m_animationCounter++;
+    }
 }
 
 void FieldManager::update() {
-    InputManager& inputManager = InputManager::instance();
-
-    int durationS = inputManager.getKeyHoldFrames(KEY_INPUT_W);
-    int durationW = inputManager.getKeyHoldFrames(KEY_INPUT_S);
-    int durationA = inputManager.getKeyHoldFrames(KEY_INPUT_A);
-    int durationD = inputManager.getKeyHoldFrames(KEY_INPUT_D);
-
-    // 実際に動けるピクセル量
-    int upMoveAmount = 0;
-    int dwMoveAmount = 0;
-    int ltMoveAmount = 0;
-    int rtMoveAmount = 0;
-
-    // 移動フラグ
-    bool upFlag = false;
-    bool dwFlag = false;
-    bool ltFlag = false;
-    bool rtFlag = false;
-    Direction direction = Direction::None;
+    // 入力継続時間の取得
+    DurationInputs durations = computeDurationInputs();
 
     // 絶対座標 ＝ キャラクタの座標 ＋ カメラ座標
-    int absCharaX = m_character->getX() + m_field.getViewOffsetX();
-    int absCharaY = m_character->getY() + m_field.getViewOffsetY();
+    auto absPos = m_field.toAbsolute(m_character->getX(), m_character->getY());
+    int absCharaX = absPos.first;
+    int absCharaY = absPos.second;
 
-    // キー入力の調停処理
-    if (durationS > durationW) {
-        direction = Direction::Up;
-        checkMove(upMoveAmount, upFlag, absCharaX, absCharaY,  0, -1,
-            [&](int x, int y, int w, int h) { return m_field.isWall(direction, x, y, w, h); });
-    }
-    if (durationS < durationW) {
-        direction = Direction::Down;
-        checkMove(dwMoveAmount, dwFlag, absCharaX, absCharaY,  0, +1,
-            [&](int x, int y, int w, int h) { return m_field.isWall(direction, x, y, w, h); });
-    }
-    if (durationA > durationD) {
-        direction = Direction::Left;
-        checkMove(ltMoveAmount, ltFlag, absCharaX, absCharaY, -1,  0,
-            [&](int x, int y, int w, int h) { return m_field.isWall(direction, x, y, w, h); });
-    }
-    if (durationA < durationD) {
-        direction = Direction::Right;
-        checkMove(rtMoveAmount, rtFlag, absCharaX, absCharaY,  1,  0,
-            [&](int x, int y, int w, int h) { return m_field.isWall(direction, x, y, w, h); });
-    }
+    // 移動可能量の計算
+    MoveAmounts amounts = computeAmounts(durations, absCharaX, absCharaY);
 
-    if (dwMoveAmount > 0) { direction = Direction::Down;  }
-    if (upMoveAmount > 0) { direction = Direction::Up;    }
-    if (ltMoveAmount > 0) { direction = Direction::Left;  }
-    if (rtMoveAmount > 0) { direction = Direction::Right; }
+    // 移動方向の決定(キャラクタの向きに使用)
+    Direction direction = computeDirection(amounts);
 
     // 画面の中央（ピクセル）
     int screenCenterX = GameSettings::instance().getWindowWidth()  / 2;
@@ -98,23 +122,23 @@ void FieldManager::update() {
     int charaXMax = screenCenterX - charaHalfWidth  + m_field.getViewOffsetX();
     int charaYMax = screenCenterY - charaHalfHeight + m_field.getViewOffsetY(); 
 
+    // フィールド移動処理
     m_field.move(
-          upMoveAmount, dwMoveAmount, ltMoveAmount, rtMoveAmount
+          amounts.up, amounts.down, amounts.left, amounts.right
         , absCharaX, absCharaY
         , charaXMax, charaYMax
     );
 
+    // キャラクタ更新
     if (m_character) {
         m_character->update(
-              upMoveAmount, dwMoveAmount, ltMoveAmount, rtMoveAmount
-            , upFlag, dwFlag, ltFlag, rtFlag
+              amounts.up, amounts.down, amounts.left, amounts.right
+            , amounts.upFlag, amounts.downFlag, amounts.leftFlag, amounts.rightFlag
             , direction);
     }
-    // アニメーションカウンタ更新
-    m_frameCount++;
-    if (m_frameCount % 20 == 0) {
-        m_animationCounter++;
-    }
+
+    // アニメーション更新
+    updateAnimation();
 }
 
 void FieldManager::draw() {

@@ -62,6 +62,13 @@ bool Field::isWall(Direction dir, int absCharaX, int absCharaY, int tileSizeX, i
     return false;
 }
 
+std::pair<int, int> Field::toAbsolute(int localX, int localY) const {
+    return {
+          localX + m_viewOffsetX
+        , localY + m_viewOffsetY
+    };
+}
+
 void Field::moveDirection(
       int& moveCount
     , int& startPixel

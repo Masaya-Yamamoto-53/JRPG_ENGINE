@@ -15,6 +15,8 @@ public:
 
     bool isWall(Direction dir, int absCharaX, int absCharaY, int tileSizeX, int tileSizeY);
 
+    std::pair<int, int> toAbsolute(int localX, int localY) const;
+
     void move(
           int& upMove
         , int& downMove
