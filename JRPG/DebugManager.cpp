@@ -39,7 +39,7 @@ void DebugManager::draw() const {
     // ウィンドウサイズ
     DrawFormatString(
           10, fontSize * 1, GetColor(255, 255, 255)
-        , "WindowSize: w=%4d, h=%4d"
+        , "WindowSize: w =%4d, h =%4d"
         , GameSettings::instance().getWindowWidth()
         , GameSettings::instance().getWindowHeight()
     );
@@ -47,7 +47,7 @@ void DebugManager::draw() const {
     // 画面左上にキャラクタの座標を表示する
     DrawFormatString(
           10, fontSize * 2, GetColor(255, 255, 255)
-        , "CharaPos:   x=%4d, y=%4d"
+        , "CharaPos:   x =%4d, y =%4d"
         , m_charaX, m_charaY
     );
 }
