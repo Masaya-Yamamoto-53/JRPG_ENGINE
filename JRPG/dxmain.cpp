@@ -84,6 +84,13 @@ int WINAPI WinMain(
         fieldManager.update();
         fieldManager.draw();
 
+        // Update debug information
+        DebugManager::instance().setCharacterPosition(
+              fieldCharacter.getX()
+            , fieldCharacter.getY()
+        );
+        DebugManager::instance().draw();
+
         // Method to adjust the frame interval
         fpsController.wait();
 
