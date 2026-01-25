@@ -1,0 +1,11 @@
+{
+  "frames": [
+    {
+      "image": "Tile00.png",
+      "tiles": [
+        { "x":   0, "y":   0, "width": 32, "height": 32, "wall": false }
+      ]
+    }
+  ],
+  "frameDuration": 0
+}

@@ -149,6 +149,7 @@
     <ClCompile Include="GameSettings.cpp" />
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="KeyboardInput.cpp" />
+    <ClCompile Include="MovementController.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="TileSet.cpp" />
   </ItemGroup>
@@ -164,8 +165,10 @@
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="KeyboardInput.h" />
+    <ClInclude Include="MovementController.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TileSet.h" />
+    <ClInclude Include="IFieldEntity.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="config.ini" />

@@ -2,8 +2,9 @@
 #include <string>
 #include <vector>
 #include "common.h"
+#include "IFieldEntity.h"
 
-class FieldCharacter {
+class FieldCharacter : public IFieldEntity {
 private:
     // Constatnts
     static constexpr int CharacterSpriteNum = 27;
@@ -36,7 +37,7 @@ private:
 public:
     FieldCharacter(std::string id);
 
-    int getMoveAmount();
+    int getMoveAmount() const;
 
     void update(
           const MoveAmounts & amounts

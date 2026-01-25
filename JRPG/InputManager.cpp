@@ -1,3 +1,4 @@
+#include "DxLib.h"
 #include "InputManager.h"
 
 InputManager& InputManager::instance() {
@@ -21,3 +22,15 @@ bool InputManager::isKeyTriggered(int keyIndex) const {
 int InputManager::getKeyHoldFrames(int keyIndex) const {
     return m_keyboard.getHoldFrames(keyIndex);
 }
+
+DirectionalHoldFrames InputManager::getDirectionalHoldFrames() {
+    DirectionalHoldFrames frames;
+
+    frames.up    = getKeyHoldFrames(KEY_INPUT_W);
+    frames.down  = getKeyHoldFrames(KEY_INPUT_S);
+    frames.left  = getKeyHoldFrames(KEY_INPUT_A);
+    frames.right = getKeyHoldFrames(KEY_INPUT_D);
+
+    return frames;
+}
+

@@ -1,0 +1,25 @@
+{
+  "frames": [
+    {
+      "image": "Tile01.png",
+      "tiles": [
+          { "x":   0, "y":   0, "width": 32, "height": 32, "wall": false }
+        , { "x":  32, "y":   0, "width": 32, "height": 32, "wall": false }
+        , { "x":  64, "y":   0, "width": 32, "height": 32, "wall": false }
+
+        , { "x":   0, "y":  32, "width": 32, "height": 32, "wall": false }
+        , { "x":  32, "y":  32, "width": 32, "height": 32, "wall": false }
+        , { "x":  64, "y":  32, "width": 32, "height": 32, "wall": false }
+
+        , { "x":   0, "y":  64, "width": 32, "height": 32, "wall": false }
+        , { "x":  32, "y":  64, "width": 32, "height": 32, "wall": false }
+        , { "x":  64, "y":  64, "width": 32, "height": 32, "wall": false }
+
+        , { "x":  96, "y":   0, "width": 32, "height": 32, "wall": false }
+        , { "x":  96, "y":  32, "width": 32, "height": 32, "wall": false }
+        , { "x":  96, "y":  64, "width": 32, "height": 32, "wall": false }
+      ]
+    }
+  ],
+  "frameDuration": 0
+}

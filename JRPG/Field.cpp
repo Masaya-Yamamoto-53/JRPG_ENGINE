@@ -9,7 +9,7 @@ Field::Field()
 {
 }
 
-bool Field::isWall(Direction dir, int absCharaX, int absCharaY, int tileSizeX, int tileSizeY)
+bool Field::isWall(Direction dir, int absCharaX, int absCharaY, int tileSizeX, int tileSizeY) const
 {
     const int spriteW = GameSettings::instance().getSpriteWidth();
     const int spriteH = GameSettings::instance().getSpriteHeight();
@@ -82,11 +82,67 @@ std::pair<int, int> Field::toAbsolute(int localX, int localY) const {
     };
 }
 
-MoveAmounts Field::move(
+std::pair<int,int> Field::computeCharacterCenterAbsPos(const IFieldEntity& entity) const {
+    int screenCenterX = GameSettings::instance().getWindowWidth()  / 2;
+    int screenCenterY = GameSettings::instance().getWindowHeight() / 2;
+
+    int charaHalfWidth  = entity.getSpriteWidth()  / 2;
+    int charaHalfHeight = entity.getSpriteHeight() / 2;
+
+    return {
+        screenCenterX - charaHalfWidth  + m_viewOffsetX,
+        screenCenterY - charaHalfHeight + m_viewOffsetY
+    };
+}
+
+bool Field::canScrollUp(int viewOffsetY, int amountUp) const {
+    return (viewOffsetY - amountUp) >= 0;
+}
+
+bool Field::canScrollDown(int nextTopTileY, int screenTileCountY) const {
+    int bottomTile = nextTopTileY + screenTileCountY;
+    return bottomTile <= m_tileMap.getTileHeightNum();
+}
+
+bool Field::canScrollLeft(int viewOffsetX, int amountLeft) const {
+    return (viewOffsetX - amountLeft) >= 0;
+}
+
+bool Field::canScrollRight(int nextTopTileX, int screenTileCountX) const {
+    int nextRightTile = nextTopTileX + screenTileCountX;
+    return nextRightTile <= m_tileMap.getTileWidthNum();
+}
+
+bool Field::isCharacterAboveCenter(int absCharaY, int charaYMax) const {
+    return absCharaY <= charaYMax;
+}
+
+bool Field::isCharacterBelowCenter(int absCharaY, int charaYMax) const {
+    return absCharaY >= charaYMax;
+}
+
+bool Field::isCharacterLeftOfCenter(int absCharaX, int charaXMax) const {
+    return absCharaX <= charaXMax;
+}
+
+bool Field::isCharacterRightOfCenter(int absCharaX, int charaXMax) const {
+    return absCharaX >= charaXMax;
+}
+
+MoveAmounts Field::applyScroll(
       const MoveAmounts& amounts
-    , int absCharaX, int absCharaY
-    , int charaXMax, int charaYMax
+    , const IFieldEntity& entity
     ) {
+
+    // 絶対座標 ＝ キャラクタの座標 ＋ カメラ座標
+    auto charaAbsPos = toAbsolute(entity.getX(), entity.getY());
+    int charaAbsX = charaAbsPos.first;
+    int charaAbsY = charaAbsPos.second;
+
+    // キャラクタが画面中央に来る時の絶対座標（マップ座標）
+    auto charaCenterAbsPos = computeCharacterCenterAbsPos(entity);
+    int charaCenterAbsX = charaCenterAbsPos.first;
+    int charaCenterAbsY = charaCenterAbsPos.second;
 
     // タイルのサイズ（1タイルのピクセル幅・高さ）
     int tileSizeY = GameSettings::instance().getFieldTileHeight();
@@ -109,45 +165,36 @@ MoveAmounts Field::move(
 
     MoveAmounts results = amounts;
 
-    // 下方向スクロール処理
-    //    画面下端がマップの下端を超えていない 
-    // && キャラクタが画面中央を超えている
-    if ((screenTileCountY + nextTopTileY <= m_tileMap.getTileHeightNum())
-     && (absCharaY >= charaYMax)) {
-        m_viewOffsetY += amounts.down;
-        results.down = 0;
-    }
-
-    // 右方向スクロール処理
-    //    画面右端がマップの右端を超えていない
-    // && キャラクタが画面中央を超えている
-    if ((screenTileCountX + nextTopTileX <= m_tileMap.getTileWidthNum())
-     && (absCharaX >= charaXMax)) {
-        m_viewOffsetX += amounts.right;
-        results.right = 0;
-    }
-
     // 上方向スクロール処理
-    //    画面上端がマップの上端を超えていない
-    // && キャラクタが画面中央を超えている
-    if ((m_viewOffsetY - amounts.up   >= 0) && (absCharaY <= charaYMax)) {
+    // スクロール可能 && キャラクタが画面中央を超えている
+    if (canScrollUp(m_viewOffsetY, amounts.up) && isCharacterAboveCenter(charaAbsY, charaCenterAbsY)) {
         m_viewOffsetY -= amounts.up;
         results.up = 0;
     }
 
+    // 下方向スクロール処理
+    // スクロール可能 && キャラクタが画面中央を超えている
+    if (canScrollDown(nextTopTileY, screenTileCountY) && isCharacterBelowCenter(charaAbsY, charaCenterAbsY)) {
+        m_viewOffsetY += amounts.down;
+        results.down = 0;
+    }
+
     // 左方向スクロール処理
-    //   画面左端がマップの左端を超えていない
-    // && キャラクタが画面中央を超えている
-    if ((m_viewOffsetX - amounts.left >= 0) && (absCharaX <= charaXMax)) {
+    // スクロール可能 && キャラクタが画面中央を超えている
+    if (canScrollLeft(m_viewOffsetX, amounts.left) && isCharacterLeftOfCenter(charaAbsX, charaCenterAbsX)) {
         m_viewOffsetX -= amounts.left;
         results.left = 0;
     }
 
+    // 右方向スクロール処理
+    // スクロール可能 && キャラクタが画面中央を超えている
+    if (canScrollRight(nextTopTileX, screenTileCountX) && isCharacterRightOfCenter(charaAbsX, charaCenterAbsX)) {
+        m_viewOffsetX += amounts.right;
+        results.right = 0;
+    }
+
     return results;
 }
-
-int Field::getViewOffsetX() const { return m_viewOffsetX; }
-int Field::getViewOffsetY() const { return m_viewOffsetY; }
 
 bool Field::load(const std::vector<std::string>& jsonFiles
                , const std::string& mapFile

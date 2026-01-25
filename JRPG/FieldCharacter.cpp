@@ -26,7 +26,7 @@ FieldCharacter::FieldCharacter(std::string id)
     loadImages();
 }
 
-int FieldCharacter::getMoveAmount() {
+int FieldCharacter::getMoveAmount() const {
     return (m_running ? RunSpeed : WalkSpeed);
 }
 
