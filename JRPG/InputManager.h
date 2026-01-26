@@ -23,7 +23,7 @@ public:
     // 指定したキーの入力継続時間を取得
     int getKeyHoldFrames(int keyIndex) const;
     // 方向キーの入力継続時間を取得
-    DirectionalHoldFrames getDirectionalHoldFrames();
+    DirectionalHoldFrames getDirectionalHoldFrames() const;
 
 private:
     //コンストラクタをprivateにしてシングルトン化

@@ -23,7 +23,7 @@ int InputManager::getKeyHoldFrames(int keyIndex) const {
     return m_keyboard.getHoldFrames(keyIndex);
 }
 
-DirectionalHoldFrames InputManager::getDirectionalHoldFrames() {
+DirectionalHoldFrames InputManager::getDirectionalHoldFrames() const {
     DirectionalHoldFrames frames;
 
     frames.up    = getKeyHoldFrames(KEY_INPUT_W);
