@@ -8,7 +8,7 @@ private:
 
     // 各キーが「何フレーム連続でおされているか」を記録する配列
     // インデックスはキーコードに対応
-    std::array<unsigned int, KeyKindMax> m_keyHoldFrames;
+    std::array<int, KeyKindMax> m_keyHoldFrames;
 public:
     // コンストラクタ：ホールドフレームをすべて0で初期化
     KeyboardInput();

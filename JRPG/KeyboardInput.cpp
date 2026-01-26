@@ -20,7 +20,7 @@ void KeyboardInput::update() {
 
 		// キーが押されている場合、フレームを増加させる
 		if (pressed) {
-            if (m_keyHoldFrames[i] < std::numeric_limits<unsigned int>::max())  // オーバーフロー防止
+            if (m_keyHoldFrames[i] < std::numeric_limits<int>::max())  // オーバーフロー防止
                 m_keyHoldFrames[i]++;
 		}
 		else {
