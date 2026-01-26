@@ -1,6 +1,7 @@
 #include "DebugManager.h"
 #include "DxLib.h"
 #include "GameSettings.h"
+#include "FpsController.h"
 
 DebugManager& DebugManager::instance() {
     static DebugManager instance;
@@ -36,18 +37,40 @@ void DebugManager::draw() const {
 
     int fontSize = GetFontSize();
 
+    // 処理時間[ms], 余裕時間[ms]
+    int y = fontSize * 1;
+
+    int white = GetColor(255, 255, 255);
+    DrawString(10, y, "FrameTime:", white); y += fontSize;
+    DrawFormatString(20, y, white, "Min : %6.2f ms", FpsController::instance().getFrameTimeMin());
+    y += fontSize;
+    DrawFormatString(20, y, white, "Med : %6.2f ms", FpsController::instance().getFrameTimeMedian());
+    y += fontSize;
+    DrawFormatString(20, y, white, "Max : %6.2f ms", FpsController::instance().getFrameTimeMax());
+    y += fontSize * 2;
+
+    DrawString(10, y, "Slack:", white); y += fontSize;
+    DrawFormatString(20, y, white, "Min : %6.2f ms", FpsController::instance().getFrameSlackMin());
+    y += fontSize;
+    DrawFormatString(20, y, white, "Med : %6.2f ms", FpsController::instance().getFrameSlackMedian());
+    y += fontSize;
+    DrawFormatString(20, y, white, "Max : %6.2f ms", FpsController::instance().getFrameSlackMax());
+    y += fontSize * 2;
+
     // ウィンドウサイズ
     DrawFormatString(
-          10, fontSize * 1, GetColor(255, 255, 255)
+          10, y, white
         , "WindowSize: w =%4d, h =%4d"
         , GameSettings::instance().getWindowWidth()
         , GameSettings::instance().getWindowHeight()
     );
+    y += fontSize;
 
     // 画面左上にキャラクタの座標を表示する
     DrawFormatString(
-          10, fontSize * 2, GetColor(255, 255, 255)
+          10, y, white
         , "CharaPos:   x =%4d, y =%4d"
         , m_charaX, m_charaY
     );
+    y += fontSize;
 }

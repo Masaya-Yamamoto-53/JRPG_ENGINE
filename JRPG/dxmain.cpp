@@ -51,9 +51,6 @@ int WINAPI WinMain(
     // Set the drawing target to the back screen
     SetDrawScreen(DX_SCREEN_BACK);
 
-    // FPS object to manage the frame rate
-    FpsController fpsController(settings.getTargetFps());
-
     // Žb’è‘Î‰ž
     FieldCharacter fieldCharacter("00");
     FieldManager fieldManager;
@@ -69,7 +66,7 @@ int WINAPI WinMain(
         ClearDrawScreen();
 
         // Update frame timing and calculate FPS
-        fpsController.update();
+        FpsController::instance().update();
 
         // Method to update the key input status
         InputManager::instance().update();
@@ -92,7 +89,7 @@ int WINAPI WinMain(
         DebugManager::instance().draw();
 
         // Method to adjust the frame interval
-        fpsController.wait();
+        FpsController::instance().wait();
 
         // Update the screen
         ScreenFlip();
