@@ -9,7 +9,7 @@ Field::Field()
 {
 }
 
-bool Field::isWall(Direction dir, int absCharaX, int absCharaY, int tileSizeX, int tileSizeY) const
+bool Field::isWall(Direction dir, int frameId, int absCharaX, int absCharaY, int tileSizeX, int tileSizeY) const
 {
     const int spriteW = GameSettings::instance().getSpriteWidth();
     const int spriteH = GameSettings::instance().getSpriteHeight();
@@ -38,9 +38,9 @@ bool Field::isWall(Direction dir, int absCharaX, int absCharaY, int tileSizeX, i
 
         // タイル衝突判定
         return m_tileSet.isWall(m_tileMap.get(rightX, topY).first
-                              , m_tileMap.get(rightX, topY).second)
+                              , m_tileMap.get(rightX, topY).second, frameId)
             || m_tileSet.isWall(m_tileMap.get(leftX,  topY).first
-                              , m_tileMap.get(leftX,  topY).second);
+                              , m_tileMap.get(leftX,  topY).second, frameId);
 
     case Direction::Down:
         // ピクセルベース境界チェック
@@ -48,18 +48,18 @@ bool Field::isWall(Direction dir, int absCharaX, int absCharaY, int tileSizeX, i
 
         // タイル衝突判定
         return m_tileSet.isWall(m_tileMap.get(rightX, btmY).first
-                              , m_tileMap.get(rightX, btmY).second)
+                              , m_tileMap.get(rightX, btmY).second, frameId)
             || m_tileSet.isWall(m_tileMap.get(leftX,  btmY).first
-                              , m_tileMap.get(leftX,  btmY).second);
+                              , m_tileMap.get(leftX,  btmY).second, frameId);
     case Direction::Left: 
         // ピクセルベース境界チェック
         if (hitLeft < 0) return true;
 
         // タイル衝突判定
         return m_tileSet.isWall(m_tileMap.get(leftX, topY).first
-                              , m_tileMap.get(leftX, topY).second)
+                              , m_tileMap.get(leftX, topY).second, frameId)
             || m_tileSet.isWall(m_tileMap.get(leftX, btmY).first
-                              , m_tileMap.get(leftX, btmY).second);
+                              , m_tileMap.get(leftX, btmY).second, frameId);
 
     case Direction::Right:
         // ピクセルベース境界チェック
@@ -67,9 +67,9 @@ bool Field::isWall(Direction dir, int absCharaX, int absCharaY, int tileSizeX, i
 
         // タイル衝突判定
         return m_tileSet.isWall(m_tileMap.get(rightX, topY).first
-                              , m_tileMap.get(rightX, topY).second)
+                              , m_tileMap.get(rightX, topY).second, frameId)
             || m_tileSet.isWall(m_tileMap.get(rightX, btmY).first
-                              , m_tileMap.get(rightX, btmY).second);
+                              , m_tileMap.get(rightX, btmY).second, frameId);
     }
     return false;
 }

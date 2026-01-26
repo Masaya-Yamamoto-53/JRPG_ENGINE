@@ -3,6 +3,7 @@
 
 MoveAmounts MovementController::computeMoveAmounts(
       const DirectionalHoldFrames& holdFrames
+    , int frameId
     , const IFieldEntity& entity
     , const Field& field
 ) {
@@ -17,16 +18,16 @@ MoveAmounts MovementController::computeMoveAmounts(
 
     // 移動可能量の計算
     if (holdFrames.up > holdFrames.down) {
-        amounts.up    = computeMoveAmount(Direction::Up,    absX, absY,  0, -1, maxMove, field);
+        amounts.up    = computeMoveAmount(Direction::Up,    frameId, absX, absY,  0, -1, maxMove, field);
     }
     if (holdFrames.up < holdFrames.down) {
-        amounts.down  = computeMoveAmount(Direction::Down,  absX, absY,  0, +1, maxMove, field);
+        amounts.down  = computeMoveAmount(Direction::Down,  frameId, absX, absY,  0, +1, maxMove, field);
     }
     if (holdFrames.left > holdFrames.right) {
-        amounts.left  = computeMoveAmount(Direction::Left,  absX, absY, -1,  0, maxMove, field);
+        amounts.left  = computeMoveAmount(Direction::Left,  frameId, absX, absY, -1,  0, maxMove, field);
     }
     if (holdFrames.left < holdFrames.right) {
-        amounts.right = computeMoveAmount(Direction::Right, absX, absY,  1,  0, maxMove, field);
+        amounts.right = computeMoveAmount(Direction::Right, frameId, absX, absY,  1,  0, maxMove, field);
     }
 
     // 移動フラグ
@@ -70,6 +71,7 @@ Direction MovementController::computeDirection(
 
 int MovementController::computeMoveAmount(
       Direction dir
+    , int frameId
     , int baseX, int baseY
     , int deltaX, int deltaY
     , int maxMove
@@ -82,7 +84,7 @@ int MovementController::computeMoveAmount(
     while (maxMove > 0) {
         int nextX = baseX + deltaX * maxMove;
         int nextY = baseY + deltaY * maxMove;
-        if (!field.isWall(dir, nextX, nextY, tileW, tileH)) {
+        if (!field.isWall(dir, frameId, nextX, nextY, tileW, tileH)) {
             return maxMove;  // 移動可能量を返す
         }
         maxMove--;

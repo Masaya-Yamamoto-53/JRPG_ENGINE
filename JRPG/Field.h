@@ -16,7 +16,7 @@ public:
     Field();
 
     // 指定方向に壁があるかどうかを判定
-    bool isWall(Direction dir, int absCharaX, int absCharaY, int tileSizeX, int tileSizeY) const;
+    bool isWall(Direction dir, int frameId, int absCharaX, int absCharaY, int tileSizeX, int tileSizeY) const;
     // ローカル座標を絶対座標に変換
     std::pair<int, int> toAbsolute(int localX, int localY) const;
     // キャラクタの画面中央位置の絶対座標を計算

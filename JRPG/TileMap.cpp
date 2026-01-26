@@ -68,10 +68,3 @@ std::pair<int, int> TileMap::get(int x, int y) const {
     return m_tiles[y][x];
 }
 
-int TileMap::getTileWidthNum() const {
-    return m_tileWidthNum;
-}
-
-int TileMap::getTileHeightNum() const {
-    return m_tileHeightNum;
-}

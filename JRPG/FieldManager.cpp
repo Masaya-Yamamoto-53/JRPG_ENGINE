@@ -37,7 +37,7 @@ int FieldManager::computeMoveAmount(int baseX, int baseY, int deltaX, int deltaY
 void FieldManager::updateAnimation() {
     // アニメーションカウンタ更新
     m_frameCount++;
-    if (m_frameCount % 20 == 0) {
+    if (m_frameCount % 30 == 0) {
         m_animationCounter++;
     }
 }
@@ -47,7 +47,8 @@ void FieldManager::update() {
     DirectionalHoldFrames holdFrames = InputManager::instance().getDirectionalHoldFrames();
 
     // 移動可能量の計算
-    MoveAmounts amounts = m_movementController.computeMoveAmounts(holdFrames ,*m_character ,m_field );
+    MoveAmounts amounts = m_movementController.computeMoveAmounts(
+        holdFrames , m_animationCounter, *m_character ,m_field );
 
     // 移動方向の決定(キャラクタの向きに使用)
     Direction direction = m_movementController.computeDirection(holdFrames, amounts);

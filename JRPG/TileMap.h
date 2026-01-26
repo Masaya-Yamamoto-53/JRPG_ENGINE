@@ -15,7 +15,7 @@ public:
     // タイルIDを取得
     std::pair<int, int> get(int x, int y) const;
     //マップの横方向のタイル数を取得
-    int getTileWidthNum() const;
+    int getTileWidthNum()  const { return m_tileWidthNum;  }
     //マップの縦方向のタイル数を取得
-    int getTileHeightNum() const;
+    int getTileHeightNum() const { return m_tileHeightNum; }
 };
