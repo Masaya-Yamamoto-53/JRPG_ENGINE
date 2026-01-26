@@ -42,19 +42,19 @@ void DebugManager::draw() const {
 
     int white = GetColor(255, 255, 255);
     DrawString(10, y, "FrameTime:", white); y += fontSize;
-    DrawFormatString(20, y, white, "Min : %6.2f ms", FpsController::instance().getFrameTimeMin());
+    DrawFormatString(20, y, white, "Min : %7.3f ms", FpsController::instance().getFrameTimeMin());
     y += fontSize;
-    DrawFormatString(20, y, white, "Med : %6.2f ms", FpsController::instance().getFrameTimeMedian());
+    DrawFormatString(20, y, white, "Med : %7.3f ms", FpsController::instance().getFrameTimeMedian());
     y += fontSize;
-    DrawFormatString(20, y, white, "Max : %6.2f ms", FpsController::instance().getFrameTimeMax());
+    DrawFormatString(20, y, white, "Max : %7.3f ms", FpsController::instance().getFrameTimeMax());
     y += fontSize * 2;
 
     DrawString(10, y, "Slack:", white); y += fontSize;
-    DrawFormatString(20, y, white, "Min : %6.2f ms", FpsController::instance().getFrameSlackMin());
+    DrawFormatString(20, y, white, "Min : %7.3f ms", FpsController::instance().getFrameSlackMin());
     y += fontSize;
-    DrawFormatString(20, y, white, "Med : %6.2f ms", FpsController::instance().getFrameSlackMedian());
+    DrawFormatString(20, y, white, "Med : %7.3f ms", FpsController::instance().getFrameSlackMedian());
     y += fontSize;
-    DrawFormatString(20, y, white, "Max : %6.2f ms", FpsController::instance().getFrameSlackMax());
+    DrawFormatString(20, y, white, "Max : %7.3f ms", FpsController::instance().getFrameSlackMax());
     y += fontSize * 2;
 
     // ウィンドウサイズ

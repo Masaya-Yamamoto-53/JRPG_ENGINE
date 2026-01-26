@@ -3,12 +3,15 @@
 
 class FpsController {
 private:
-    int m_targetFps;    // 目標フレームレート
-    double m_fps;       // 実際のフレームレートを保持する
-    double m_frameTime; // 1フレームかかった時間を保持する
-    int m_startTime;    // 計測開始時刻を保持する
-    int m_frameStart;   // 現在のフレーム開始時刻を保持する
-    int m_frameCount;   // フレーム数をカウントする
+    int m_targetFps;      // 目標フレームレート
+    double m_fps;         // 実際のフレームレートを保持する
+    double m_frameTime;   // 1フレームかかった時間を保持する
+    double m_startTime;   // 計測開始時刻を保持する
+    double m_frameStart;  // 現在のフレーム開始時刻を保持する
+    int m_frameCount;     // フレーム数をカウントする
+
+    long long m_qpcStart;
+    long long m_qpcFreq;
 
     // デバッグ情報用の履歴
     std::vector<double> m_frameTimeHistory; // 過去フレームの処理時間
@@ -40,6 +43,7 @@ private:
     FpsController(int targetFps);
 
     // 計算用関数
+    inline double getTimeUS();
     double calcMin(const std::vector<double>& data) const;
     double calcMax(const std::vector<double>& data) const;
     double calcMedian(std::vector<double> data) const;

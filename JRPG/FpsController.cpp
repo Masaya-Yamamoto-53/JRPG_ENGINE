@@ -16,15 +16,26 @@ FpsController::FpsController(int targetFps)
     , m_frameStart(GetNowCount())
     , m_frameCount(0)
     , m_frameTimeHistoryIndex(0)
+    , m_frameTimeHistorySum(0)
     , m_slackTimeHistoryIndex(0)
+    , m_slackTimeHistorySum(0)
 {
+    QueryPerformanceFrequency((LARGE_INTEGER*)&m_qpcFreq);
+    QueryPerformanceCounter((LARGE_INTEGER*)&m_qpcStart);
+
     m_frameTimeHistory.resize(targetFps, 0.0);
     m_slackTimeHistory.resize(targetFps, 0.0);
 }
 
+inline double FpsController::getTimeUS() {
+    long long now;
+    QueryPerformanceCounter((LARGE_INTEGER*)&now);
+    return (double)(now - m_qpcStart) * 1000000.0 / m_qpcFreq;
+}
+
 void FpsController::update() {
-    // 現在の時刻を取得
-    int now = GetNowCount();
+    // 現在の時刻を取得（μs）
+    double now = getTimeUS();
 
     // 前フレームからの経過時間を計測
     m_frameTime  = now - m_frameStart;
@@ -33,10 +44,10 @@ void FpsController::update() {
     // FPS計測用にフレーム数をカウント
     m_frameCount++;
     // 1秒以上経過したらFPSを更新する
-    if (now - m_startTime >= 1000) {
+    if (now - m_startTime >= 1000000.0) {
         // 1秒間に処理したフレーム数からFPSを産出
         double elapsed = now - m_startTime;
-        m_fps = (m_frameCount * 1000.0) / elapsed;
+        m_fps = (m_frameCount * 1000000.0) / elapsed;
 
         // 次の1秒計測に向けてリセット
         m_startTime = now;
@@ -46,13 +57,13 @@ void FpsController::update() {
 
 void FpsController::wait() {
     // 1フレームにかけてよい時間
-    double frameDuration = 1000.0 / m_targetFps;
+    double frameDuration = 1000000.0 / m_targetFps;
     // 現在のフレーム開始からの経過時間
-    double frameElapsed  = GetNowCount() - m_frameStart;
+    double frameElapsed  = getTimeUS() - m_frameStart;
     // 目標到達までの待ち時間を計算する
-    int waitTime = static_cast<int>(frameDuration - frameElapsed);
+    double waitTime = frameDuration - frameElapsed;
     if (waitTime > 0) {
-        WaitTimer(waitTime);
+        WaitTimer(static_cast<int>(waitTime / 1000.0));  // μs → ms
     }
 
     if (DebugManager::instance().enabled()) {
@@ -68,7 +79,7 @@ void FpsController::wait() {
         m_slackTimeHistoryIndex = (m_slackTimeHistoryIndex + 1) % m_targetFps;
     }
 
-    m_frameStart = GetNowCount();
+    m_frameStart = getTimeUS();
 }
 
 double FpsController::calcMin(const std::vector<double>& data) const {
@@ -76,7 +87,7 @@ double FpsController::calcMin(const std::vector<double>& data) const {
     for (double v : data) {
         if (v < minVal) minVal = v;
     }
-    return minVal;
+    return minVal / 1000.0;
 }
 
 double FpsController::calcMax(const std::vector<double>& data) const {
@@ -84,7 +95,7 @@ double FpsController::calcMax(const std::vector<double>& data) const {
     for (double v : data) {
         if (v > maxVal) maxVal = v;
     }
-    return maxVal;
+    return maxVal / 1000.0;
 }
 
 double FpsController::calcMedian(std::vector<double> data) const {
@@ -93,9 +104,9 @@ double FpsController::calcMedian(std::vector<double> data) const {
     int mid = m_targetFps / 2;
 
     if (m_targetFps % 2 == 1) {
-        return data[mid];
+        return data[mid] / 1000.0;
     } else {
-        return (data[mid - 1] + data[mid]) / 2.0;
+        return ((data[mid - 1] + data[mid]) / 2.0) / 1000.0;
     }
 }
 
