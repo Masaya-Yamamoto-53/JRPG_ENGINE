@@ -5,6 +5,8 @@
 #include "DebugManager.h"
 #include "FieldCharacter.h" // Žb’è‘Î‰ž
 #include "FieldManager.h"   // Žb’è‘Î‰ž
+#include "PlayerAnimation.h" // Žb’è‘Î‰ž
+#include <memory>
 
 int WINAPI WinMain(
       _In_ HINSTANCE hInstance
@@ -52,7 +54,12 @@ int WINAPI WinMain(
     SetDrawScreen(DX_SCREEN_BACK);
 
     // Žb’è‘Î‰ž
-    FieldCharacter fieldCharacter("00");
+    auto fieldCharacter = std::make_unique<FieldCharacter>(
+          "00"
+        , "assets\\characters\\players\\"
+        , std::make_unique<PlayerAnimation>()
+    );
+    //FieldCharacter fieldCharacter("00", "assets\\characters\\players\\");
     FieldManager fieldManager;
     fieldManager.load();
 
@@ -77,14 +84,14 @@ int WINAPI WinMain(
         }
 
         // Žb’è‘Î‰ž
-        fieldManager.setCharacter(&fieldCharacter);
+        fieldManager.setCharacter(fieldCharacter.get());
         fieldManager.update();
         fieldManager.draw();
 
         // Update debug information
         DebugManager::instance().setCharacterPosition(
-              fieldCharacter.getX()
-            , fieldCharacter.getY()
+              fieldCharacter.get()->getX()
+            , fieldCharacter.get()->getY()
         );
         DebugManager::instance().draw();
 

@@ -150,6 +150,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="KeyboardInput.cpp" />
     <ClCompile Include="MovementController.cpp" />
+    <ClCompile Include="PlayerAnimation.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="TileSet.cpp" />
   </ItemGroup>
@@ -162,10 +163,12 @@
     <ClInclude Include="FieldRenderer.h" />
     <ClInclude Include="FpsController.h" />
     <ClInclude Include="GameSettings.h" />
+    <ClInclude Include="ICharacterAnimation.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="KeyboardInput.h" />
     <ClInclude Include="MovementController.h" />
+    <ClInclude Include="PlayerAnimation.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TileSet.h" />
     <ClInclude Include="IFieldEntity.h" />

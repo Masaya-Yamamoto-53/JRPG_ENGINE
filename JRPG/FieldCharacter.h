@@ -1,43 +1,31 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <memory>
 #include "common.h"
 #include "IFieldEntity.h"
+#include "ICharacterAnimation.h"
 
 class FieldCharacter : public IFieldEntity {
 private:
-    // Constatnts
-    static constexpr int CharacterSpriteNum = 27;
-    static constexpr int RunStartFrame      = 30;
+    std::string m_id;       // キャラクタID
+    std::string m_baseDir;  // ベースディレクトリ
 
-    static constexpr int WalkSpeed = 2;  // 歩行時の速度
-    static constexpr int RunSpeed  = 4;  // 走行時の速度
+    int m_x;  // X座標
+    int m_y;  // Y座標
 
-    // Identity
-    std::string m_id;
+    Direction m_direction; //キャラクタの方向
 
-    // Position
-    int m_x;
-    int m_y;
-
-    // Movement / State
-    bool m_running;
-    Direction m_prevDirection;
-
-    // Animation
-    int m_frame;       // 現在のアニメーションフレーム番号
-    int m_runCounter;  // 走り始めるまでのカウンタ
-    int m_animIndex;   // 描画用インデックス
-
-    // Sprite info
     int m_spriteWidth;
     int m_spriteHeight;
-    std::vector<int> m_images;  // 読み込んだ画像ハンドル
+    std::unique_ptr<ICharacterAnimation> m_anim;
 
 public:
-    FieldCharacter(std::string id);
-
-    int getMoveAmount() const;
+    FieldCharacter(
+          std::string id
+        , std::string baseDir
+        , std::unique_ptr<ICharacterAnimation> anim
+    );
 
     void update(
           const MoveAmounts & amounts
@@ -45,6 +33,7 @@ public:
 
     int getX() const;
     int getY() const;
+    int getMoveAmount() const;
 
     int getSpriteWidth() const;
     int getSpriteHeight() const;
@@ -52,6 +41,4 @@ public:
     int getCurrentFrame() const;
     const std::vector<int>& getImages() const;
 
-private:
-    void loadImages();
 };
