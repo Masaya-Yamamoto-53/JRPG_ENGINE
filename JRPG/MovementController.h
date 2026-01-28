@@ -24,6 +24,7 @@ private:
         , int frameId
         , int baseX, int baseY
         , int deltaX, int deltaY
+        , int spriteW, int spriteH
         , int maxMove
         , const Field& field
         ) const;

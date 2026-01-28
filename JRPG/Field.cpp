@@ -9,11 +9,14 @@ Field::Field()
 {
 }
 
-bool Field::isWall(Direction dir, int frameId, int absCharaX, int absCharaY, int tileSizeX, int tileSizeY) const
+bool Field::isWall(
+      Direction dir
+    , int frameId
+    , int absCharaX, int absCharaY
+    , int tileSizeX, int tileSizeY
+    , int spriteW, int spriteH
+) const
 {
-    const int spriteW = GameSettings::instance().getSpriteWidth();
-    const int spriteH = GameSettings::instance().getSpriteHeight();
-
     // ìñÇΩÇËîªíËÇÃç∂âEí[
     int hitLeft   = absCharaX + spriteW / 4;
     int hitRight  = absCharaX + spriteW - spriteW / 4 - 1;

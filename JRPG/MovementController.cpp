@@ -13,21 +13,27 @@ MoveAmounts MovementController::computeMoveAmounts(
     auto absPos = field.toAbsolute(entity.getX(), entity.getY());
     int absX = absPos.first;
     int absY = absPos.second;
+    int spriteW = entity.getSpriteWidth();
+    int spriteH = entity.getSpriteHeight();
 
     int maxMove = entity.getMoveAmount(); 
 
     // 移動可能量の計算
     if (holdFrames.up > holdFrames.down) {
-        amounts.up    = computeMoveAmount(Direction::Up,    frameId, absX, absY,  0, -1, maxMove, field);
+        amounts.up    = computeMoveAmount(
+            Direction::Up,    frameId, absX, absY,  0, -1, spriteW, spriteH, maxMove, field);
     }
     if (holdFrames.up < holdFrames.down) {
-        amounts.down  = computeMoveAmount(Direction::Down,  frameId, absX, absY,  0, +1, maxMove, field);
+        amounts.down  = computeMoveAmount(
+            Direction::Down,  frameId, absX, absY,  0, +1, spriteW, spriteH, maxMove, field);
     }
     if (holdFrames.left > holdFrames.right) {
-        amounts.left  = computeMoveAmount(Direction::Left,  frameId, absX, absY, -1,  0, maxMove, field);
+        amounts.left  = computeMoveAmount(
+            Direction::Left,  frameId, absX, absY, -1,  0, spriteW, spriteH, maxMove, field);
     }
     if (holdFrames.left < holdFrames.right) {
-        amounts.right = computeMoveAmount(Direction::Right, frameId, absX, absY,  1,  0, maxMove, field);
+        amounts.right = computeMoveAmount(
+            Direction::Right, frameId, absX, absY,  1,  0, spriteW, spriteH, maxMove, field);
     }
 
     // 移動フラグ
@@ -74,17 +80,17 @@ int MovementController::computeMoveAmount(
     , int frameId
     , int baseX, int baseY
     , int deltaX, int deltaY
+    , int spriteW, int spriteH
     , int maxMove
     , const Field& field
     ) const {
 
     int tileW = GameSettings::instance().getFieldTileWidth();
     int tileH = GameSettings::instance().getFieldTileHeight();
-
     while (maxMove > 0) {
         int nextX = baseX + deltaX * maxMove;
         int nextY = baseY + deltaY * maxMove;
-        if (!field.isWall(dir, frameId, nextX, nextY, tileW, tileH)) {
+        if (!field.isWall(dir, frameId, nextX, nextY, tileW, tileH, spriteW, spriteH)) {
             return maxMove;  // 移動可能量を返す
         }
         maxMove--;
