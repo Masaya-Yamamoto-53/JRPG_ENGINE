@@ -17,7 +17,7 @@ private:
          1,  0,  0,  0,  0,  0,  0,  0
     };
 
-    std::vector<int> m_images;  // 読み込んだ画像ハンドル
+    std::vector<CharacterImage> m_images;  // 読み込んだ画像ハンドル 
 
     int m_frame;       // 現在のアニメーションフレーム番号
     int m_runCounter;  // 走り始めるまでのカウンタ
@@ -25,12 +25,18 @@ private:
 
     bool m_running;
 
+    int m_spriteWidth;   // スプライト画像の幅
+    int m_spriteHeight;  // スプライト画像の高さ
+
 public:
     PlayerAnimation();
     void loadImages(const std::string& baseDir, const std::string& id) override;
-    const std::vector<int>& getImages() const override;
-    int getCurrentFrame() const override;
+    const CharacterImage& getImage() const override;
     int getMoveAmount() const override;
     void updateAnimation(Direction useDir, bool isMoving) override;
     int calcAnimIndex(Direction dir) const override;
+    // スプライト画像の幅
+    int getSpriteWidth() const;
+    // スプライト画像の高さ
+    int getSpriteHeight() const;
 };

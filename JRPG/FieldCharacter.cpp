@@ -13,8 +13,6 @@ FieldCharacter::FieldCharacter(
     , m_x(0)
     , m_y(0)
     , m_direction(Direction::None)
-    , m_spriteWidth(GameSettings::instance().getSpriteWidth())
-    , m_spriteHeight(GameSettings::instance().getSpriteHeight())
     , m_anim(std::move(anim))
    
 {
@@ -54,7 +52,6 @@ void FieldCharacter::update(
 int FieldCharacter::getX() const { return m_x; }
 int FieldCharacter::getY() const { return m_y; }
 int FieldCharacter::getMoveAmount() const { return m_anim->getMoveAmount(); }
-int FieldCharacter::getSpriteWidth() const { return m_spriteWidth; }
-int FieldCharacter::getSpriteHeight() const { return m_spriteHeight; }
-int FieldCharacter::getCurrentFrame() const { return m_anim->getCurrentFrame(); }
-const std::vector<int>& FieldCharacter::getImages() const { return m_anim->getImages(); }
+int FieldCharacter::getSpriteWidth() const { return m_anim->getSpriteWidth(); }
+int FieldCharacter::getSpriteHeight() const { return m_anim->getSpriteHeight(); }
+const CharacterImage& FieldCharacter::getImage() const { return m_anim->getImage(); }

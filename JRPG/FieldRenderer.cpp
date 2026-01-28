@@ -88,13 +88,13 @@ void FieldRenderer::drawCharacter(const FieldCharacter& character) {
     int spriteWidth  = character.getSpriteWidth();
     int spriteHeight = character.getSpriteHeight();
 
-    // 現在のアニメーションフレーム
-    int frame = character.getCurrentFrame();
-
-    // スプライト画像
-    const std::vector<int>& images = character.getImages();
-
-    DrawGraph(x, y, images[frame], TRUE);
+    // キャラクタを表示
+    const CharacterImage& charImg = character.getImage();
+    if (charImg.flip) {
+        DrawTurnGraph(x, y, charImg.handle, TRUE);
+    } else {
+        DrawGraph(x, y, charImg.handle, TRUE);
+    }
 
     if (DebugManager::instance().enabled()) {
         // スプライトの大きさを赤枠を表示
