@@ -41,6 +41,7 @@ void PlayerAnimation::loadImages(const std::string& baseDir, const std::string& 
     SetTransColor(0, 255, 0);  // 透過色を設定
     int handle = LoadGraph(filePath.c_str());
 
+    int i = 0;
     for (const auto& imagesJson : frameJson.at("images")) {
         CharacterImage charImg;
         int x = imagesJson.at("x").get<int>();
@@ -48,19 +49,21 @@ void PlayerAnimation::loadImages(const std::string& baseDir, const std::string& 
         charImg.flip = imagesJson.at("flip").get<int>();
         charImg.handle = DerivationGraph(x, y, m_spriteWidth, m_spriteHeight, handle);
 
+        std::string dir = "none";
+        if (imagesJson.contains("Direction")) {
+            dir = imagesJson.at("Direction").get<std::string>();
+        }
+        // インデックスを決定する
+        if      (dir == "up"       ) { m_up = i;       }
+        else if (dir == "down"     ) { m_down = i;     }
+        else if (dir == "left"     ) { m_left = i;     }
+        else if (dir == "right"    ) { m_right = i;    }
+        else if (dir == "left-run" ) { m_leftRun = i;  }
+        else if (dir == "right-run") { m_rightRun = i; }
+
         m_images.push_back(charImg);
+        i++;
     }
-
-    /*
-    std::string dirName = baseDir + id + "\\";
-    for (int i = 0; i < CharacterSpriteNum; i++) {
-        char baseName[4];
-        std::snprintf(baseName, sizeof(baseName), "%02d", i);
-        std::string filePath = dirName + baseName + ".bmp";
-
-        m_images.push_back(LoadGraph(filePath.c_str()));
-    }
-    */
 }
 
 const CharacterImage& PlayerAnimation::getImage() const {
@@ -91,16 +94,16 @@ int PlayerAnimation::calcAnimIndex(Direction dir) const {
     int base = 0;
     switch (dir) {
     case Direction::Down:
-        base = 1;
+        base = m_down;
         break;
     case Direction::Up:
-        base = 10;
+        base = m_up;
         break;
     case Direction::Left:
-        base = m_running ? 19 :  4;
+        base = m_running ? m_leftRun  : m_left;
         break;
     case Direction::Right:
-        base = m_running ? 22 :  7;
+        base = m_running ? m_rightRun : m_right;
         break;
     default:
         break;
