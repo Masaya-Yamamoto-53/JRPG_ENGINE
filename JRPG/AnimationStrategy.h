@@ -8,9 +8,9 @@ struct CharacterImage {
     bool flip;
 };
 
-class ICharacterAnimation {
+class AnimationStrategy {
 public:
-    virtual ~ICharacterAnimation() = default;
+    virtual ~AnimationStrategy() = default;
 
     virtual void loadImages(const std::string& baseDir, const std::string& id) = 0;
     virtual const CharacterImage& getImage() const = 0;

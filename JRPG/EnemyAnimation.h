@@ -2,7 +2,7 @@
 #include <array>
 #include "AnimationStrategy.h"
 
-class PlayerAnimation : public AnimationStrategy {
+class EnemyAnimation : public AnimationStrategy {
 private:
     static constexpr int RunStartFrame      = 30;
     static constexpr int WalkSpeed = 2;  // 歩行時の速度
@@ -33,7 +33,7 @@ private:
     int m_rightRun;
 
 public:
-    PlayerAnimation();
+    EnemyAnimation();
     void loadImages(const std::string& baseDir, const std::string& id) override;
     const CharacterImage& getImage() const override;
     int getMoveAmount() const override;
@@ -44,3 +44,4 @@ public:
     // スプライト画像の高さ
     int getSpriteHeight() const;
 };
+#pragma once

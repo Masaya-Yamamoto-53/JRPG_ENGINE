@@ -58,7 +58,9 @@ void FieldManager::update() {
 
     // キャラクタ更新
     if (m_character) {
-        m_character->update(charaAmounts, direction);
+        m_character->setMoveAmounts(charaAmounts);
+        m_character->setDirection(direction);
+        m_character->update();
     }
 
     // アニメーション更新

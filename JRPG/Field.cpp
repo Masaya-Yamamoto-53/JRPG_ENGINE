@@ -1,4 +1,7 @@
+#include <memory>
 #include "Field.h"
+#include "FieldCharacter.h"
+#include "EnemyAnimation.h"
 #include "GameSettings.h"
 
 Field::Field()
@@ -7,6 +10,15 @@ Field::Field()
     , m_viewOffsetX(0)
     , m_viewOffsetY(0)
 {
+        // Žb’è‘Î‰ž
+    /*
+    auto fieldCharacter = std::make_unique<FieldCharacter>(
+          "00"
+        , "assets\\characters\\players\\"
+        , std::make_unique<EnemyAnimation>()
+    );*/
+
+    //m_enemies.push_back(std::move(fieldCharacter));
 }
 
 bool Field::isWall(
@@ -197,6 +209,12 @@ MoveAmounts Field::applyScroll(
     }
 
     return results;
+}
+
+void Field::update() {
+    for (auto& e : m_enemies) {
+        //e.update();
+    }
 }
 
 bool Field::load(const std::vector<std::string>& jsonFiles

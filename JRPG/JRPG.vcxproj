@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="DebugManager.cpp" />
     <ClCompile Include="dxmain.cpp" />
+    <ClCompile Include="EnemyAnimation.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="FieldCharacter.cpp" />
     <ClCompile Include="FieldManager.cpp" />
@@ -151,24 +152,28 @@
     <ClCompile Include="KeyboardInput.cpp" />
     <ClCompile Include="MovementController.cpp" />
     <ClCompile Include="PlayerAnimation.cpp" />
+    <ClCompile Include="PlayerMovementStrategy.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="TileSet.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="common.h" />
     <ClInclude Include="DebugManager.h" />
+    <ClInclude Include="EnemyAnimation.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="FieldCharacter.h" />
     <ClInclude Include="FieldManager.h" />
     <ClInclude Include="FieldRenderer.h" />
     <ClInclude Include="FpsController.h" />
     <ClInclude Include="GameSettings.h" />
-    <ClInclude Include="ICharacterAnimation.h" />
+    <ClInclude Include="AnimationStrategy.h" />
     <ClInclude Include="InputManager.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="KeyboardInput.h" />
     <ClInclude Include="MovementController.h" />
+    <ClInclude Include="MovementStrategy.h" />
     <ClInclude Include="PlayerAnimation.h" />
+    <ClInclude Include="PlayerMovementStrategy.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TileSet.h" />
     <ClInclude Include="IFieldEntity.h" />

@@ -5,6 +5,7 @@
 #include "DebugManager.h"
 #include "FieldCharacter.h" // Žb’è‘Î‰ž
 #include "FieldManager.h"   // Žb’è‘Î‰ž
+#include "PlayerMovementStrategy.h"
 #include "PlayerAnimation.h" // Žb’è‘Î‰ž
 #include <memory>
 
@@ -57,9 +58,9 @@ int WINAPI WinMain(
     auto fieldCharacter = std::make_unique<FieldCharacter>(
           "00"
         , "assets\\characters\\players\\"
+        , std::make_unique<PlayerMovementStrategy>()
         , std::make_unique<PlayerAnimation>()
     );
-    //FieldCharacter fieldCharacter("00", "assets\\characters\\players\\");
     FieldManager fieldManager;
     fieldManager.load();
 

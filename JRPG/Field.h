@@ -3,6 +3,7 @@
 #include "TileSet.h"
 #include "TileMap.h"
 #include "IFieldEntity.h"
+#include "FieldCharacter.h"
 
 class Field {
 private:
@@ -11,6 +12,8 @@ private:
 
     int m_viewOffsetX;  // マップ内における画面左上のX座標（カメラ位置）
     int m_viewOffsetY;  // マップ内における画面左上のY座標（カメラ位置）
+
+    std::vector<std::unique_ptr<FieldCharacter>> m_enemies;
 
 public:
     Field();
@@ -27,6 +30,8 @@ public:
     std::pair<int, int> toAbsolute(int localX, int localY) const;
     // キャラクタの画面中央位置の絶対座標を計算
     std::pair<int,int> computeCharacterCenterAbsPos(const IFieldEntity& entity) const;
+
+    void update();
 
     // フィールド移動処理
     MoveAmounts applyScroll(
