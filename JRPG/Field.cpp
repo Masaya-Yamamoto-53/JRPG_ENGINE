@@ -1,7 +1,11 @@
 #include <memory>
 #include "Field.h"
 #include "FieldCharacter.h"
+#include "PlayerAnimation.h"
 #include "EnemyAnimation.h"
+#include "PlayerMovementStrategy.h"
+#include "EnemyMovementStrategy.h"
+#include "DebugManager.h"
 #include "GameSettings.h"
 
 Field::Field()
@@ -10,15 +14,23 @@ Field::Field()
     , m_viewOffsetX(0)
     , m_viewOffsetY(0)
 {
-        // 暫定対応
-    /*
-    auto fieldCharacter = std::make_unique<FieldCharacter>(
+    // 暫定対応
+    auto playerCharacter = std::make_unique<FieldCharacter>(
           "00"
         , "assets\\characters\\players\\"
-        , std::make_unique<EnemyAnimation>()
-    );*/
+        , std::make_unique<PlayerMovementStrategy>()
+        , std::make_unique<PlayerAnimation>()
+    );
 
-    //m_enemies.push_back(std::move(fieldCharacter));
+    auto enemiesCharacter = std::make_unique<FieldCharacter>(
+          "goblin"
+        , "assets\\characters\\enemies\\"
+        , std::make_unique<EnemyMovementStrategy>()
+        , std::make_unique<EnemyAnimation>()
+    );
+
+    m_players.push_back(std::move(playerCharacter));
+    m_enemies.push_back(std::move(enemiesCharacter));
 }
 
 bool Field::isWall(
@@ -97,12 +109,12 @@ std::pair<int, int> Field::toAbsolute(int localX, int localY) const {
     };
 }
 
-std::pair<int,int> Field::computeCharacterCenterAbsPos(const IFieldEntity& entity) const {
+std::pair<int,int> Field::computeCharacterCenterAbsPos(const FieldCharacter* entity) const {
     int screenCenterX = GameSettings::instance().getWindowWidth()  / 2;
     int screenCenterY = GameSettings::instance().getWindowHeight() / 2;
 
-    int charaHalfWidth  = entity.getSpriteWidth()  / 2;
-    int charaHalfHeight = entity.getSpriteHeight() / 2;
+    int charaHalfWidth  = entity->getSpriteWidth()  / 2;
+    int charaHalfHeight = entity->getSpriteHeight() / 2;
 
     return {
         screenCenterX - charaHalfWidth  + m_viewOffsetX,
@@ -144,18 +156,17 @@ bool Field::isCharacterRightOfCenter(int absCharaX, int charaXMax) const {
     return absCharaX >= charaXMax;
 }
 
-MoveAmounts Field::applyScroll(
-      const MoveAmounts& amounts
-    , const IFieldEntity& entity
-    ) {
+MoveAmounts Field::applyScroll(const MoveAmounts& amounts) {
+
+    FieldCharacter* chara = m_players[0].get();
 
     // 絶対座標 ＝ キャラクタの座標 ＋ カメラ座標
-    auto charaAbsPos = toAbsolute(entity.getX(), entity.getY());
+    auto charaAbsPos = toAbsolute(chara->getX(), chara->getY());
     int charaAbsX = charaAbsPos.first;
     int charaAbsY = charaAbsPos.second;
 
     // キャラクタが画面中央に来る時の絶対座標（マップ座標）
-    auto charaCenterAbsPos = computeCharacterCenterAbsPos(entity);
+    auto charaCenterAbsPos = computeCharacterCenterAbsPos(chara);
     int charaCenterAbsX = charaCenterAbsPos.first;
     int charaCenterAbsY = charaCenterAbsPos.second;
 
@@ -211,9 +222,39 @@ MoveAmounts Field::applyScroll(
     return results;
 }
 
-void Field::update() {
+const std::vector<std::unique_ptr<FieldCharacter>>& Field::getPlayers() const {
+    return m_players;
+}
+
+const std::vector<std::unique_ptr<FieldCharacter>>& Field::getEnemies() const {
+    return m_enemies;
+}
+
+void Field::update(const MoveAmounts& amounts, const Direction& direction) {
+    // フィールド移動処理
+    MoveAmounts playerAmounts = applyScroll(amounts);
+
+    // 味方キャラクタ更新
+    m_players[0].get()->setMoveAmounts(playerAmounts); // 味方キャラクターが移動する距離
+    m_players[0].get()->setDirection(direction);
+    m_players[0].get()->update();
+
+    // Update debug information
+    DebugManager::instance().setCharacterPosition(
+          m_players[0].get()->getX()
+        , m_players[0].get()->getY()
+    );
+
+    MoveAmounts enemiesAmounts;
+    enemiesAmounts.up    = amounts.up    - playerAmounts.up;
+    enemiesAmounts.down  = amounts.down  - playerAmounts.down;
+    enemiesAmounts.left  = amounts.left  - playerAmounts.left;
+    enemiesAmounts.right = amounts.right - playerAmounts.right;
+
+    // 敵キャラクタ更新
     for (auto& e : m_enemies) {
-        //e.update();
+        e->setMoveAmounts(enemiesAmounts);
+        e->update();
     }
 }
 

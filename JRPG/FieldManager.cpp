@@ -6,20 +6,20 @@
 
 FieldManager::FieldManager()
     : m_field()
-    , m_character(nullptr)
+    //, m_character(nullptr)
     , m_frameCount(0)
     , m_animationCounter(0)
     , m_movementController()
 {
 }
 
-void FieldManager::setCharacter(FieldCharacter* character) {
-    m_character = character;
-}
+//void FieldManager::setCharacter(FieldCharacter* character) {
+//    m_character = character;
+//}
 
 int FieldManager::computeMoveAmount(int baseX, int baseY, int deltaX, int deltaY,
     std::function<bool(int, int, int, int)> isWallFunc) {
-    int maxMove = m_character->getMoveAmount();
+    int maxMove = m_field.getPlayers()[0]->getMoveAmount();
     int pixelXSize = GameSettings::instance().getFieldTileWidth();
     int pixelYSize = GameSettings::instance().getFieldTileHeight();
 
@@ -48,20 +48,13 @@ void FieldManager::update() {
 
     // 移動可能量の計算
     MoveAmounts amounts = m_movementController.computeMoveAmounts(
-        holdFrames , m_animationCounter, *m_character ,m_field );
+        holdFrames , m_animationCounter, m_field.getPlayers()[0].get(), m_field );
 
     // 移動方向の決定(キャラクタの向きに使用)
     Direction direction = m_movementController.computeDirection(holdFrames, amounts);
 
-    // フィールド移動処理
-    MoveAmounts charaAmounts = m_field.applyScroll(amounts , *m_character);
-
-    // キャラクタ更新
-    if (m_character) {
-        m_character->setMoveAmounts(charaAmounts);
-        m_character->setDirection(direction);
-        m_character->update();
-    }
+    // 敵キャラクタ更新
+    m_field.update(amounts, direction);
 
     // アニメーション更新
     updateAnimation();
@@ -70,11 +63,8 @@ void FieldManager::update() {
 void FieldManager::draw() {
     // フィールドの描画
     m_renderer.drawField(m_field, m_animationCounter);
-
     // キャラクターの描画
-    if (m_character) {
-        m_renderer.drawCharacter(*m_character);
-    }
+    m_renderer.drawCharacter(m_field, m_field.getPlayers(), m_field.getEnemies());
 }
 
 void FieldManager::load() {

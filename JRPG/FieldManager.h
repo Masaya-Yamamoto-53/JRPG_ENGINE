@@ -9,7 +9,7 @@
 class FieldManager {
 private:
     Field m_field;
-    FieldCharacter* m_character;
+    //FieldCharacter* m_character;
     FieldRenderer m_renderer;
     MovementController m_movementController;
     int m_frameCount;

@@ -9,7 +9,7 @@ public:
     MoveAmounts computeMoveAmounts(
           const DirectionalHoldFrames& holdFrames
         , int frameId
-        , const IFieldEntity& entity
+        , const IFieldEntity* entity
         , const Field& field
     );
     // ˆÚ“®•ûŒü‚ÌŒˆ’è

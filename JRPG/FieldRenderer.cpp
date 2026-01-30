@@ -1,7 +1,13 @@
+#include <algorithm>
 #include "DxLib.h"
 #include "FieldRenderer.h"
 #include "GameSettings.h"
 #include "DebugManager.h"
+
+struct DrawEntry {
+    const FieldCharacter *ch;
+    int footY;  // 足元のY座標
+};
 
 FieldRenderer::FieldRenderer()
 {
@@ -80,21 +86,49 @@ void FieldRenderer::drawField(const Field& field, int counter) {
     }
 }
 
-void FieldRenderer::drawCharacter(const FieldCharacter& character) {
-    // キャラの現在位置
-    int x = character.getX();
-    int y = character.getY();
+void FieldRenderer::drawCharacter(
+      const Field& field
+    , const std::vector<std::unique_ptr<FieldCharacter>>& players
+    , const std::vector<std::unique_ptr<FieldCharacter>>& enemies
+) {
 
-    int spriteWidth  = character.getSpriteWidth();
-    int spriteHeight = character.getSpriteHeight();
+    std::vector<DrawEntry> list;
 
-    // キャラクタを表示
-    const CharacterImage& charImg = character.getImage();
-    if (charImg.flip) {
-        DrawTurnGraph(x, y, charImg.handle, TRUE);
-    } else {
-        DrawGraph(x, y, charImg.handle, TRUE);
+    // 味方
+    for (const auto& p : players) {
+        list.push_back({p.get(), p->getY() + p->getSpriteHeight()});
     }
+    // 敵
+    for (const auto& e : enemies) {
+        list.push_back({e.get(), e->getY() + e->getSpriteHeight()});
+    }
+
+    std::sort(list.begin(), list.end(),
+        [](const DrawEntry& a, const DrawEntry& b) {
+            return a.footY < b.footY;
+        }
+    );
+
+    // ソート後に描画
+    for (const auto& entry : list) {
+        const FieldCharacter* ch = entry.ch;
+        const CharacterImage& img = ch->getImage();
+
+        if (img.flip) {
+            DrawTurnGraph(ch->getX(), ch->getY(), img.handle, TRUE);
+        }
+        else {
+            DrawGraph(ch->getX(), ch->getY(), img.handle, TRUE);
+        }
+    }
+
+    // キャラの現在位置
+    // 暫定対応
+    int x = players[0].get()->getX();
+    int y = players[0].get()->getY();
+    // 暫定対応
+    int spriteWidth  = players[0].get()->getSpriteWidth();
+    int spriteHeight = players[0].get()->getSpriteHeight();
 
     if (DebugManager::instance().enabled()) {
         // スプライトの大きさを赤枠を表示

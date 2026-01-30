@@ -8,7 +8,7 @@ class PlayerMovementStrategy : public MovementStrategy {
     Direction m_prevDirection;  // 向いている方向（前回値）
 
 public:
-    void setDirection(Direction direction) override;
     void setMoveAmounts(const MoveAmounts& amounts) override;
+    void setDirection(Direction direction) override;
     Movement computeMovement() override;
 };

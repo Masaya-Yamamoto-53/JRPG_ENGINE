@@ -1,11 +1,12 @@
+#include <stdio.h>
 #include "PlayerMovementStrategy.h"
-
-void PlayerMovementStrategy::setDirection(Direction direction) {
-    m_direction = direction;
-}
 
 void PlayerMovementStrategy::setMoveAmounts(const MoveAmounts& m) {
     m_amounts = m;
+}
+
+void PlayerMovementStrategy::setDirection(Direction direction) {
+    m_direction = direction;
 }
 
 Movement PlayerMovementStrategy::computeMovement() {
@@ -24,10 +25,11 @@ Movement PlayerMovementStrategy::computeMovement() {
                         );
 
     Direction useDir = (m_direction != Direction::None)
-                                ? m_direction
-                                : m_prevDirection;
+                     ? m_direction
+                     : m_prevDirection;
 
     m_prevDirection = m_direction;
 
-    return Movement{ dx, dy, isMoving, m_direction};
+    return Movement{ dx, dy, isMoving, useDir};
 }
+

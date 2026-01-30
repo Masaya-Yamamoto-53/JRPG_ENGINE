@@ -4,19 +4,19 @@
 MoveAmounts MovementController::computeMoveAmounts(
       const DirectionalHoldFrames& holdFrames
     , int frameId
-    , const IFieldEntity& entity
+    , const IFieldEntity* entity
     , const Field& field
 ) {
     MoveAmounts amounts = { 0, 0, 0, 0, false, false, false, false };
 
     // キャラクタの絶対座標
-    auto absPos = field.toAbsolute(entity.getX(), entity.getY());
+    auto absPos = field.toAbsolute(entity->getX(), entity->getY());
     int absX = absPos.first;
     int absY = absPos.second;
-    int spriteW = entity.getSpriteWidth();
-    int spriteH = entity.getSpriteHeight();
+    int spriteW = entity->getSpriteWidth();
+    int spriteH = entity->getSpriteHeight();
 
-    int maxMove = entity.getMoveAmount(); 
+    int maxMove = entity->getMoveAmount(); 
 
     // 移動可能量の計算
     if (holdFrames.up > holdFrames.down) {

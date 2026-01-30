@@ -3,10 +3,7 @@
 #include "FpsController.h"
 #include "InputManager.h"
 #include "DebugManager.h"
-#include "FieldCharacter.h" // Žb’è‘Î‰ž
 #include "FieldManager.h"   // Žb’è‘Î‰ž
-#include "PlayerMovementStrategy.h"
-#include "PlayerAnimation.h" // Žb’è‘Î‰ž
 #include <memory>
 
 int WINAPI WinMain(
@@ -54,13 +51,6 @@ int WINAPI WinMain(
     // Set the drawing target to the back screen
     SetDrawScreen(DX_SCREEN_BACK);
 
-    // Žb’è‘Î‰ž
-    auto fieldCharacter = std::make_unique<FieldCharacter>(
-          "00"
-        , "assets\\characters\\players\\"
-        , std::make_unique<PlayerMovementStrategy>()
-        , std::make_unique<PlayerAnimation>()
-    );
     FieldManager fieldManager;
     fieldManager.load();
 
@@ -85,15 +75,8 @@ int WINAPI WinMain(
         }
 
         // Žb’è‘Î‰ž
-        fieldManager.setCharacter(fieldCharacter.get());
         fieldManager.update();
         fieldManager.draw();
-
-        // Update debug information
-        DebugManager::instance().setCharacterPosition(
-              fieldCharacter.get()->getX()
-            , fieldCharacter.get()->getY()
-        );
         DebugManager::instance().draw();
 
         // Method to adjust the frame interval

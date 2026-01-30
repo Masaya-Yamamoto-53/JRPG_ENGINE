@@ -13,6 +13,7 @@ private:
     int m_viewOffsetX;  // マップ内における画面左上のX座標（カメラ位置）
     int m_viewOffsetY;  // マップ内における画面左上のY座標（カメラ位置）
 
+    std::vector<std::unique_ptr<FieldCharacter>> m_players;
     std::vector<std::unique_ptr<FieldCharacter>> m_enemies;
 
 public:
@@ -29,14 +30,16 @@ public:
     // ローカル座標を絶対座標に変換
     std::pair<int, int> toAbsolute(int localX, int localY) const;
     // キャラクタの画面中央位置の絶対座標を計算
-    std::pair<int,int> computeCharacterCenterAbsPos(const IFieldEntity& entity) const;
+    std::pair<int, int> computeCharacterCenterAbsPos(const FieldCharacter* entity) const;
 
-    void update();
+    const std::vector<std::unique_ptr<FieldCharacter>>& getPlayers() const;
+    const std::vector<std::unique_ptr<FieldCharacter>>& getEnemies() const;
+    void update(const MoveAmounts& amounts, const Direction& direction);
 
     // フィールド移動処理
     MoveAmounts applyScroll(
           const MoveAmounts& amounts
-        , const IFieldEntity& entity
+        //, const IFieldEntity& entity
     );
 
     // ビューオフセット取得

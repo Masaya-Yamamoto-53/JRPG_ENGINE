@@ -8,5 +8,9 @@ public:
     FieldRenderer();
 
     void drawField(const Field& field, int counter);
-    void drawCharacter(const FieldCharacter& character);
+    void drawCharacter(
+          const Field& field
+        , const std::vector<std::unique_ptr<FieldCharacter>>& players
+        , const std::vector<std::unique_ptr<FieldCharacter>>& enemies
+    );
 };
