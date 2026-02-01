@@ -122,40 +122,6 @@ std::pair<int,int> Field::computeCharacterCenterAbsPos(const FieldCharacter* ent
     };
 }
 
-bool Field::canScrollUp(int viewOffsetY, int amountUp) const {
-    return (viewOffsetY - amountUp) >= 0;
-}
-
-bool Field::canScrollDown(int nextTopTileY, int screenTileCountY) const {
-    int bottomTile = nextTopTileY + screenTileCountY;
-    return bottomTile <= m_tileMap.getTileHeightNum();
-}
-
-bool Field::canScrollLeft(int viewOffsetX, int amountLeft) const {
-    return (viewOffsetX - amountLeft) >= 0;
-}
-
-bool Field::canScrollRight(int nextTopTileX, int screenTileCountX) const {
-    int nextRightTile = nextTopTileX + screenTileCountX;
-    return nextRightTile <= m_tileMap.getTileWidthNum();
-}
-
-bool Field::isCharacterAboveCenter(int absCharaY, int charaYMax) const {
-    return absCharaY <= charaYMax;
-}
-
-bool Field::isCharacterBelowCenter(int absCharaY, int charaYMax) const {
-    return absCharaY >= charaYMax;
-}
-
-bool Field::isCharacterLeftOfCenter(int absCharaX, int charaXMax) const {
-    return absCharaX <= charaXMax;
-}
-
-bool Field::isCharacterRightOfCenter(int absCharaX, int charaXMax) const {
-    return absCharaX >= charaXMax;
-}
-
 MoveAmounts Field::applyScroll(const MoveAmounts& amounts) {
 
     FieldCharacter* chara = m_players[0].get();
@@ -220,14 +186,6 @@ MoveAmounts Field::applyScroll(const MoveAmounts& amounts) {
     }
 
     return results;
-}
-
-const std::vector<std::unique_ptr<FieldCharacter>>& Field::getPlayers() const {
-    return m_players;
-}
-
-const std::vector<std::unique_ptr<FieldCharacter>>& Field::getEnemies() const {
-    return m_enemies;
 }
 
 void Field::update(const MoveAmounts& amounts, const Direction& direction) {

@@ -32,8 +32,9 @@ public:
     // キャラクタの画面中央位置の絶対座標を計算
     std::pair<int, int> computeCharacterCenterAbsPos(const FieldCharacter* entity) const;
 
-    const std::vector<std::unique_ptr<FieldCharacter>>& getPlayers() const;
-    const std::vector<std::unique_ptr<FieldCharacter>>& getEnemies() const;
+    const std::vector<std::unique_ptr<FieldCharacter>>& getPlayers() const { return m_players; }
+    const std::vector<std::unique_ptr<FieldCharacter>>& getEnemies() const { return m_enemies; }
+
     void update(const MoveAmounts& amounts, const Direction& direction);
 
     // フィールド移動処理
@@ -57,14 +58,14 @@ public:
 
 private:
     // スクロール可能かどうかを判定
-    bool canScrollUp(int viewOffsetY, int amountUp) const;
-    bool canScrollDown(int nextTopTileY, int screenTileCountY) const;
-    bool canScrollLeft(int viewOffsetX, int amountLeft) const;
-    bool canScrollRight(int nextTopTileX, int screenTileCountX) const;
-
+    bool canScrollUp   (int viewOffsetY, int amountUp  ) const { return (viewOffsetY - amountUp  ) >= 0; }
+    bool canScrollLeft (int viewOffsetX, int amountLeft) const { return (viewOffsetX - amountLeft) >= 0; }
+    bool canScrollDown (int nextTopTileY, int screenTileCountY) const { return nextTopTileY + screenTileCountY <= m_tileMap.getTileHeightNum(); }
+    bool canScrollRight(int nextTopTileX, int screenTileCountX) const { return nextTopTileX + screenTileCountX <= m_tileMap.getTileWidthNum();  }
     // キャラクタが画面中央を超えているかどうかを判定
-    bool isCharacterAboveCenter(int absCharaY, int charaYMax) const;
-    bool isCharacterBelowCenter(int absCharaY, int charaYMax) const;
-    bool isCharacterLeftOfCenter(int absCharaX, int charaXMax) const;
-    bool isCharacterRightOfCenter(int absCharaX, int charaXMax) const;
+    bool isCharacterAboveCenter  (int absCharaY, int charaYMax) const { return absCharaY <= charaYMax; }
+    bool isCharacterBelowCenter  (int absCharaY, int charaYMax) const { return absCharaY >= charaYMax; }
+    bool isCharacterLeftOfCenter (int absCharaX, int charaXMax) const { return absCharaX <= charaXMax; }
+    bool isCharacterRightOfCenter(int absCharaX, int charaXMax) const { return absCharaX >= charaXMax; }
+
 };

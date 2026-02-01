@@ -5,19 +5,19 @@
       "sprite": { "width": 64, "height": 64 },
       "images": [
           { "x":   0, "y":   0, "flip": false }
-        , { "x":  64, "y":   0, "flip": false }
+        , { "x":  64, "y":   0, "flip": false, "Direction": "down"     }
         , { "x": 128, "y":   0, "flip": false }
 
         , { "x":   0, "y":  64, "flip": false }
-        , { "x":  64, "y":  64, "flip": false }
+        , { "x":  64, "y":  64, "flip": false, "Direction": "left"      }
         , { "x": 128, "y":  64, "flip": false }
 
         , { "x":   0, "y":  64, "flip": true  }
-        , { "x":  64, "y":  64, "flip": true  }
+        , { "x":  64, "y":  64, "flip": true , "Direction": "right"     }
         , { "x": 128, "y":  64, "flip": true  }
 
         , { "x":   0, "y": 128, "flip": false }
-        , { "x":  64, "y": 128, "flip": false }
+        , { "x":  64, "y": 128, "flip": false, "Direction": "up"      }
         , { "x": 128, "y": 128, "flip": false }
 
         , { "x":   0, "y": 192, "flip": false }
@@ -29,11 +29,11 @@
         , { "x": 128, "y": 256, "flip": false }
 
         , { "x":   0, "y": 320, "flip": false }
-        , { "x":  64, "y": 320, "flip": false }
+        , { "x":  64, "y": 320, "flip": false, "Direction": "left-run"  }
         , { "x": 128, "y": 320, "flip": false }
 
         , { "x":   0, "y": 320, "flip": true  }
-        , { "x":  64, "y": 320, "flip": true  }
+        , { "x":  64, "y": 320, "flip": true , "Direction": "right-run" }
         , { "x": 128, "y": 320, "flip": true  }
 
         , { "x":   0, "y": 384, "flip": false }

@@ -1,0 +1,21 @@
+{
+  "frames": [
+    {
+      "image": "goblin.bmp",
+      "sprite": { "width": 64, "height": 64 },
+      "images": [
+          { "x":   0, "y":   0, "flip": false, "Direction": "down"      }
+        , { "x":  64, "y":   0, "flip": false }
+
+        , { "x":   0, "y":  64, "flip": false, "Direction": "left"      }
+        , { "x":  64, "y":  64, "flip": false }
+
+        , { "x":   0, "y":  64, "flip": true , "Direction": "right"     }
+        , { "x":  64, "y":  64, "flip": true  }
+
+        , { "x":   0, "y": 128, "flip": false, "Direction": "up"        }
+        , { "x":  64, "y": 128, "flip": false }
+      ]
+    }
+  ]
+}
