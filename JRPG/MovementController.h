@@ -1,6 +1,6 @@
 #pragma once
 #include "Field.h"
-#include "IFieldEntity.h"
+#include "FieldCharacter.h"
 #include "InputController.h"
 #include "CollisionChecker.h"
 
@@ -13,7 +13,7 @@ public:
     // 入力とフィールド情報から移動量を計算
     MoveAmounts computeMoveAmounts(
           const DirectionalHoldFrames& holdFrames
-        , const IFieldEntity* entity
+        , const FieldCharacter* chara
         , const Field& field
     );
     // 入力と移動量からキャラクタの向きを決定

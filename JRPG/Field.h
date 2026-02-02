@@ -45,7 +45,8 @@ public:
 
     // ステージデータを読み込む
     bool load(const std::vector<std::string>& jsonFiles
-            , const std::string& mapFile);
+            , const std::string& mapFile
+    );
 
     // タイル番号取得
     int getTileImage(int num, int tileId) const;
