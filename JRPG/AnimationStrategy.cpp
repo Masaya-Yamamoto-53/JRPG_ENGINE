@@ -5,6 +5,12 @@
 #include "json.hpp"
 using json = nlohmann::json;
 
+AnimationStrategy::AnimationStrategy()
+    : m_frame(0)
+    , m_animIndex(1)
+{
+}
+
 void AnimationStrategy::loadImages(const std::string& baseDir, const std::string& id) {
     std::string jsonPath = baseDir + id + ".json";
 
@@ -58,4 +64,48 @@ void AnimationStrategy::loadImages(const std::string& baseDir, const std::string
         m_images.push_back(charImg);
         i++;
     }
+    if (m_leftRun == -1) {
+        m_leftRun = m_left;
+    }
+    if (m_rightRun == -1) {
+        m_rightRun = m_right;
+    }
+}
+
+const CharacterImage& AnimationStrategy::getImage() const {
+    return m_images[m_animIndex];
+}
+
+void AnimationStrategy::update(Direction useDir, bool isMoving, bool running) {
+    if(isMoving) {
+        m_frame = (m_frame + 1) % imgPattern.size();
+    }
+    else {
+        m_frame = 0;
+    }
+    if (useDir != Direction::None) {
+        m_animIndex = calcAnimIndex(useDir, running);
+        m_animIndex += imgPattern[m_frame];
+    }
+}
+
+int AnimationStrategy::calcAnimIndex(Direction dir, bool running) const {
+    int base = 0;
+    switch (dir) {
+    case Direction::Down:
+        base = m_down;
+        break;
+    case Direction::Up:
+        base = m_up;
+        break;
+    case Direction::Left:
+        base = running ? m_leftRun  : m_left;
+        break;
+    case Direction::Right:
+        base = running ? m_rightRun : m_right;
+        break;
+    default:
+        break;
+    }
+    return base;
 }

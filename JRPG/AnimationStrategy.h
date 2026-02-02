@@ -1,4 +1,5 @@
 #pragma once
+#include <array>
 #include <vector>
 #include <string>
 #include "common.h"
@@ -12,6 +13,7 @@ struct CharacterImage {
 
 class AnimationStrategy {
 protected:
+    std::array<int, 32> imgPattern{};
     std::vector<CharacterImage> m_images;  // 読み込んだ画像ハンドル 
 
     int m_spriteWidth;   // スプライト画像の幅
@@ -24,14 +26,20 @@ protected:
     int m_leftRun  = -1;
     int m_rightRun = -1;
 
+    int m_frame;       // 現在のアニメーションフレーム番号
+    int m_animIndex;   // 描画用インデックス
+
+protected:
+    AnimationStrategy();
+
 public:
     virtual ~AnimationStrategy() = default;
 
     virtual void loadImages(const std::string& baseDir, const std::string& id);
-    virtual const CharacterImage& getImage() const = 0;
-    //virtual int getMoveAmount() const = 0;
-    virtual void update(Direction useDir, bool isMoving) = 0;
-    virtual int calcAnimIndex(Direction dir) const = 0;
+    virtual const CharacterImage& getImage() const;
+    virtual void update(Direction useDir, bool isMoving, bool running);
+    virtual int calcAnimIndex(Direction dir, bool running) const;
+
     // スプライト画像の幅
     virtual int getSpriteWidth()  const { return m_spriteWidth;  }
     // スプライト画像の高さ

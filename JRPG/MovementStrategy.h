@@ -18,6 +18,8 @@ protected:
 
 public:
     virtual ~MovementStrategy() = default;
+
+    virtual bool isRunning() const = 0;
     virtual int getMoveAmount() const = 0;
     // キャラクタの移動量を計算
     virtual Movement update(const MoveAmounts& amounts, Direction direction) = 0;

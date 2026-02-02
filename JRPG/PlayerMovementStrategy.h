@@ -6,6 +6,7 @@ class PlayerMovementStrategy : public MovementStrategy {
     Direction m_prevDirection;  // 向いている方向（前回値）
 
 public:
+    bool isRunning() const;
     int getMoveAmount() const;
     Movement update(const MoveAmounts& amounts, Direction direction) override;
 };

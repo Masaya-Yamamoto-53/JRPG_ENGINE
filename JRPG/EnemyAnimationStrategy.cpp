@@ -1,44 +1,32 @@
-#include <fstream>
-#include "DxLib.h"
 #include "EnemyAnimationStrategy.h"
 
-#include "json.hpp"
-using json = nlohmann::json;
-
-EnemyAnimationStrategy::EnemyAnimationStrategy()
-    : m_running(false)
-    , m_frame(0)
-    , m_runCounter(0)
-    , m_animIndex(1)
-{
+EnemyAnimationStrategy::EnemyAnimationStrategy() {
+    imgPattern = {
+         0,  0,  0,  0,  0,  0,  0,  0,
+         0,  0,  0,  0,  0,  0,  0,  0,
+         1,  1,  1,  1,  1,  1,  1,  1,
+         1,  1,  1,  1,  1,  1,  1,  1
+    };
 }
-
+/*
 const CharacterImage& EnemyAnimationStrategy::getImage() const {
-    return m_images[(std::max)(0, m_animIndex)];
+    return m_images[m_animIndex];
 }
 
-//int EnemyAnimationStrategy::getMoveAmount() const {
-//    return (m_running ? RunSpeed : WalkSpeed);
-//}
-
-void EnemyAnimationStrategy::update(Direction useDir, bool isMoving) {
+void EnemyAnimationStrategy::update(Direction useDir, bool isMoving, bool running) {
     if(isMoving) {
-        //m_runCounter = (std::min)(m_runCounter + 1, RunStartFrame);
-        //m_running = (m_runCounter >= RunStartFrame);
         m_frame = (m_frame + 1) % imgPattern.size();
     }
     else {
-        //m_runCounter = 0;
-        //m_running = false;
         m_frame = 0;
     }
     if (useDir != Direction::None) {
-        m_animIndex = calcAnimIndex(useDir);
+        m_animIndex = calcAnimIndex(useDir, running);
         m_animIndex += imgPattern[m_frame];
     }
 }
 
-int EnemyAnimationStrategy::calcAnimIndex(Direction dir) const {
+int EnemyAnimationStrategy::calcAnimIndex(Direction dir, bool running) const {
     int base = 0;
     switch (dir) {
     case Direction::Down:
@@ -48,14 +36,14 @@ int EnemyAnimationStrategy::calcAnimIndex(Direction dir) const {
         base = m_up;
         break;
     case Direction::Left:
-        base = m_running ? m_leftRun  : m_left;
+        base = running ? m_leftRun  : m_left;
         break;
     case Direction::Right:
-        base = m_running ? m_rightRun : m_right;
+        base = running ? m_rightRun : m_right;
         break;
     default:
         break;
     }
     return base;
 }
-
+*/

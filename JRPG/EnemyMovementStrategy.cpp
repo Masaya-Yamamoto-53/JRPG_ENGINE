@@ -9,6 +9,10 @@ EnemyMovementStrategy::EnemyMovementStrategy(int minX, int maxX, int speed)
 {
 }
 
+bool EnemyMovementStrategy::isRunning() const {
+    return m_running;
+}
+
 int EnemyMovementStrategy::getMoveAmount() const {
     return (m_running ? RunSpeed : WalkSpeed);
 }

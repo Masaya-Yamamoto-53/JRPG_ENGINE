@@ -1,6 +1,10 @@
 #include <iostream>
 #include "PlayerMovementStrategy.h"
 
+bool PlayerMovementStrategy::isRunning() const {
+    return m_running;
+}
+
 int PlayerMovementStrategy::getMoveAmount() const {
     return (m_running ? RunSpeed : WalkSpeed);
 }

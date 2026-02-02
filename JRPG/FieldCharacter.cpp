@@ -20,7 +20,7 @@ FieldCharacter::FieldCharacter(
 
 void FieldCharacter::update(const MoveAmounts& amounts, Direction direction) {
     Movement movement = m_move->update(amounts, direction);
-    m_anim->update(movement.direction, movement.isMoving);
+    m_anim->update(movement.direction, movement.isMoving, m_move->isRunning());
     m_y += movement.dy;
     m_x += movement.dx;
 }
