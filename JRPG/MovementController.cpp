@@ -85,7 +85,7 @@ int MovementController::computeMoveAmount(
     while (maxMove > 0) {
         int nextX = baseX + deltaX * maxMove;
         int nextY = baseY + deltaY * maxMove;
-        if (!field.isWall(dir, nextX, nextY, spriteW, spriteH)) {
+        if (!field.isWall(field.getTileSet(), field.getTileMap(), field.getFrameId(), dir, nextX, nextY, spriteW, spriteH)) {
             return maxMove;  // ˆÚ“®‰Â”\—Ê‚ð•Ô‚·
         }
         maxMove--;

@@ -5,6 +5,7 @@
 #include "IFieldEntity.h"
 #include "FieldCharacter.h"
 #include "Camera.h"
+#include "CollisionChecker.h"
 
 class Field {
 private:
@@ -12,6 +13,7 @@ private:
     TileMap m_tileMap;
 
     Camera m_camera;
+    CollisionChecker m_collisionChecker;
 
     std::vector<std::unique_ptr<FieldCharacter>> m_players;
     std::vector<std::unique_ptr<FieldCharacter>> m_enemies;
@@ -24,10 +26,16 @@ public:
 
     // 指定方向に壁があるかどうかを判定
     bool isWall(
-          Direction dir
+          const TileSet& tileSet
+        , const TileMap& tileMap
+        , int frameId
+        , Direction dir
         , int absCharaX, int absCharaY
         , int spriteW, int spriteH
-    ) const;
+    ) const { return m_collisionChecker.isWall(tileSet, tileMap, frameId, dir, absCharaX, absCharaY, spriteW, spriteH); }
+
+    int getFrameId() const { return m_animationCounter; }
+
     // ローカル座標を絶対座標に変換
     std::pair<int, int> toAbsolute(int localX, int localY) const { return m_camera.toAbsolute(localX, localY); }
 

@@ -141,6 +141,7 @@
   <ItemGroup>
     <ClCompile Include="AnimationStrategy.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CollisionChecker.cpp" />
     <ClCompile Include="DebugManager.cpp" />
     <ClCompile Include="dxmain.cpp" />
     <ClCompile Include="EnemyAnimationStrategy.cpp" />
@@ -162,6 +163,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CollisionChecker.h" />
     <ClInclude Include="common.h" />
     <ClInclude Include="DebugManager.h" />
     <ClInclude Include="EnemyAnimationStrategy.h" />
