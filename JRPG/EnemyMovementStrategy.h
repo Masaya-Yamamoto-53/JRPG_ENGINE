@@ -3,7 +3,6 @@
 #include "MovementStrategy.h"
 
 class EnemyMovementStrategy : public MovementStrategy {
-    MoveAmounts m_amounts;
     int m_minX;
     int m_maxX;
     int m_speed;
