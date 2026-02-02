@@ -9,30 +9,13 @@ FieldManager::FieldManager()
 {
 }
 
-int FieldManager::computeMoveAmount(int baseX, int baseY, int deltaX, int deltaY,
-    std::function<bool(int, int, int, int)> isWallFunc) {
-    int maxMove = m_field.getPlayers()[0]->getMoveAmount();
-    int pixelXSize = m_field.getTileSet().getTileWidth();
-    int pixelYSize = m_field.getTileSet().getTileHeight();
-
-    while (maxMove > 0) {
-        int nextX = baseX + deltaX * maxMove;
-        int nextY = baseY + deltaY * maxMove;
-        if (!isWallFunc(nextX, nextY, pixelXSize, pixelYSize)) {
-            return maxMove;  // 移動可能量を返す
-        }
-        maxMove--;
-    }
-    return 0;
-}
-
 void FieldManager::update() {
     // 入力継続時間の取得
     DirectionalHoldFrames holdFrames = InputManager::instance().getDirectionalHoldFrames();
 
     // 移動可能量の計算
     MoveAmounts amounts = m_movementController.computeMoveAmounts(
-        holdFrames , m_field.getPlayers()[0].get(), m_field);
+        holdFrames, m_field.getPlayers()[0].get(), m_field);
 
     // 移動方向の決定(キャラクタの向きに使用)
     Direction direction = m_movementController.computeDirection(holdFrames, amounts);

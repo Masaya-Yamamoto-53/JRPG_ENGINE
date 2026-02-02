@@ -22,12 +22,4 @@ public:
     void draw();
     // ステージデータ読み込み
     void load();
-
-private:
-    // 衝突判定と移動可能量の計算
-    int computeMoveAmount(
-          int baseX, int baseY
-        , int deltaX, int deltaY
-        , std::function<bool(int, int, int, int)> isWallFunc
-    );
-};
+}
