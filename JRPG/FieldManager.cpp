@@ -5,7 +5,6 @@
 
 FieldManager::FieldManager()
     : m_field()
-    //, m_character(nullptr)
     , m_frameCount(0)
     , m_animationCounter(0)
     , m_movementController()
@@ -48,11 +47,8 @@ void FieldManager::update() {
     // 移動方向の決定(キャラクタの向きに使用)
     Direction direction = m_movementController.computeDirection(holdFrames, amounts);
 
-    // 敵キャラクタ更新
+    // キャラクタ更新
     m_field.update(amounts, direction);
-
-    // アニメーション更新
-    updateAnimation();
 }
 
 void FieldManager::draw() {
@@ -60,6 +56,8 @@ void FieldManager::draw() {
     m_renderer.drawField(m_field, m_animationCounter);
     // キャラクターの描画
     m_renderer.drawCharacter(m_field, m_field.getPlayers(), m_field.getEnemies());
+    // アニメーション更新
+    updateAnimation();
 }
 
 void FieldManager::load() {

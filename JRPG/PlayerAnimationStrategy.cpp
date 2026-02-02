@@ -21,7 +21,7 @@ int PlayerAnimationStrategy::getMoveAmount() const {
     return (m_running ? RunSpeed : WalkSpeed);
 }
 
-void PlayerAnimationStrategy::updateAnimation(Direction useDir, bool isMoving) {
+void PlayerAnimationStrategy::update(Direction useDir, bool isMoving) {
     if(isMoving) {
         m_runCounter = (std::min)(m_runCounter + 1, RunStartFrame);
         m_running = (m_runCounter >= RunStartFrame);

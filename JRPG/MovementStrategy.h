@@ -13,8 +13,6 @@ private:
 
 public:
     virtual ~MovementStrategy() = default;
-    virtual void setMoveAmounts(const MoveAmounts& amounts) {};
-    virtual void setDirection(Direction direction) {};
     // キャラクタの移動量を計算
-    virtual Movement computeMovement() = 0;
+    virtual Movement update(const MoveAmounts& amounts, Direction direction) = 0;
 };

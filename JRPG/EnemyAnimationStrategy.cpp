@@ -21,7 +21,7 @@ int EnemyAnimationStrategy::getMoveAmount() const {
     return (m_running ? RunSpeed : WalkSpeed);
 }
 
-void EnemyAnimationStrategy::updateAnimation(Direction useDir, bool isMoving) {
+void EnemyAnimationStrategy::update(Direction useDir, bool isMoving) {
     if(isMoving) {
         m_runCounter = (std::min)(m_runCounter + 1, RunStartFrame);
         m_running = (m_runCounter >= RunStartFrame);

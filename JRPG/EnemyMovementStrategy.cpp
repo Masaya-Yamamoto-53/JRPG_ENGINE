@@ -9,24 +9,15 @@ EnemyMovementStrategy::EnemyMovementStrategy(int minX, int maxX, int speed)
 {
 }
 
-void EnemyMovementStrategy::setPosition(int x, int y) {
-    m_posX = x;
-    m_posY = y;
-}
-
-void EnemyMovementStrategy::setMoveAmounts(const MoveAmounts& m) {
-    m_amounts = m;
-}
-
-Movement EnemyMovementStrategy::computeMovement() {
+Movement EnemyMovementStrategy::update(const MoveAmounts &amounts, Direction direction) {
     Movement movement;
 
     // カメラ移動量を反映
-    int dy = (m_amounts.downFlag ? -m_amounts.down : 0)
-           + (m_amounts.upFlag   ?  m_amounts.up   : 0);
+    int dy = (amounts.downFlag  ? -amounts.down  : 0)
+           + (amounts.upFlag    ?  amounts.up    : 0);
 
-    int dx = (m_amounts.leftFlag  ?  m_amounts.left  : 0)
-           + (m_amounts.rightFlag ? -m_amounts.right : 0);
+    int dx = (amounts.leftFlag  ?  amounts.left  : 0)
+           + (amounts.rightFlag ? -amounts.right : 0);
 
     // 敵のパトロール移動（AI）
     int aiDx = 0;

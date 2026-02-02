@@ -194,10 +194,21 @@ void Field::update(const MoveAmounts& amounts, const Direction& direction) {
     // フィールド移動処理
     MoveAmounts playerAmounts = applyScroll(amounts);
 
-    // 味方キャラクタ更新
-    m_players[0].get()->setMoveAmounts(playerAmounts); // 味方キャラクターが移動する距離
-    m_players[0].get()->setDirection(direction);
-    m_players[0].get()->update();
+    // 味方キャラクタ移動処理
+    for (auto& p : m_players) {
+        p->update(playerAmounts, direction);
+    }
+
+    MoveAmounts enemiesAmounts;
+    enemiesAmounts.up    = amounts.up    - playerAmounts.up;
+    enemiesAmounts.down  = amounts.down  - playerAmounts.down;
+    enemiesAmounts.left  = amounts.left  - playerAmounts.left;
+    enemiesAmounts.right = amounts.right - playerAmounts.right;
+
+    // 敵キャラクタ移動処理
+    for (auto& e : m_enemies) {
+        e->update(enemiesAmounts, direction);
+    }
 
     // Update debug information
     DebugManager::instance().setCharacterPosition(
@@ -206,18 +217,6 @@ void Field::update(const MoveAmounts& amounts, const Direction& direction) {
         , m_players[0].get()->getSpriteWidth()
         , m_players[0].get()->getSpriteHeight()
     );
-
-    MoveAmounts enemiesAmounts;
-    enemiesAmounts.up    = amounts.up    - playerAmounts.up;
-    enemiesAmounts.down  = amounts.down  - playerAmounts.down;
-    enemiesAmounts.left  = amounts.left  - playerAmounts.left;
-    enemiesAmounts.right = amounts.right - playerAmounts.right;
-
-    // 敵キャラクタ更新
-    for (auto& e : m_enemies) {
-        e->setMoveAmounts(enemiesAmounts);
-        e->update();
-    }
 }
 
 bool Field::load(const std::vector<std::string>& jsonFiles

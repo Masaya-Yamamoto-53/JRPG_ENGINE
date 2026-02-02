@@ -30,7 +30,7 @@ public:
     virtual void loadImages(const std::string& baseDir, const std::string& id);
     virtual const CharacterImage& getImage() const = 0;
     virtual int getMoveAmount() const = 0;
-    virtual void updateAnimation(Direction useDir, bool isMoving) = 0;
+    virtual void update(Direction useDir, bool isMoving) = 0;
     virtual int calcAnimIndex(Direction dir) const = 0;
     // スプライト画像の幅
     virtual int getSpriteWidth()  const { return m_spriteWidth;  }
