@@ -5,8 +5,6 @@
 
 FieldManager::FieldManager()
     : m_field()
-    , m_frameCount(0)
-    , m_animationCounter(0)
     , m_movementController()
 {
 }
@@ -28,21 +26,13 @@ int FieldManager::computeMoveAmount(int baseX, int baseY, int deltaX, int deltaY
     return 0;
 }
 
-void FieldManager::updateAnimation() {
-    // アニメーションカウンタ更新
-    m_frameCount++;
-    if (m_frameCount % 30 == 0) {
-        m_animationCounter++;
-    }
-}
-
 void FieldManager::update() {
     // 入力継続時間の取得
     DirectionalHoldFrames holdFrames = InputManager::instance().getDirectionalHoldFrames();
 
     // 移動可能量の計算
     MoveAmounts amounts = m_movementController.computeMoveAmounts(
-        holdFrames , m_animationCounter, m_field.getPlayers()[0].get(), m_field );
+        holdFrames , m_field.getPlayers()[0].get(), m_field);
 
     // 移動方向の決定(キャラクタの向きに使用)
     Direction direction = m_movementController.computeDirection(holdFrames, amounts);
@@ -53,11 +43,9 @@ void FieldManager::update() {
 
 void FieldManager::draw() {
     // フィールドの描画
-    m_renderer.drawField(m_field, m_animationCounter);
+    m_renderer.drawField(m_field);
     // キャラクターの描画
     m_renderer.drawCharacter(m_field, m_field.getPlayers(), m_field.getEnemies());
-    // アニメーション更新
-    updateAnimation();
 }
 
 void FieldManager::load() {

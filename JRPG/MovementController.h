@@ -8,7 +8,6 @@ public:
     // Õ“Ë”»’è‚ÆˆÚ“®‰Â”\—Ê‚ÌŒvZ
     MoveAmounts computeMoveAmounts(
           const DirectionalHoldFrames& holdFrames
-        , int frameId
         , const IFieldEntity* entity
         , const Field& field
     );
@@ -21,7 +20,6 @@ public:
 private:
     int computeMoveAmount(
           Direction dir
-        , int frameId
         , int baseX, int baseY
         , int deltaX, int deltaY
         , int spriteW, int spriteH

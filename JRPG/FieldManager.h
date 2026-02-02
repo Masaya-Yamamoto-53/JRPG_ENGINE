@@ -9,11 +9,8 @@
 class FieldManager {
 private:
     Field m_field;
-    //FieldCharacter* m_character;
     FieldRenderer m_renderer;
     MovementController m_movementController;
-    int m_frameCount;
-    int m_animationCounter;
 
 public:
     FieldManager();
@@ -33,7 +30,4 @@ private:
         , int deltaX, int deltaY
         , std::function<bool(int, int, int, int)> isWallFunc
     );
-    // アニメーション更新
-    void updateAnimation();
-
 };

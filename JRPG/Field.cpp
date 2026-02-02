@@ -13,6 +13,8 @@ Field::Field()
     , m_tileMap()
     , m_viewOffsetX(0)
     , m_viewOffsetY(0)
+    , m_frameCount(0)
+    , m_animationCounter(0)
 {
     // 暫定対応
     auto playerCharacter = std::make_unique<FieldCharacter>(
@@ -35,7 +37,6 @@ Field::Field()
 
 bool Field::isWall(
       Direction dir
-    , int frameId
     , int absCharaX, int absCharaY
     , int spriteW, int spriteH
 ) const
@@ -67,9 +68,9 @@ bool Field::isWall(
 
         // タイル衝突判定
         return m_tileSet.isWall(m_tileMap.get(rightX, topY).first
-                              , m_tileMap.get(rightX, topY).second, frameId)
+                              , m_tileMap.get(rightX, topY).second, m_animationCounter)
             || m_tileSet.isWall(m_tileMap.get(leftX,  topY).first
-                              , m_tileMap.get(leftX,  topY).second, frameId);
+                              , m_tileMap.get(leftX,  topY).second, m_animationCounter);
 
     case Direction::Down:
         // ピクセルベース境界チェック
@@ -77,18 +78,18 @@ bool Field::isWall(
 
         // タイル衝突判定
         return m_tileSet.isWall(m_tileMap.get(rightX, btmY).first
-                              , m_tileMap.get(rightX, btmY).second, frameId)
+                              , m_tileMap.get(rightX, btmY).second, m_animationCounter)
             || m_tileSet.isWall(m_tileMap.get(leftX,  btmY).first
-                              , m_tileMap.get(leftX,  btmY).second, frameId);
+                              , m_tileMap.get(leftX,  btmY).second, m_animationCounter);
     case Direction::Left: 
         // ピクセルベース境界チェック
         if (hitLeft < 0) return true;
 
         // タイル衝突判定
         return m_tileSet.isWall(m_tileMap.get(leftX, topY).first
-                              , m_tileMap.get(leftX, topY).second, frameId)
+                              , m_tileMap.get(leftX, topY).second, m_animationCounter)
             || m_tileSet.isWall(m_tileMap.get(leftX, btmY).first
-                              , m_tileMap.get(leftX, btmY).second, frameId);
+                              , m_tileMap.get(leftX, btmY).second, m_animationCounter);
 
     case Direction::Right:
         // ピクセルベース境界チェック
@@ -96,9 +97,9 @@ bool Field::isWall(
 
         // タイル衝突判定
         return m_tileSet.isWall(m_tileMap.get(rightX, topY).first
-                              , m_tileMap.get(rightX, topY).second, frameId)
+                              , m_tileMap.get(rightX, topY).second, m_animationCounter)
             || m_tileSet.isWall(m_tileMap.get(rightX, btmY).first
-                              , m_tileMap.get(rightX, btmY).second, frameId);
+                              , m_tileMap.get(rightX, btmY).second, m_animationCounter);
     }
     return false;
 }
@@ -217,6 +218,16 @@ void Field::update(const MoveAmounts& amounts, const Direction& direction) {
         , m_players[0].get()->getSpriteWidth()
         , m_players[0].get()->getSpriteHeight()
     );
+
+    // アニメーションカウンタ更新
+    updateAnimation();
+}
+
+void Field::updateAnimation() {
+    m_frameCount++;
+    if (m_frameCount % 30 == 0) {
+        m_animationCounter++;
+    }
 }
 
 bool Field::load(const std::vector<std::string>& jsonFiles
@@ -237,3 +248,6 @@ bool Field::load(const std::vector<std::string>& jsonFiles
     return true;
 }
 
+int Field::getTileImage(int num, int tileId) const {
+    return m_tileSet.getTileImage(num, tileId, m_animationCounter);
+}

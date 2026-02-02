@@ -31,7 +31,7 @@ void DrawDottedHLine(int y, int winW, int color) {
     }
 }
 
-void FieldRenderer::drawField(const Field& field, int counter) {
+void FieldRenderer::drawField(const Field& field) {
     const TileMap& map = field.getTileMap();
     const TileSet& set = field.getTileSet();
 
@@ -55,7 +55,7 @@ void FieldRenderer::drawField(const Field& field, int counter) {
     for (int y = startY ; y < endY + offsetY; y++) {
         for (int x = startX; x < endX + offsetX; x++) {
             auto index = map.get(x, y);
-            int img = set.getTileImage(index.first, index.second, counter);
+            int img = field.getTileImage(index.first, index.second);
 
             if (img != -1) {
                 DrawGraph(

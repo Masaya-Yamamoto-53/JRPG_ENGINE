@@ -16,13 +16,15 @@ private:
     std::vector<std::unique_ptr<FieldCharacter>> m_players;
     std::vector<std::unique_ptr<FieldCharacter>> m_enemies;
 
+    int m_frameCount;
+    int m_animationCounter;
+
 public:
     Field();
 
     // 指定方向に壁があるかどうかを判定
     bool isWall(
           Direction dir
-        , int frameId
         , int absCharaX, int absCharaY
         , int spriteW, int spriteH
     ) const;
@@ -35,6 +37,8 @@ public:
     const std::vector<std::unique_ptr<FieldCharacter>>& getEnemies() const { return m_enemies; }
 
     void update(const MoveAmounts& amounts, const Direction& direction);
+
+    void updateAnimation();
 
     // フィールド移動処理
     MoveAmounts applyScroll(
@@ -54,6 +58,9 @@ public:
     const TileSet& getTileSet() const { return m_tileSet; }
     // タイルマップ取得
     const TileMap& getTileMap() const { return m_tileMap; }
+
+    // タイル番号取得
+    int getTileImage(int num, int tileId) const;
 
 private:
     // スクロール可能かどうかを判定
