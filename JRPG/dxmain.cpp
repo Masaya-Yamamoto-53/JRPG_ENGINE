@@ -56,7 +56,7 @@ int WINAPI WinMain(
 
     // Main loop
     while (true) {
-        // DxLibが修了要求を返したらループを抜ける
+        // DxLibが終了要求を返したらループを抜ける
         if (ProcessMessage() != 0) {
             break;
         }
