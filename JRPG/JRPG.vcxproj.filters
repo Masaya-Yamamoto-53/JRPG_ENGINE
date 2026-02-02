@@ -25,14 +25,14 @@
     <Filter Include="ヘッダー ファイル\MovementStrategy">
       <UniqueIdentifier>{41269f2b-52f6-4e93-bde4-e63b2655151e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Input">
+      <UniqueIdentifier>{54fe5803-a978-4f39-84d8-b1bfd73e1295}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\Input">
+      <UniqueIdentifier>{1fbee02e-d032-48af-a767-f8445f3abf3e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="InputManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="KeyboardInput.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="FpsController.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
@@ -90,14 +90,17 @@
     <ClCompile Include="CollisionChecker.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="KeyboardInput.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="InputDeviceHub.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="InputController.cpp">
+      <Filter>ソース ファイル\Input</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="InputManager.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyboardInput.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="FpsController.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -160,6 +163,15 @@
     </ClInclude>
     <ClInclude Include="CollisionChecker.h">
       <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="InputDeviceHub.h">
+      <Filter>ヘッダー ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardInput.h">
+      <Filter>ヘッダー ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputController.h">
+      <Filter>ヘッダー ファイル\Input</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

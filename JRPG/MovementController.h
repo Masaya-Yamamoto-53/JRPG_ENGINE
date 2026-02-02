@@ -1,7 +1,7 @@
 #pragma once
 #include "Field.h"
 #include "IFieldEntity.h"
-#include "InputManager.h"
+#include "InputController.h"
 #include "CollisionChecker.h"
 
 class MovementController {

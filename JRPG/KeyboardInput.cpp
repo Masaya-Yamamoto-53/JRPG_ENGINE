@@ -1,6 +1,5 @@
 #define NOMINMAX
 #include <limits>
-#include "DxLib.h"
 #include "KeyboardInput.h"
 
 KeyboardInput::KeyboardInput()

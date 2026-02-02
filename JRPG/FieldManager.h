@@ -1,6 +1,6 @@
 #pragma once
 #include <functional>
-#include "InputManager.h"
+#include "InputController.h"
 #include "Field.h"
 #include "FieldCharacter.h"
 #include "FieldRenderer.h"
@@ -8,14 +8,13 @@
 
 class FieldManager {
 private:
+    InputController m_inputController;
     Field m_field;
     FieldRenderer m_renderer;
     MovementController m_movementController;
 
 public:
     FieldManager();
-    // キャラクタ設定
-    void setCharacter(FieldCharacter* character);
     // フィールドとキャラクタの更新
     void update();
     // フィールドとキャラクタの描画

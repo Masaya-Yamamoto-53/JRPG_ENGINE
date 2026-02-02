@@ -152,7 +152,8 @@
     <ClCompile Include="FieldRenderer.cpp" />
     <ClCompile Include="FpsController.cpp" />
     <ClCompile Include="GameSettings.cpp" />
-    <ClCompile Include="InputManager.cpp" />
+    <ClCompile Include="InputController.cpp" />
+    <ClCompile Include="InputDeviceHub.cpp" />
     <ClCompile Include="KeyboardInput.cpp" />
     <ClCompile Include="MovementController.cpp" />
     <ClCompile Include="MovementStrategy.cpp" />
@@ -175,7 +176,7 @@
     <ClInclude Include="FpsController.h" />
     <ClInclude Include="GameSettings.h" />
     <ClInclude Include="AnimationStrategy.h" />
-    <ClInclude Include="InputManager.h" />
+    <ClInclude Include="InputDeviceHub.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="KeyboardInput.h" />
     <ClInclude Include="MovementController.h" />
@@ -185,6 +186,7 @@
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TileSet.h" />
     <ClInclude Include="IFieldEntity.h" />
+    <ClInclude Include="InputController.h" />
   </ItemGroup>
   <ItemGroup>
     <None Include="config.ini" />

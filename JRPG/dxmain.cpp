@@ -1,7 +1,7 @@
 #include "DxLib.h"
 #include "GameSettings.h"
 #include "FpsController.h"
-#include "InputManager.h"
+#include "InputDeviceHub.h"
 #include "FieldManager.h"   // 暫定対応
 #include "DebugManager.h"
 #include <memory>
@@ -67,10 +67,10 @@ int WINAPI WinMain(
         FpsController::instance().update();
 
         // Method to update the key input status
-        InputManager::instance().update();
+        InputDeviceHub::instance().update();
 
         // デバッグモード切替
-        if (InputManager::instance().isKeyTriggered(KEY_INPUT_ESCAPE)) {
+        if (InputDeviceHub::instance().isKeyTriggered(KEY_INPUT_ESCAPE)) {
             DebugManager::instance().toggle();
         }
 

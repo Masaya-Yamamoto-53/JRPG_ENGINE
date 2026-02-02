@@ -1,17 +1,18 @@
 #include "DxLib.h"
 #include "FieldManager.h"
-#include "InputManager.h"
+#include "InputDeviceHub.h"
 #include "FieldCharacter.h"
 
 FieldManager::FieldManager()
-    : m_field()
+    : m_inputController()
+    , m_field()
     , m_movementController()
 {
 }
 
 void FieldManager::update() {
     // “ü—ÍŒp‘±ŽžŠÔ‚ÌŽæ“¾
-    DirectionalHoldFrames holdFrames = InputManager::instance().getDirectionalHoldFrames();
+    DirectionalHoldFrames holdFrames = m_inputController.getDirectionalHoldFrames();
 
     // ˆÚ“®‰Â”\—Ê‚ÌŒvŽZ
     MoveAmounts amounts = m_movementController.computeMoveAmounts(
