@@ -13,7 +13,7 @@ public:
     void toggle();
     bool enabled() const;
 
-    void setCharacterPosition(int x, int y);
+    void setCharacterPosition(int x, int y, int w, int h);
 
     void draw() const;
 

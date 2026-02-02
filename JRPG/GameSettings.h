@@ -5,9 +5,6 @@ class GameSettings {
 private:
     bool m_windowMode = true;
 
-    int m_spriteWidth  = 64;
-    int m_spriteHeight = 64;
-
     int m_fieldTileWidth = 32;
     int m_fieldTileHeight = 32;
 
@@ -27,11 +24,6 @@ public:
 
     // ウィンドウモードを取得
     bool isWindowMode() const { return m_windowMode; }
-
-    // スプライト幅（ピクセル単位）を取得する
-    int getSpriteWidth() const { return m_spriteWidth; }
-    // スプライト高さ（ピクセル単位）を取得する
-    int getSpriteHeight() const { return m_spriteHeight; }
 
     // フィールドタイル幅（ピクセル単位）を取得する
     int getFieldTileWidth() const { return m_fieldTileWidth; }

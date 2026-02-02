@@ -21,9 +21,9 @@ bool DebugManager::enabled() const {
     return m_enabled;
 }
 
-void DebugManager::setCharacterPosition(int x, int y) {
-    m_charaX = x + GameSettings::instance().getSpriteWidth()  / 2;
-    m_charaY = y + GameSettings::instance().getSpriteHeight() / 2;
+void DebugManager::setCharacterPosition(int x, int y, int w, int h) {
+    m_charaX = x + w / 2;
+    m_charaY = y + h / 2;
 }
 
 void DebugManager::draw() const {

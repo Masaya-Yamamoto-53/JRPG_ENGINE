@@ -2,7 +2,6 @@
 #include "FieldManager.h"
 #include "InputManager.h"
 #include "FieldCharacter.h"
-#include "GameSettings.h"
 
 FieldManager::FieldManager()
     : m_field()
@@ -13,15 +12,11 @@ FieldManager::FieldManager()
 {
 }
 
-//void FieldManager::setCharacter(FieldCharacter* character) {
-//    m_character = character;
-//}
-
 int FieldManager::computeMoveAmount(int baseX, int baseY, int deltaX, int deltaY,
     std::function<bool(int, int, int, int)> isWallFunc) {
     int maxMove = m_field.getPlayers()[0]->getMoveAmount();
-    int pixelXSize = GameSettings::instance().getFieldTileWidth();
-    int pixelYSize = GameSettings::instance().getFieldTileHeight();
+    int pixelXSize = m_field.getTileSet().getTileWidth();
+    int pixelYSize = m_field.getTileSet().getTileHeight();
 
     while (maxMove > 0) {
         int nextX = baseX + deltaX * maxMove;

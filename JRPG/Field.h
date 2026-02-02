@@ -24,7 +24,6 @@ public:
           Direction dir
         , int frameId
         , int absCharaX, int absCharaY
-        , int tileSizeX, int tileSizeY
         , int spriteW, int spriteH
     ) const;
     // ローカル座標を絶対座標に変換

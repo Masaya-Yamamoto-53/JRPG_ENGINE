@@ -1,5 +1,4 @@
 #include "MovementController.h"
-#include "GameSettings.h"
 
 MoveAmounts MovementController::computeMoveAmounts(
       const DirectionalHoldFrames& holdFrames
@@ -85,12 +84,10 @@ int MovementController::computeMoveAmount(
     , const Field& field
     ) const {
 
-    int tileW = GameSettings::instance().getFieldTileWidth();
-    int tileH = GameSettings::instance().getFieldTileHeight();
     while (maxMove > 0) {
         int nextX = baseX + deltaX * maxMove;
         int nextY = baseY + deltaY * maxMove;
-        if (!field.isWall(dir, frameId, nextX, nextY, tileW, tileH, spriteW, spriteH)) {
+        if (!field.isWall(dir, frameId, nextX, nextY, spriteW, spriteH)) {
             return maxMove;  // ˆÚ“®‰Â”\—Ê‚ð•Ô‚·
         }
         maxMove--;

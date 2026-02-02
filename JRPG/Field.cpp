@@ -37,7 +37,6 @@ bool Field::isWall(
       Direction dir
     , int frameId
     , int absCharaX, int absCharaY
-    , int tileSizeX, int tileSizeY
     , int spriteW, int spriteH
 ) const
 {
@@ -48,6 +47,9 @@ bool Field::isWall(
     // 当たり判定の上下端
     int hitTop = absCharaY;                   // キャラクタの頭頂部
     int hitBottom = absCharaY + spriteH - 1;  // キャラクタの足元
+
+    int tileSizeX = m_tileSet.getTileWidth();
+    int tileSizeY = m_tileSet.getTileHeight();
 
     // タイル座標（衝突判定用）
     int leftX  = hitLeft / tileSizeX;
@@ -137,8 +139,8 @@ MoveAmounts Field::applyScroll(const MoveAmounts& amounts) {
     int charaCenterAbsY = charaCenterAbsPos.second;
 
     // タイルのサイズ（1タイルのピクセル幅・高さ）
-    int tileSizeY = GameSettings::instance().getFieldTileHeight();
-    int tileSizeX = GameSettings::instance().getFieldTileWidth();
+    int tileSizeY = m_tileSet.getTileHeight();
+    int tileSizeX = m_tileSet.getTileWidth();
 
     // 下方向・右方向に動いた場合に、画面上端がどのタイルに位置するかを計算
     // （タイル境界を跨ぐかどうかの判定に使用）
@@ -151,7 +153,7 @@ MoveAmounts Field::applyScroll(const MoveAmounts& amounts) {
         // (+ timeSizeX - 1は切り上げの為で、画面の端が切れないようにするため)
         (m_viewOffsetX + amounts.right + tileSizeX - 1) / tileSizeX;
 
-    // 画面に表示されるタイル数
+    // 画面に表示できるタイル数
     int screenTileCountY = GameSettings::instance().getTileCountY();
     int screenTileCountX = GameSettings::instance().getTileCountX();
 
@@ -201,6 +203,8 @@ void Field::update(const MoveAmounts& amounts, const Direction& direction) {
     DebugManager::instance().setCharacterPosition(
           m_players[0].get()->getX()
         , m_players[0].get()->getY()
+        , m_players[0].get()->getSpriteWidth()
+        , m_players[0].get()->getSpriteHeight()
     );
 
     MoveAmounts enemiesAmounts;
