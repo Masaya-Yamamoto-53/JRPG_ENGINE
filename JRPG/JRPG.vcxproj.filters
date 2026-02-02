@@ -57,7 +57,7 @@
     <ClCompile Include="PlayerAnimationStrategy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyAnimation.cpp">
+    <ClCompile Include="EnemyAnimationStrategy.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="PlayerMovementStrategy.cpp">

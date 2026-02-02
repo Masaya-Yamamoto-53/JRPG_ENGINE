@@ -142,7 +142,7 @@
     <ClCompile Include="AnimationStrategy.cpp" />
     <ClCompile Include="DebugManager.cpp" />
     <ClCompile Include="dxmain.cpp" />
-    <ClCompile Include="EnemyAnimation.cpp" />
+    <ClCompile Include="EnemyAnimationStrategy.cpp" />
     <ClCompile Include="EnemyMovementStrategy.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="FieldCharacter.cpp" />
