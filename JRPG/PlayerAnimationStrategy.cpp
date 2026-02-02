@@ -1,11 +1,11 @@
 #include <fstream>
 #include "DxLib.h"
-#include "EnemyAnimationStrategy.h"
+#include "PlayerAnimationStrategy.h"
 
 #include "json.hpp"
 using json = nlohmann::json;
 
-EnemyAnimationStrategy::EnemyAnimationStrategy()
+PlayerAnimationStrategy::PlayerAnimationStrategy()
     : m_running(false)
     , m_frame(0)
     , m_runCounter(0)
@@ -13,15 +13,15 @@ EnemyAnimationStrategy::EnemyAnimationStrategy()
 {
 }
 
-const CharacterImage& EnemyAnimationStrategy::getImage() const {
+const CharacterImage& PlayerAnimationStrategy::getImage() const {
     return m_images[m_animIndex];
 }
 
-int EnemyAnimationStrategy::getMoveAmount() const {
+int PlayerAnimationStrategy::getMoveAmount() const {
     return (m_running ? RunSpeed : WalkSpeed);
 }
 
-void EnemyAnimationStrategy::updateAnimation(Direction useDir, bool isMoving) {
+void PlayerAnimationStrategy::updateAnimation(Direction useDir, bool isMoving) {
     if(isMoving) {
         m_runCounter = (std::min)(m_runCounter + 1, RunStartFrame);
         m_running = (m_runCounter >= RunStartFrame);
@@ -37,7 +37,7 @@ void EnemyAnimationStrategy::updateAnimation(Direction useDir, bool isMoving) {
     }
 }
 
-int EnemyAnimationStrategy::calcAnimIndex(Direction dir) const {
+int PlayerAnimationStrategy::calcAnimIndex(Direction dir) const {
     int base = 0;
     switch (dir) {
     case Direction::Down:

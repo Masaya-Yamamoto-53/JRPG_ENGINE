@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include "PlayerMovementStrategy.h"
 
 void PlayerMovementStrategy::setMoveAmounts(const MoveAmounts& m) {

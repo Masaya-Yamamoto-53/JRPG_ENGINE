@@ -1,8 +1,8 @@
 #include <memory>
 #include "Field.h"
 #include "FieldCharacter.h"
-#include "PlayerAnimation.h"
-#include "EnemyAnimation.h"
+#include "PlayerAnimationStrategy.h"
+#include "EnemyAnimationStrategy.h"
 #include "PlayerMovementStrategy.h"
 #include "EnemyMovementStrategy.h"
 #include "DebugManager.h"
@@ -19,14 +19,14 @@ Field::Field()
           "00"
         , "assets\\characters\\players\\"
         , std::make_unique<PlayerMovementStrategy>()
-        , std::make_unique<PlayerAnimation>()
+        , std::make_unique<PlayerAnimationStrategy>()
     );
 
     auto enemiesCharacter = std::make_unique<FieldCharacter>(
           "goblin"
         , "assets\\characters\\enemies\\"
         , std::make_unique<EnemyMovementStrategy>()
-        , std::make_unique<EnemyAnimation>()
+        , std::make_unique<EnemyAnimationStrategy>()
     );
 
     m_players.push_back(std::move(playerCharacter));
