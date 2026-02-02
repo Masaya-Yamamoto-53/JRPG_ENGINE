@@ -24,7 +24,7 @@ private:
 public:
     EnemyAnimationStrategy();
     const CharacterImage& getImage() const override;
-    int getMoveAmount() const override;
+    //int getMoveAmount() const override;
     void update(Direction useDir, bool isMoving) override;
     int calcAnimIndex(Direction dir) const override;
 

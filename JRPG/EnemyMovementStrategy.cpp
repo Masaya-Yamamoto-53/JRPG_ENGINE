@@ -1,4 +1,4 @@
-#include <stdio.h>
+#include <iostream>
 #include "EnemyMovementStrategy.h"
 
 EnemyMovementStrategy::EnemyMovementStrategy(int minX, int maxX, int speed)
@@ -9,9 +9,11 @@ EnemyMovementStrategy::EnemyMovementStrategy(int minX, int maxX, int speed)
 {
 }
 
-Movement EnemyMovementStrategy::update(const MoveAmounts &amounts, Direction direction) {
-    Movement movement;
+int EnemyMovementStrategy::getMoveAmount() const {
+    return (m_running ? RunSpeed : WalkSpeed);
+}
 
+Movement EnemyMovementStrategy::update(const MoveAmounts &amounts, Direction direction) {
     // ƒJƒƒ‰ˆÚ“®—Ê‚ð”½‰f
     int dy = (amounts.downFlag  ? -amounts.down  : 0)
            + (amounts.upFlag    ?  amounts.up    : 0);
@@ -42,10 +44,20 @@ Movement EnemyMovementStrategy::update(const MoveAmounts &amounts, Direction dir
     m_posX += aiDx;
 
     // ƒJƒƒ‰ˆÚ“®—Ê + AIˆÚ“®—Ê‚ð‡¬
+    Movement movement;
     movement.dx = dx + aiDx;
     movement.dy = dy + aiDy;
     movement.direction = m_direction;
     movement.isMoving = (aiDx != 0 || aiDy != 0);
+
+    if(movement.isMoving) {
+        m_runCounter = (std::min)(m_runCounter + 1, RunStartFrame);
+        m_running = (m_runCounter >= RunStartFrame);
+    }
+    else {
+        m_runCounter = 0;
+        m_running = false;
+    }
 
     return movement;
 }

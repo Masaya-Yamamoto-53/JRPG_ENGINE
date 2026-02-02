@@ -17,19 +17,19 @@ const CharacterImage& EnemyAnimationStrategy::getImage() const {
     return m_images[(std::max)(0, m_animIndex)];
 }
 
-int EnemyAnimationStrategy::getMoveAmount() const {
-    return (m_running ? RunSpeed : WalkSpeed);
-}
+//int EnemyAnimationStrategy::getMoveAmount() const {
+//    return (m_running ? RunSpeed : WalkSpeed);
+//}
 
 void EnemyAnimationStrategy::update(Direction useDir, bool isMoving) {
     if(isMoving) {
-        m_runCounter = (std::min)(m_runCounter + 1, RunStartFrame);
-        m_running = (m_runCounter >= RunStartFrame);
+        //m_runCounter = (std::min)(m_runCounter + 1, RunStartFrame);
+        //m_running = (m_runCounter >= RunStartFrame);
         m_frame = (m_frame + 1) % imgPattern.size();
     }
     else {
-        m_runCounter = 0;
-        m_running = false;
+        //m_runCounter = 0;
+        //m_running = false;
         m_frame = 0;
     }
     if (useDir != Direction::None) {

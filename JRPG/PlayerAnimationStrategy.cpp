@@ -17,19 +17,19 @@ const CharacterImage& PlayerAnimationStrategy::getImage() const {
     return m_images[m_animIndex];
 }
 
-int PlayerAnimationStrategy::getMoveAmount() const {
-    return (m_running ? RunSpeed : WalkSpeed);
-}
+//int PlayerAnimationStrategy::getMoveAmount() const {
+//    return (m_running ? RunSpeed : WalkSpeed);
+//}
 
 void PlayerAnimationStrategy::update(Direction useDir, bool isMoving) {
     if(isMoving) {
-        m_runCounter = (std::min)(m_runCounter + 1, RunStartFrame);
-        m_running = (m_runCounter >= RunStartFrame);
+        //m_runCounter = (std::min)(m_runCounter + 1, RunStartFrame);
+        //m_running = (m_runCounter >= RunStartFrame);
         m_frame = (m_frame + 1) % imgPattern.size();
     }
     else {
-        m_runCounter = 0;
-        m_running = false;
+        //m_runCounter = 0;
+        //m_running = false;
         m_frame = 0;
     }
     if (useDir != Direction::None) {

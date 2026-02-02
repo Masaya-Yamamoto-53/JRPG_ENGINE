@@ -27,7 +27,7 @@ void FieldCharacter::update(const MoveAmounts& amounts, Direction direction) {
 
 int FieldCharacter::getX() const { return m_x; }
 int FieldCharacter::getY() const { return m_y; }
-int FieldCharacter::getMoveAmount() const { return m_anim->getMoveAmount(); }
+int FieldCharacter::getMoveAmount() const { return m_move->getMoveAmount(); }
 int FieldCharacter::getSpriteWidth() const { return m_anim->getSpriteWidth(); }
 int FieldCharacter::getSpriteHeight() const { return m_anim->getSpriteHeight(); }
 const CharacterImage& FieldCharacter::getImage() const { return m_anim->getImage(); }

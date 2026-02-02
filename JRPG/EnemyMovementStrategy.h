@@ -14,6 +14,7 @@ class EnemyMovementStrategy : public MovementStrategy {
 
 public:
     EnemyMovementStrategy(int minX, int maxX, int speed);
+    int getMoveAmount() const;
     Movement update(const MoveAmounts& amounts, Direction direction) override;
 };
 
