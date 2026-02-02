@@ -4,7 +4,6 @@
 #include "InputDeviceHub.h"
 #include "FieldManager.h"   // Žb’è‘Î‰ž
 #include "DebugManager.h"
-#include <memory>
 
 int WINAPI WinMain(
       _In_ HINSTANCE hInstance
