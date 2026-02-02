@@ -33,15 +33,8 @@ void FieldManager::draw() {
 }
 
 void FieldManager::load() {
-    // タイルセット
-    std::vector<std::string> jsonFiles = {
-          "assets\\feild\\Tile00.json"
-        , "assets\\feild\\Tile01.json"
-        , "assets\\feild\\Tile02.json"
-    };
+    // ダンジョン情報
+    std::string path = "assets\\dungeon.json";
 
-    // マップファイル
-    std::string mapFile = "assets\\map\\dungeon.csv";
-
-    bool result = m_field.load(jsonFiles, mapFile);
+    bool result = m_field.load(path);
 }

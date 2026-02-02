@@ -44,9 +44,7 @@ public:
     int getViewOffsetY() const { return m_camera.getViewOffsetY(); }
 
     // ステージデータを読み込む
-    bool load(const std::vector<std::string>& jsonFiles
-            , const std::string& mapFile
-    );
+    bool load(const std::string& path);
 
     // タイル番号取得
     int getTileImage(int num, int tileId) const;

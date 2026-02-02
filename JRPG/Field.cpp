@@ -1,3 +1,4 @@
+#include <fstream>
 #include <memory>
 #include "Field.h"
 #include "FieldCharacter.h"
@@ -7,6 +8,9 @@
 #include "EnemyMovementStrategy.h"
 #include "DebugManager.h"
 #include "GameSettings.h"
+
+#include "json.hpp"
+using json = nlohmann::json;
 
 Field::Field()
     : m_tileSet()
@@ -74,17 +78,27 @@ void Field::update(const MoveAmounts& amounts, const Direction& direction) {
     updateAnimation();
 }
 
-bool Field::load(const std::vector<std::string>& jsonFiles
-               , const std::string& mapFile
-               ) {
+bool Field::load(const std::string& path) {
+    std::ifstream ifs(path);
+    json j;
+    ifs >> j;
+
     // タイルセット読み込み
-    if (!m_tileSet.loadFromJson(jsonFiles)) {
+    std::vector<std::string> tilesetsPath;
+    if (j.contains("tilesets")) {
+        tilesetsPath = j["tilesets"].get<std::vector<std::string>>();
+    }
+    if (!m_tileSet.loadFromJson(tilesetsPath)) {
         printf("Error: TileSet load failed\n");
         return false;
     }
 
     // マップ読み込み
-    if (!m_tileMap.load(mapFile)) {
+    std::string mapFilePath;
+    if (j.contains("map")) {
+        mapFilePath = j["map"].get<std::string>();
+    }
+    if (!m_tileMap.load(mapFilePath)) {
         printf("Error: TileMap load failed\n");
         return false;
     }
