@@ -6,8 +6,6 @@
 
 struct CharacterImage {
     int handle;
-    int handleUpper;
-    int handleLower;
     bool flip;
 };
 

@@ -46,8 +46,6 @@ void AnimationStrategy::loadImages(const std::string& baseDir, const std::string
         int y = imagesJson.at("y").get<int>();
         charImg.flip = imagesJson.at("flip").get<int>();
         charImg.handle = DerivationGraph(x, y, m_spriteWidth, m_spriteHeight, handle);
-        charImg.handleUpper = DerivationGraph(x, y                           , m_spriteWidth, (m_spriteHeight / 4) * 3, handle);
-        charImg.handleLower = DerivationGraph(x, y + (m_spriteHeight / 4) * 3, m_spriteWidth, (m_spriteHeight / 4)    , handle);
 
         std::string dir = "none";
         if (imagesJson.contains("Direction")) {
