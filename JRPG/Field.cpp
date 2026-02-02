@@ -11,10 +11,9 @@
 Field::Field()
     : m_tileSet()
     , m_tileMap()
-    , m_viewOffsetX(0)
-    , m_viewOffsetY(0)
     , m_frameCount(0)
     , m_animationCounter(0)
+    , m_camera()
 {
     // 暫定対応
     auto playerCharacter = std::make_unique<FieldCharacter>(
@@ -104,96 +103,16 @@ bool Field::isWall(
     return false;
 }
 
-// ローカル座標を絶対座標に変換
-std::pair<int, int> Field::toAbsolute(int localX, int localY) const {
-    return {
-          localX + m_viewOffsetX
-        , localY + m_viewOffsetY
-    };
-}
-
-std::pair<int,int> Field::computeCharacterCenterAbsPos(const FieldCharacter* entity) const {
-    int screenCenterX = GameSettings::instance().getWindowWidth()  / 2;
-    int screenCenterY = GameSettings::instance().getWindowHeight() / 2;
-
-    int charaHalfWidth  = entity->getSpriteWidth()  / 2;
-    int charaHalfHeight = entity->getSpriteHeight() / 2;
-
-    return {
-        screenCenterX - charaHalfWidth  + m_viewOffsetX,
-        screenCenterY - charaHalfHeight + m_viewOffsetY
-    };
-}
-
-MoveAmounts Field::applyScroll(const MoveAmounts& amounts) {
-
-    FieldCharacter* chara = m_players[0].get();
-
-    // 絶対座標 ＝ キャラクタの座標 ＋ カメラ座標
-    auto charaAbsPos = toAbsolute(chara->getX(), chara->getY());
-    int charaAbsX = charaAbsPos.first;
-    int charaAbsY = charaAbsPos.second;
-
-    // キャラクタが画面中央に来る時の絶対座標（マップ座標）
-    auto charaCenterAbsPos = computeCharacterCenterAbsPos(chara);
-    int charaCenterAbsX = charaCenterAbsPos.first;
-    int charaCenterAbsY = charaCenterAbsPos.second;
-
-    // タイルのサイズ（1タイルのピクセル幅・高さ）
-    int tileSizeY = m_tileSet.getTileHeight();
-    int tileSizeX = m_tileSet.getTileWidth();
-
-    // 下方向・右方向に動いた場合に、画面上端がどのタイルに位置するかを計算
-    // （タイル境界を跨ぐかどうかの判定に使用）
-    int nextTopTileY =
-        // スクロール後の画面上端のY座標をタイルサイズで割る
-        // (+ timeSizeY - 1は切り上げの為で、画面の端が切れないようにするため)
-        (m_viewOffsetY + amounts.down  + tileSizeY - 1) / tileSizeY;
-    int nextTopTileX =
-        // スクロール後の画面上端のX座標をタイルサイズで割る
-        // (+ timeSizeX - 1は切り上げの為で、画面の端が切れないようにするため)
-        (m_viewOffsetX + amounts.right + tileSizeX - 1) / tileSizeX;
-
-    // 画面に表示できるタイル数
-    int screenTileCountY = GameSettings::instance().getTileCountY();
-    int screenTileCountX = GameSettings::instance().getTileCountX();
-
-    MoveAmounts results = amounts;
-
-    // 上方向スクロール処理
-    // スクロール可能 && キャラクタが画面中央を超えている
-    if (canScrollUp(m_viewOffsetY, amounts.up) && isCharacterAboveCenter(charaAbsY, charaCenterAbsY)) {
-        m_viewOffsetY -= amounts.up;
-        results.up = 0;
-    }
-
-    // 下方向スクロール処理
-    // スクロール可能 && キャラクタが画面中央を超えている
-    if (canScrollDown(nextTopTileY, screenTileCountY) && isCharacterBelowCenter(charaAbsY, charaCenterAbsY)) {
-        m_viewOffsetY += amounts.down;
-        results.down = 0;
-    }
-
-    // 左方向スクロール処理
-    // スクロール可能 && キャラクタが画面中央を超えている
-    if (canScrollLeft(m_viewOffsetX, amounts.left) && isCharacterLeftOfCenter(charaAbsX, charaCenterAbsX)) {
-        m_viewOffsetX -= amounts.left;
-        results.left = 0;
-    }
-
-    // 右方向スクロール処理
-    // スクロール可能 && キャラクタが画面中央を超えている
-    if (canScrollRight(nextTopTileX, screenTileCountX) && isCharacterRightOfCenter(charaAbsX, charaCenterAbsX)) {
-        m_viewOffsetX += amounts.right;
-        results.right = 0;
-    }
-
-    return results;
-}
-
 void Field::update(const MoveAmounts& amounts, const Direction& direction) {
     // フィールド移動処理
-    MoveAmounts playerAmounts = applyScroll(amounts);
+    //MoveAmounts playerAmounts = applyScroll(amounts);
+
+    MoveAmounts playerAmounts = m_camera.applyScroll(amounts
+        , m_players[0].get()->getX(), m_players[0].get()->getY()
+        , m_players[0].get()->getSpriteWidth(), m_players[0].get()->getSpriteHeight()
+        , m_tileSet.getTileWidth(), m_tileSet.getTileHeight()
+        , m_tileMap.getTileWidthNum(), m_tileMap.getTileHeightNum()
+    );
 
     // 味方キャラクタ移動処理
     for (auto& p : m_players) {

@@ -33,10 +33,9 @@ void DrawDottedHLine(int y, int winW, int color) {
 
 void FieldRenderer::drawField(const Field& field) {
     const TileMap& map = field.getTileMap();
-    const TileSet& set = field.getTileSet();
 
-    int tileH = set.getTileHeight();
-    int tileW = set.getTileWidth();
+    int tileH = field.getTileHeight();
+    int tileW = field.getTileWidth();
 
     // タイルのSTART位置を算出
     int startY = field.getViewOffsetY() / tileH;

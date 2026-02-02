@@ -16,6 +16,15 @@
     <Filter Include="ソース ファイル\AnimationStrategy">
       <UniqueIdentifier>{33b9f85f-6c98-4123-b299-d226dccfbb86}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\AnimationStrategy">
+      <UniqueIdentifier>{d4802999-d86a-4ddc-b3e1-344953023086}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ソース ファイル\MovementStrategy">
+      <UniqueIdentifier>{66f0c8fa-c833-4f56-b772-0f78e7a07b2f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="ヘッダー ファイル\MovementStrategy">
+      <UniqueIdentifier>{41269f2b-52f6-4e93-bde4-e63b2655151e}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="InputManager.cpp">
@@ -57,22 +66,25 @@
     <ClCompile Include="FieldManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="PlayerMovementStrategy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyMovementStrategy.cpp">
-      <Filter>ソース ファイル</Filter>
+    <ClCompile Include="EnemyAnimationStrategy.cpp">
+      <Filter>ソース ファイル\AnimationStrategy</Filter>
     </ClCompile>
     <ClCompile Include="AnimationStrategy.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyAnimationStrategy.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\AnimationStrategy</Filter>
     </ClCompile>
     <ClCompile Include="PlayerAnimationStrategy.cpp">
-      <Filter>ソース ファイル</Filter>
+      <Filter>ソース ファイル\AnimationStrategy</Filter>
     </ClCompile>
     <ClCompile Include="MovementStrategy.cpp">
+      <Filter>ソース ファイル\MovementStrategy</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyMovementStrategy.cpp">
+      <Filter>ソース ファイル\MovementStrategy</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMovementStrategy.cpp">
+      <Filter>ソース ファイル\MovementStrategy</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
@@ -123,21 +135,24 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="AnimationStrategy.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\AnimationStrategy</Filter>
     </ClInclude>
     <ClInclude Include="PlayerAnimationStrategy.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\AnimationStrategy</Filter>
     </ClInclude>
     <ClInclude Include="EnemyAnimationStrategy.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\AnimationStrategy</Filter>
     </ClInclude>
     <ClInclude Include="MovementStrategy.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerMovementStrategy.h">
-      <Filter>ヘッダー ファイル</Filter>
+      <Filter>ヘッダー ファイル\MovementStrategy</Filter>
     </ClInclude>
     <ClInclude Include="EnemyMovementStrategy.h">
+      <Filter>ヘッダー ファイル\MovementStrategy</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMovementStrategy.h">
+      <Filter>ヘッダー ファイル\MovementStrategy</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
