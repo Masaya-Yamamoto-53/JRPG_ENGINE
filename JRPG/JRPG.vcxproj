@@ -153,6 +153,7 @@
     <ClCompile Include="InputManager.cpp" />
     <ClCompile Include="KeyboardInput.cpp" />
     <ClCompile Include="MovementController.cpp" />
+    <ClCompile Include="MovementStrategy.cpp" />
     <ClCompile Include="PlayerAnimationStrategy.cpp" />
     <ClCompile Include="PlayerMovementStrategy.cpp" />
     <ClCompile Include="TileMap.cpp" />

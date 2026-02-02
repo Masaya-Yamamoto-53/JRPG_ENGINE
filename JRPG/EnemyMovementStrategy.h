@@ -4,8 +4,19 @@
 
 class EnemyMovementStrategy : public MovementStrategy {
     MoveAmounts m_amounts;
+    int m_minX;
+    int m_maxX;
+    int m_speed;
+
+    int m_posX = 0;
+    int m_posY = 0;
+
+    Direction m_direction;
+
 public:
+    EnemyMovementStrategy(int minX, int maxX, int speed);
     void setMoveAmounts(const MoveAmounts& m) override;
+    void setPosition(int x, int y);
     Movement computeMovement() override;
 };
 

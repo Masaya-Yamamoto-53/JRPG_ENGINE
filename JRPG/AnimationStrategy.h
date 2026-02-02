@@ -17,12 +17,12 @@ protected:
     int m_spriteWidth;   // スプライト画像の幅
     int m_spriteHeight;  // スプライト画像の高さ
 
-    int m_up;
-    int m_down;
-    int m_left;
-    int m_right;
-    int m_leftRun;
-    int m_rightRun;
+    int m_up       = -1;
+    int m_down     = -1;
+    int m_left     = -1;
+    int m_right    = -1;
+    int m_leftRun  = -1;
+    int m_rightRun = -1;
 
 public:
     virtual ~AnimationStrategy() = default;

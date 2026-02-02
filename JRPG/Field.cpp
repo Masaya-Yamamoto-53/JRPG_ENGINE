@@ -25,7 +25,7 @@ Field::Field()
     auto enemiesCharacter = std::make_unique<FieldCharacter>(
           "goblin"
         , "assets\\characters\\enemies\\"
-        , std::make_unique<EnemyMovementStrategy>()
+        , std::make_unique<EnemyMovementStrategy>(0, 100, 1)
         , std::make_unique<EnemyAnimationStrategy>()
     );
 

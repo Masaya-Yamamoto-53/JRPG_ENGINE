@@ -14,7 +14,7 @@ EnemyAnimationStrategy::EnemyAnimationStrategy()
 }
 
 const CharacterImage& EnemyAnimationStrategy::getImage() const {
-    return m_images[m_animIndex];
+    return m_images[(std::max)(0, m_animIndex)];
 }
 
 int EnemyAnimationStrategy::getMoveAmount() const {
@@ -34,6 +34,7 @@ void EnemyAnimationStrategy::updateAnimation(Direction useDir, bool isMoving) {
     }
     if (useDir != Direction::None) {
         m_animIndex = calcAnimIndex(useDir);
+        m_animIndex += imgPattern[m_frame];
     }
 }
 
@@ -55,6 +56,6 @@ int EnemyAnimationStrategy::calcAnimIndex(Direction dir) const {
     default:
         break;
     }
-    return base + imgPattern[m_frame];
+    return base;
 }
 
