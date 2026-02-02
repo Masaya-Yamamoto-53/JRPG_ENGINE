@@ -22,4 +22,4 @@ public:
     void draw();
     // ステージデータ読み込み
     void load();
-}
+};
