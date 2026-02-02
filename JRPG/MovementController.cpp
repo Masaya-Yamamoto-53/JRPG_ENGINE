@@ -1,5 +1,10 @@
 #include "MovementController.h"
 
+MovementController::MovementController()
+    : m_collisionChecker()
+{
+}
+
 MoveAmounts MovementController::computeMoveAmounts(
       const DirectionalHoldFrames& holdFrames
     , const IFieldEntity* entity
@@ -11,9 +16,9 @@ MoveAmounts MovementController::computeMoveAmounts(
     auto absPos = field.toAbsolute(entity->getX(), entity->getY());
     int absX = absPos.first;
     int absY = absPos.second;
+
     int spriteW = entity->getSpriteWidth();
     int spriteH = entity->getSpriteHeight();
-
     int maxMove = entity->getMoveAmount(); 
 
     // 移動可能量の計算
@@ -51,18 +56,10 @@ Direction MovementController::computeDirection(
 
     // キャラクタが静止している場合、最後の向きを維持する
     direction = Direction::None;
-    if (holdFrames.up > holdFrames.down) {
-        direction = Direction::Up;
-    }
-    if (holdFrames.up < holdFrames.down) {
-        direction = Direction::Down;
-    }
-    if (holdFrames.left > holdFrames.right) {
-        direction = Direction::Left;
-    }
-    if (holdFrames.left < holdFrames.right) {
-        direction = Direction::Right;
-    }
+    if (holdFrames.up > holdFrames.down)    { direction = Direction::Up;    }
+    if (holdFrames.up < holdFrames.down)    { direction = Direction::Down;  }
+    if (holdFrames.left > holdFrames.right) { direction = Direction::Left;  }
+    if (holdFrames.left < holdFrames.right) { direction = Direction::Right; }
 
     // 移動した方向を優先する
     if (amounts.up       > 0) { direction = Direction::Up;    }
@@ -85,7 +82,14 @@ int MovementController::computeMoveAmount(
     while (maxMove > 0) {
         int nextX = baseX + deltaX * maxMove;
         int nextY = baseY + deltaY * maxMove;
-        if (!field.isWall(field.getTileSet(), field.getTileMap(), field.getFrameId(), dir, nextX, nextY, spriteW, spriteH)) {
+        if (!m_collisionChecker.isWall(
+                  field.getTileSet()
+                , field.getTileMap()
+                , field.getFrameId()
+                , dir
+                , nextX, nextY
+                , spriteW, spriteH
+        )) {
             return maxMove;  // 移動可能量を返す
         }
         maxMove--;

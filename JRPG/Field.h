@@ -24,16 +24,6 @@ private:
 public:
     Field();
 
-    // 指定方向に壁があるかどうかを判定
-    bool isWall(
-          const TileSet& tileSet
-        , const TileMap& tileMap
-        , int frameId
-        , Direction dir
-        , int absCharaX, int absCharaY
-        , int spriteW, int spriteH
-    ) const { return m_collisionChecker.isWall(tileSet, tileMap, frameId, dir, absCharaX, absCharaY, spriteW, spriteH); }
-
     int getFrameId() const { return m_animationCounter; }
 
     // ローカル座標を絶対座標に変換
@@ -43,8 +33,6 @@ public:
     const std::vector<std::unique_ptr<FieldCharacter>>& getEnemies() const { return m_enemies; }
 
     void update(const MoveAmounts& amounts, const Direction& direction);
-
-    void updateAnimation();
 
     // タイル1枚の幅を取得
     int getTileWidth()  const { return m_tileSet.getTileWidth();  }
@@ -66,5 +54,6 @@ public:
     const TileSet& getTileSet() const { return m_tileSet; }
     // タイルマップ取得
     const TileMap& getTileMap() const { return m_tileMap; }
-
+private:
+    void updateAnimation();
 };

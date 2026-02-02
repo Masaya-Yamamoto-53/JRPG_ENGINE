@@ -2,8 +2,8 @@
 #include "GameSettings.h"
 #include "FpsController.h"
 #include "InputManager.h"
-#include "DebugManager.h"
 #include "FieldManager.h"   // Žb’è‘Î‰ž
+#include "DebugManager.h"
 #include <memory>
 
 int WINAPI WinMain(

@@ -74,13 +74,6 @@ void Field::update(const MoveAmounts& amounts, const Direction& direction) {
     updateAnimation();
 }
 
-void Field::updateAnimation() {
-    m_frameCount++;
-    if (m_frameCount % 30 == 0) {
-        m_animationCounter++;
-    }
-}
-
 bool Field::load(const std::vector<std::string>& jsonFiles
                , const std::string& mapFile
                ) {
@@ -102,3 +95,11 @@ bool Field::load(const std::vector<std::string>& jsonFiles
 int Field::getTileImage(int num, int tileId) const {
     return m_tileSet.getTileImage(num, tileId, m_animationCounter);
 }
+
+void Field::updateAnimation() {
+    m_frameCount++;
+    if (m_frameCount % 30 == 0) {
+        m_animationCounter++;
+    }
+}
+
