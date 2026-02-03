@@ -19,6 +19,7 @@ Field::Field()
     , m_animationCounter(0)
     , m_camera()
     , m_collisionChecker()
+    , m_factory()
 {
     // b’è‘Î‰
     auto playerCharacter = std::make_unique<FieldCharacter>(
@@ -26,17 +27,19 @@ Field::Field()
         , "assets\\characters\\players\\"
         , std::make_unique<PlayerMovementStrategy>()
         , std::make_unique<PlayerAnimationStrategy>()
+        , 100, 100
     );
 
-    auto enemiesCharacter = std::make_unique<FieldCharacter>(
-          "goblin"
-        , "assets\\characters\\enemies\\"
-        , std::make_unique<EnemyMovementStrategy>(0, 100, 1)
-        , std::make_unique<EnemyAnimationStrategy>()
-    );
+    //auto enemiesCharacter = std::make_unique<FieldCharacter>(
+    //      "goblin"
+    //    , "assets\\characters\\enemies\\"
+    //    , std::make_unique<EnemyMovementStrategy>(0, 100, 1)
+    //    , std::make_unique<EnemyAnimationStrategy>()
+    //    , 150, 150
+    //);
 
     m_players.push_back(std::move(playerCharacter));
-    m_enemies.push_back(std::move(enemiesCharacter));
+    //m_enemies.push_back(std::move(enemiesCharacter));
 }
 
 void Field::update(const MoveAmounts& amounts, const Direction& direction) {
@@ -101,6 +104,40 @@ bool Field::load(const std::string& path) {
     if (!m_tileMap.load(mapFilePath)) {
         printf("Error: TileMap load failed\n");
         return false;
+    }
+
+    // “G‚ğ¶¬
+    std::string enemyFilePath;
+    if (j.contains("enemies")) {
+        enemyFilePath = j["enemies"].get<std::string>();
+    }
+    std::ifstream ifs2(enemyFilePath);
+    json j2;
+    if (!ifs2) {
+        printf("JSON error: cannot open %s\n", enemyFilePath.c_str());
+    }
+    ifs2 >> j2;
+
+    if (j2.contains("enemies")) {
+        printf("Hit\n");
+        for (auto& enemyData : j2["enemies"]) {
+
+            // “Gƒ^ƒCƒv
+            std::string type = enemyData["type"];
+
+            // spawnî•ñ
+            auto& spawn = enemyData["spawn"];
+            int x = enemyData["x"];
+            int y = enemyData["y"];
+
+            // Factory‚Å¶¬
+            auto enemy = m_factory.create(type, x, y);
+            if (enemy) {
+                m_enemies.push_back(std::move(enemy));
+            } else {
+                printf("Error: Unknown enemy type: %s\n", type.c_str());
+            }
+        }
     }
 
     return true;

@@ -21,6 +21,8 @@ public:
         , std::string baseDir
         , std::unique_ptr<MovementStrategy> move
         , std::unique_ptr<AnimationStrategy> anim
+        , int x
+        , int y
     );
 
     void loadImage(std::string baseDir, std::string id);

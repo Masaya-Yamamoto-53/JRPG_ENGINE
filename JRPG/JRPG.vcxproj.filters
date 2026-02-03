@@ -31,6 +31,9 @@
     <Filter Include="ソース ファイル\Input">
       <UniqueIdentifier>{1fbee02e-d032-48af-a767-f8445f3abf3e}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\FactoryMethod">
+      <UniqueIdentifier>{002be20c-836b-43c0-99ca-507d4901d009}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FpsController.cpp">
@@ -172,6 +175,12 @@
     </ClInclude>
     <ClInclude Include="InputController.h">
       <Filter>ヘッダー ファイル\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyFactory.h">
+      <Filter>ヘッダー ファイル\FactoryMethod</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleEnemyFactory.h">
+      <Filter>ヘッダー ファイル\FactoryMethod</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

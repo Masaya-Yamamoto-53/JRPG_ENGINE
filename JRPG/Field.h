@@ -6,6 +6,7 @@
 #include "FieldCharacter.h"
 #include "Camera.h"
 #include "CollisionChecker.h"
+#include "SimpleEnemyFactory.h"
 
 class Field {
 private:
@@ -14,6 +15,8 @@ private:
 
     Camera m_camera;
     CollisionChecker m_collisionChecker;
+
+    SimpleEnemyFactory m_factory;
 
     std::vector<std::unique_ptr<FieldCharacter>> m_players;
     std::vector<std::unique_ptr<FieldCharacter>> m_enemies;

@@ -8,9 +8,10 @@ FieldCharacter::FieldCharacter(
     , std::string baseDir
     , std::unique_ptr<MovementStrategy> move
     , std::unique_ptr<AnimationStrategy> anim
+    , int x, int y
     )
-    : m_x(100)  // Žb’è
-    , m_y(100)  // Žb’è
+    : m_x(x)  // Žb’è
+    , m_y(y)  // Žb’è
     , m_move(std::move(move))
     , m_anim(std::move(anim))
    
