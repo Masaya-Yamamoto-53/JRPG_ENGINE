@@ -1,7 +1,4 @@
-#include "DxLib.h"
 #include "FieldManager.h"
-#include "InputDeviceHub.h"
-#include "FieldCharacter.h"
 
 FieldManager::FieldManager()
     : m_inputController()
@@ -11,10 +8,10 @@ FieldManager::FieldManager()
 }
 
 void FieldManager::update() {
-    // 入力継続時間の取得
+    // 入力継続時間を取得
     DirectionalHoldFrames holdFrames = m_inputController.getDirectionalHoldFrames();
 
-    // 移動可能量の計算
+    // キャラクタの移動可能量を取得
     MoveAmounts amounts = m_movementController.computeMoveAmounts(
         holdFrames, m_field.getPlayers()[0].get(), m_field);
 

@@ -9,6 +9,7 @@ using json = nlohmann::json;
 TileSet::TileSet()
     : m_tileWidth(GameSettings::instance().getFieldTileWidth())
     , m_tileHeight(GameSettings::instance().getFieldTileHeight())
+    , m_frameId(0)
 {
 }
 
@@ -177,7 +178,7 @@ bool TileSet::loadFromJson(const std::vector<std::string>& jsonPaths) {
     return true;
 }
 
-bool TileSet::isWall(int entryId, int tileId, int frameId) const {
+bool TileSet::isWall(int entryId, int tileId) const {
     if (entryId < 0 || entryId >= static_cast<int>(m_entries.size())) {
         return false;
     }
@@ -187,7 +188,7 @@ bool TileSet::isWall(int entryId, int tileId, int frameId) const {
     }
     const int frameMax = static_cast<int>(entry.layers.size());
     // フレームIDを有効範囲に収める
-    int frameIndex = ((frameId % frameMax) + frameMax) % frameMax;
+    int frameIndex = ((m_frameId % frameMax) + frameMax) % frameMax;
 
     const auto& layer = entry.layers[frameIndex];
     if (tileId < 0 || tileId >= static_cast<int>(layer.isWall.size())) {
@@ -214,7 +215,7 @@ void TileSet::unload() {
     m_entries.shrink_to_fit();
 }
 
-int TileSet::getTileImage(int entryId, int tileId, int counter) const
+int TileSet::getTileImage(int entryId, int tileId) const
 {
     if (entryId < 0 || entryId >= static_cast<int>(m_entries.size())) {
         return -1;
@@ -234,9 +235,16 @@ int TileSet::getTileImage(int entryId, int tileId, int counter) const
         return -1;
     }
 
-    int frameIndex = counter % frameCount;
+    int frameIndex = m_frameId % frameCount;
     const auto& layer = entry.layers[frameIndex];
     return layer.images[tileId];
 }
 
 
+void TileSet::incrementFrameCounter() {
+    // アニメーションカウンタ更新
+    m_frameCount++;
+    if (m_frameCount % 30 == 0) {
+        m_frameId++;
+    }
+}

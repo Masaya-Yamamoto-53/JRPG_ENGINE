@@ -32,14 +32,16 @@ void DrawDottedHLine(int y, int winW, int color) {
 }
 
 void FieldRenderer::drawField(const Field& field) {
+    const TileSet& set = field.getTileSet();
     const TileMap& map = field.getTileMap();
+    const Camera& cam = field.getCamera();
 
-    int tileH = field.getTileHeight();
-    int tileW = field.getTileWidth();
+    int tileH = set.getTileHeight();
+    int tileW = set.getTileWidth();
 
     // タイルのSTART位置を算出
-    int startY = field.getViewOffsetY() / tileH;
-    int startX = field.getViewOffsetX() / tileW;
+    int startY = cam.getViewOffsetY() / tileH;
+    int startX = cam.getViewOffsetX() / tileW;
 
     int endY = GameSettings::instance().getWindowHeight() / tileH;
     int endX = GameSettings::instance().getWindowWidth()  / tileW;
@@ -48,18 +50,18 @@ void FieldRenderer::drawField(const Field& field) {
     // (viewOffset + tileSize - 1) / tileSize により、
     // 現在のビューオフセットが次のタイル境界を跨いでいるかどうかを判定し、
     // 必要なタイル数を1つ多めに描画する
-    int offsetY = (field.getViewOffsetY() + tileH - 1) / tileH;
-    int offsetX = (field.getViewOffsetX() + tileW - 1) / tileW;
+    int offsetY = (cam.getViewOffsetY() + tileH - 1) / tileH;
+    int offsetX = (cam.getViewOffsetX() + tileW - 1) / tileW;
 
     for (int y = startY ; y < endY + offsetY; y++) {
         for (int x = startX; x < endX + offsetX; x++) {
             auto index = map.get(x, y);
-            int img = field.getTileImage(index.first, index.second);
+            int img = field.getTileSet().getTileImage(index.first, index.second);
 
             if (img != -1) {
                 DrawGraph(
-                      (x * tileW) - field.getViewOffsetX()
-                    , (y * tileH) - field.getViewOffsetY()
+                      (x * tileW) - cam.getViewOffsetX()
+                    , (y * tileH) - cam.getViewOffsetY()
                     , img
                     , FALSE
                 );
@@ -73,13 +75,13 @@ void FieldRenderer::drawField(const Field& field) {
 
         // 縦線（タイルのX境界）
         for (int x = 0; x <= winW; x += tileW) {
-            int screenX = x - (field.getViewOffsetX() % tileW);
+            int screenX = x - (cam.getViewOffsetX() % tileW);
             DrawDottedVLine(screenX, winH, GetColor(0, 0, 255));
         }
 
         // 横線（タイルのY境界）
         for (int y = 0; y <= winH; y += tileH) {
-            int screenY = y - (field.getViewOffsetY() % tileH);
+            int screenY = y - (cam.getViewOffsetY() % tileH);
             DrawDottedHLine(screenY, winW, GetColor(0, 0, 255));
         }
     }
@@ -93,11 +95,11 @@ void FieldRenderer::drawCharacter(
 
     std::vector<DrawEntry> list;
 
-    // 味方
+    // 味方キャラクタ
     for (const auto& p : players) {
         list.push_back({p.get(), p->getY() + p->getSpriteHeight()});
     }
-    // 敵
+    // 敵キャラクタ
     for (const auto& e : enemies) {
         list.push_back({e.get(), e->getY() + e->getSpriteHeight()});
     }

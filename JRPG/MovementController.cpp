@@ -13,7 +13,7 @@ MoveAmounts MovementController::computeMoveAmounts(
     MoveAmounts amounts = { 0, 0, 0, 0, false, false, false, false };
 
     // キャラクタの絶対座標
-    auto absPos = field.toAbsolute(chara->getX(), chara->getY());
+    auto absPos = field.getCamera().toAbsolute(chara->getX(), chara->getY());
     int absX = absPos.first;
     int absY = absPos.second;
 
@@ -101,7 +101,6 @@ int MovementController::computeMoveAmount(
         if (!m_collisionChecker.isWall(
                   field.getTileSet()
                 , field.getTileMap()
-                , field.getFrameId()
                 , dir
                 , nextX, nextY
                 , spriteW, spriteH

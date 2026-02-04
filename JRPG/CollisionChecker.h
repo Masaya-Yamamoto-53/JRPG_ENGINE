@@ -9,7 +9,6 @@ public:
     bool isWall(
           const TileSet& tileSet
         , const TileMap& tileMap
-        , int frameId
         , Direction dir
         , int absCharaX, int absCharaY
         , int spriteW, int spriteH

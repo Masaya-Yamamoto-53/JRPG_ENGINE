@@ -15,8 +15,6 @@ using json = nlohmann::json;
 Field::Field()
     : m_tileSet()
     , m_tileMap()
-    , m_frameCount(0)
-    , m_animationCounter(0)
     , m_camera()
     , m_collisionChecker()
     , m_factory()
@@ -30,27 +28,21 @@ Field::Field()
         , 100, 100
     );
 
-    //auto enemiesCharacter = std::make_unique<FieldCharacter>(
-    //      "goblin"
-    //    , "assets\\characters\\enemies\\"
-    //    , std::make_unique<EnemyMovementStrategy>(0, 100, 1)
-    //    , std::make_unique<EnemyAnimationStrategy>()
-    //    , 150, 150
-    //);
-
     m_players.push_back(std::move(playerCharacter));
-    //m_enemies.push_back(std::move(enemiesCharacter));
 }
 
 void Field::update(const MoveAmounts& amounts, const Direction& direction) {
     // フィールド移動処理
-    //MoveAmounts playerAmounts = applyScroll(amounts);
-
-    MoveAmounts playerAmounts = m_camera.applyScroll(amounts
-        , m_players[0].get()->getX(), m_players[0].get()->getY()
-        , m_players[0].get()->getSpriteWidth(), m_players[0].get()->getSpriteHeight()
-        , m_tileSet.getTileWidth(), m_tileSet.getTileHeight()
-        , m_tileMap.getTileWidthNum(), m_tileMap.getTileHeightNum()
+    MoveAmounts playerAmounts = m_camera.applyScroll(
+          amounts
+        , m_players[0].get()->getX()
+        , m_players[0].get()->getY()
+        , m_players[0].get()->getSpriteWidth()
+        , m_players[0].get()->getSpriteHeight()
+        , m_tileSet.getTileWidth()
+        , m_tileSet.getTileHeight()
+        , m_tileMap.getTileWidthNum()
+        , m_tileMap.getTileHeightNum()
     );
 
     // 味方キャラクタ移動処理
@@ -66,7 +58,7 @@ void Field::update(const MoveAmounts& amounts, const Direction& direction) {
 
     // 敵キャラクタ移動処理
     for (auto& e : m_enemies) {
-        e->update(enemiesAmounts, direction);
+        e->update(enemiesAmounts, Direction::None);
     }
 
     // Update debug information
@@ -77,8 +69,7 @@ void Field::update(const MoveAmounts& amounts, const Direction& direction) {
         , m_players[0].get()->getSpriteHeight()
     );
 
-    // アニメーションカウンタ更新
-    updateAnimation();
+    m_tileSet.incrementFrameCounter();
 }
 
 bool Field::load(const std::string& path) {
@@ -143,14 +134,4 @@ bool Field::load(const std::string& path) {
     return true;
 }
 
-int Field::getTileImage(int num, int tileId) const {
-    return m_tileSet.getTileImage(num, tileId, m_animationCounter);
-}
-
-void Field::updateAnimation() {
-    m_frameCount++;
-    if (m_frameCount % 30 == 0) {
-        m_animationCounter++;
-    }
-}
 

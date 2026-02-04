@@ -1,8 +1,6 @@
 #pragma once
-#include <functional>
 #include "InputController.h"
 #include "Field.h"
-#include "FieldCharacter.h"
 #include "FieldRenderer.h"
 #include "MovementController.h"
 

@@ -3,7 +3,6 @@
 bool CollisionChecker::isWall(
       const TileSet& tileSet
     , const TileMap& tileMap
-    , int frameId
     , Direction dir
     , int absCharaX, int absCharaY
     , int spriteW, int spriteH
@@ -36,9 +35,9 @@ bool CollisionChecker::isWall(
 
         // タイル衝突判定
         return tileSet.isWall(tileMap.get(rightX, topY).first
-                            , tileMap.get(rightX, topY).second, frameId)
+                            , tileMap.get(rightX, topY).second)
             || tileSet.isWall(tileMap.get(leftX,  topY).first
-                            , tileMap.get(leftX,  topY).second, frameId);
+                            , tileMap.get(leftX,  topY).second);
 
     case Direction::Down:
         // ピクセルベース境界チェック
@@ -46,18 +45,18 @@ bool CollisionChecker::isWall(
 
         // タイル衝突判定
         return tileSet.isWall(tileMap.get(rightX, btmY).first
-                            , tileMap.get(rightX, btmY).second, frameId)
+                            , tileMap.get(rightX, btmY).second)
             || tileSet.isWall(tileMap.get(leftX,  btmY).first
-                            , tileMap.get(leftX,  btmY).second, frameId);
+                            , tileMap.get(leftX,  btmY).second);
     case Direction::Left: 
         // ピクセルベース境界チェック
         if (hitLeft < 0) return true;
 
         // タイル衝突判定
         return tileSet.isWall(tileMap.get(leftX, topY).first
-                            , tileMap.get(leftX, topY).second, frameId)
+                            , tileMap.get(leftX, topY).second)
             || tileSet.isWall(tileMap.get(leftX, btmY).first
-                            , tileMap.get(leftX, btmY).second, frameId);
+                            , tileMap.get(leftX, btmY).second);
 
     case Direction::Right:
         // ピクセルベース境界チェック
@@ -65,9 +64,9 @@ bool CollisionChecker::isWall(
 
         // タイル衝突判定
         return tileSet.isWall(tileMap.get(rightX, topY).first
-                            , tileMap.get(rightX, topY).second, frameId)
+                            , tileMap.get(rightX, topY).second)
             || tileSet.isWall(tileMap.get(rightX, btmY).first
-                            , tileMap.get(rightX, btmY).second, frameId);
+                            , tileMap.get(rightX, btmY).second);
     }
     return false;
 }
