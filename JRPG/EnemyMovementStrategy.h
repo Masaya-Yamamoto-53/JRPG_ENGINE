@@ -1,4 +1,5 @@
 #pragma once
+#include <vector>
 #include "common.h"
 #include "MovementStrategy.h"
 
@@ -11,6 +12,13 @@ class EnemyMovementStrategy : public MovementStrategy {
     int m_posY = 0;
 
     Direction m_direction;
+
+    std::vector<std::pair<int, int>> m_waypoints = {
+        {100, 100},
+        {200, 100},
+    };
+
+    int m_currentIndex = 0;
 
 public:
     EnemyMovementStrategy(int minX, int maxX, int speed);
