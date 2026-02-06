@@ -49,6 +49,11 @@ public:
     const CharacterImage& getImage() const;
 
     Rect getHitBox() const {
-        return { m_x, m_y, getSpriteWidth(), getSpriteHeight() };
+        return {
+              m_x + getSpriteWidth() / 4
+            , m_y + getSpriteWidth() / 4
+            , getSpriteWidth() - getSpriteWidth() / 2
+            , getSpriteHeight() - getSpriteWidth() / 4
+        };
     }
 };
