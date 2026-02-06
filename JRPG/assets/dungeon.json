@@ -1,0 +1,11 @@
+{
+  "tilesets": [
+    "assets/feild/Tile00.json",
+    "assets/feild/Tile01.json",
+    "assets/feild/Tile02.json"
+  ],
+
+  "map": "assets/map/dungeon.csv",
+
+  "enemies": "assets/dungeon_enemies.json"
+}

@@ -7,6 +7,9 @@
 #include "SimpleEnemyFactory.h"
 #include "FieldCharacter.h"
 
+#include "json.hpp"
+using json = nlohmann::json;
+
 class Field {
 private:
     TileSet m_tileSet;
@@ -28,8 +31,16 @@ public:
     const std::vector<std::unique_ptr<FieldCharacter>>& getEnemies() const { return m_enemies; }
     // 更新
     void update(const MoveAmounts& amounts, const Direction& direction);
-    // ステージデータを読み込む
+    // ステージ全体を読み込む
     bool load(const std::string& path);
+    // JSONファイルを読み込む
+    bool loadJson(const std::string& path, json& out);
+    // タイルセットを読み込む
+    bool loadTilesets(const json& j);
+    // マップを読み込む
+    bool loadMap(const json& j);
+    // 敵データを読み込む
+    bool loadEnemies(const json& j);
     // カメラを取得
     const Camera& getCamera() const { return m_camera; }
     // タイルセット取得

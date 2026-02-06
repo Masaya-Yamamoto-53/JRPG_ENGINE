@@ -187,7 +187,6 @@
     <ClInclude Include="SimpleEnemyFactory.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TileSet.h" />
-    <ClInclude Include="IFieldEntity.h" />
     <ClInclude Include="InputController.h" />
   </ItemGroup>
   <ItemGroup>

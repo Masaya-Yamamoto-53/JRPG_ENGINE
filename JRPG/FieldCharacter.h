@@ -3,11 +3,17 @@
 #include <vector>
 #include <memory>
 #include "common.h"
-#include "IFieldEntity.h"
 #include "AnimationStrategy.h"
 #include "MovementStrategy.h"
 
-class FieldCharacter : public IFieldEntity {
+struct Rect {
+    int x;
+    int y;
+    int w;
+    int h;
+};
+
+class FieldCharacter {
 private:
     int m_x;  // 現在X座標
     int m_y;  // 現在Y座標
@@ -42,4 +48,7 @@ public:
     // 現在のアニメーションで使用する画像IDを取得する
     const CharacterImage& getImage() const;
 
+    Rect getHitBox() const {
+        return { m_x, m_y, getSpriteWidth(), getSpriteHeight() };
+    }
 };

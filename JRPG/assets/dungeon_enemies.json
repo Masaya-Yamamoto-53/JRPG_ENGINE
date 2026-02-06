@@ -1,0 +1,22 @@
+{
+  "enemies": [
+    {
+      "id": 1,
+      "type": "goblin",
+      "x": 150,
+      "y": 100,
+      "spawn": {
+        "method": "static"
+      }
+    },
+    {
+      "id": 2,
+      "type": "goblin",
+      "x": 450,
+      "y": 450,
+      "spawn": {
+        "method": "static"
+      }
+    }
+  ]
+}

@@ -32,6 +32,5 @@ void FieldManager::draw() {
 void FieldManager::load() {
     // ƒ_ƒ“ƒWƒ‡ƒ“î•ñ
     std::string path = "assets\\dungeon.json";
-
-    bool result = m_field.load(path);
+    m_field.load(path);
 }

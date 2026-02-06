@@ -140,9 +140,6 @@
     <ClInclude Include="MovementController.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="IFieldEntity.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="AnimationStrategy.h">
       <Filter>ヘッダー ファイル\AnimationStrategy</Filter>
     </ClInclude>

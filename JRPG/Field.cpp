@@ -9,9 +9,6 @@
 #include "DebugManager.h"
 #include "GameSettings.h"
 
-#include "json.hpp"
-using json = nlohmann::json;
-
 Field::Field()
     : m_tileSet()
     , m_tileMap()
@@ -32,6 +29,8 @@ Field::Field()
 }
 
 void Field::update(const MoveAmounts& amounts, const Direction& direction) {
+    if (m_players.empty()) return;
+
     // フィールド移動処理
     MoveAmounts playerAmounts = m_camera.applyScroll(
           amounts
@@ -50,6 +49,7 @@ void Field::update(const MoveAmounts& amounts, const Direction& direction) {
         p->update(playerAmounts, direction);
     }
 
+    // 暫定
     MoveAmounts enemiesAmounts;
     enemiesAmounts.up    = amounts.up    - playerAmounts.up;
     enemiesAmounts.down  = amounts.down  - playerAmounts.down;
@@ -69,69 +69,127 @@ void Field::update(const MoveAmounts& amounts, const Direction& direction) {
         , m_players[0].get()->getSpriteHeight()
     );
 
+    for (auto& p : m_players) {
+        for (auto& e : m_enemies) {
+            if (m_collisionChecker.checkCharacterCollision(*p, *e)) {
+                printf("hit!");
+            }
+        }
+    }
+
     m_tileSet.incrementFrameCounter();
 }
 
 bool Field::load(const std::string& path) {
-    std::ifstream ifs(path);
     json j;
-    ifs >> j;
+    if (!loadJson(path, j)) return false;
+    if (!loadTilesets(j))   return false;
+    if (!loadMap(j))        return false;
+    if (!loadEnemies(j))    return false;
+    return true;
+}
 
-    // タイルセット読み込み
-    std::vector<std::string> tilesetsPath;
-    if (j.contains("tilesets")) {
-        tilesetsPath = j["tilesets"].get<std::vector<std::string>>();
-    }
-    if (!m_tileSet.loadFromJson(tilesetsPath)) {
-        printf("Error: TileSet load failed\n");
+bool Field::loadJson(const std::string& path, json& out) {
+    std::ifstream ifs(path);
+    if (!ifs) {
+        fprintf(stderr, "Error: cannot open field json %s\n", path.c_str());
         return false;
     }
 
-    // マップ読み込み
-    std::string mapFilePath;
-    if (j.contains("map")) {
-        mapFilePath = j["map"].get<std::string>();
-    }
-    if (!m_tileMap.load(mapFilePath)) {
-        printf("Error: TileMap load failed\n");
+    try {
+        ifs >> out;
+    } catch (const std::exception& e) {
+        fprintf(stderr, "Error: JSON parse error in %s: %s\n", path.c_str(), e.what());
         return false;
-    }
-
-    // 敵を生成
-    std::string enemyFilePath;
-    if (j.contains("enemies")) {
-        enemyFilePath = j["enemies"].get<std::string>();
-    }
-    std::ifstream ifs2(enemyFilePath);
-    json j2;
-    if (!ifs2) {
-        printf("JSON error: cannot open %s\n", enemyFilePath.c_str());
-    }
-    ifs2 >> j2;
-
-    if (j2.contains("enemies")) {
-        printf("Hit\n");
-        for (auto& enemyData : j2["enemies"]) {
-
-            // 敵タイプ
-            std::string type = enemyData["type"];
-
-            // spawn情報
-            auto& spawn = enemyData["spawn"];
-            int x = enemyData["x"];
-            int y = enemyData["y"];
-
-            // Factoryで生成
-            auto enemy = m_factory.create(type, x, y);
-            if (enemy) {
-                m_enemies.push_back(std::move(enemy));
-            } else {
-                printf("Error: Unknown enemy type: %s\n", type.c_str());
-            }
-        }
     }
 
     return true;
 }
 
+bool Field::loadTilesets(const json& j) {
+    if (!j.contains("tilesets") || !j["tilesets"].is_array()) {
+        fprintf(stderr, "Error: 'tilesets' is missing or not an array\n");
+        return false;
+    }
 
+    std::vector<std::string> tilesetsPath;
+    try {
+        tilesetsPath = j["tilesets"].get<std::vector<std::string>>();
+    } catch (const std::exception& e) {
+        fprintf(stderr, "Error: invalid tilesets format: %s\n", e.what());
+        return false;
+    }
+
+    if (!m_tileSet.loadFromJson(tilesetsPath)) {
+        fprintf(stderr, "Error: tilesets load failed\n");
+        return false;
+    }
+
+    return true;
+}
+
+bool Field::loadMap(const json& j) {
+    if (!j.contains("map") || !j["map"].is_string()) {
+        fprintf(stderr, "Error: 'map' is missing or not a string\n");
+        return false;
+    }
+
+    std::string mapFilePath = j["map"].get<std::string>();
+
+    if (!m_tileMap.load(mapFilePath)) {
+        fprintf(stderr, "Error: TileMap load failed: %s\n", mapFilePath.c_str());
+        return false;
+    }
+
+    return true;
+}
+
+bool Field::loadEnemies(const json& j) {
+    if (!j.contains("enemies") || !j["enemies"].is_string()) {
+        // 敵なしはエラーではない
+        return true;
+    }
+
+    std::string enemyFilePath = j["enemies"].get<std::string>();
+    std::ifstream ifs(enemyFilePath);
+    if (!ifs) {
+        fprintf(stderr, "Error: cannot open enemies json %s\n", enemyFilePath.c_str());
+        return false;
+    }
+
+    json j2;
+    try {
+        ifs >> j2;
+    } catch (const std::exception& e) {
+        fprintf(stderr, "Error: JSON parse error in %s: %s\n", enemyFilePath.c_str(), e.what());
+        return false;
+    }
+
+    if (!j2.contains("enemies") || !j2["enemies"].is_array()) {
+        fprintf(stderr, "Error: 'enemies' is missing or not an array in %s\n", enemyFilePath.c_str());
+        return false;
+    }
+
+    for (auto& enemyData : j2["enemies"]) {
+        if (!enemyData.contains("type") ||
+            !enemyData.contains("x") ||
+            !enemyData.contains("y")) {
+            fprintf(stderr, "Error: enemy data missing fields\n");
+            continue;
+        }
+
+        std::string type = enemyData["type"];
+        int x = enemyData["x"];
+        int y = enemyData["y"];
+
+        auto enemy = m_factory.create(type, x, y);
+        if (!enemy) {
+            fprintf(stderr, "Error: Unknown enemy type: %s\n", type.c_str());
+            continue;
+        }
+
+        m_enemies.push_back(std::move(enemy));
+    }
+
+    return true;
+}
