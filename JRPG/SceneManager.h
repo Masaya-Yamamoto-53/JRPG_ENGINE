@@ -1,6 +1,7 @@
 #pragma once
 #include <memory>
 #include "GameScene.h"
+
 #include "FieldScene.h"
 #include "MenuScene.h"
 #include "BattleScene.h"
@@ -46,9 +47,11 @@ public:
         currentSceneType = type;
     }
 
+    /*
     SceneType getCurrentSceneType() const {
         return currentSceneType;
     }
+    */
 
 private:
     // ÉVÅ[Éìê∂ê¨
@@ -56,13 +59,12 @@ private:
     std::unique_ptr<GameScene> createScene(SceneType type, Args&& ... args) {
         switch (type) {
         case SceneType::Field:
-            return std::make_uinque<FieldScene>(this, std::forward<Args>(args) ...);
-        case SceneType::Menu:
-            return std::make_unique<MenuScene>(this, std::forward<Args>(args) ...);
-        case SceneType::Battle:
-            return std::make_unique<BattleScene>(this, std::forward<Args>(args) ...);
+            return std::make_unique<FieldScene>(this, std::forward<Args>(args)...);
+        //case SceneType::Menu:
+        //    return std::make_unique<MenuScene>(this, std::forward<Args>(args)...);
+        //case SceneType::Battle:
+        //    return std::make_unique<BattleScene>(this, std::forward<Args>(args)...);
         }
         return nullptr;
     }
-
 };

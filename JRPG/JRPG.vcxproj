@@ -150,6 +150,7 @@
     <ClCompile Include="FieldCharacter.cpp" />
     <ClCompile Include="FieldManager.cpp" />
     <ClCompile Include="FieldRenderer.cpp" />
+    <ClCompile Include="FieldScene.cpp" />
     <ClCompile Include="FpsController.cpp" />
     <ClCompile Include="GameSettings.cpp" />
     <ClCompile Include="InputController.cpp" />

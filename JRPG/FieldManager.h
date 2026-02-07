@@ -16,7 +16,7 @@ public:
     // フィールドとキャラクタの更新
     void update();
     // フィールドとキャラクタの描画
-    void draw();
+    void render();
     // ステージデータ読み込み
     void load();
 };

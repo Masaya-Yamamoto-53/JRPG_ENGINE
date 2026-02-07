@@ -22,7 +22,7 @@ void FieldManager::update() {
     m_field.update(amounts, direction);
 }
 
-void FieldManager::draw() {
+void FieldManager::render() {
     // フィールドの描画
     m_renderer.drawField(m_field);
     // キャラクターの描画

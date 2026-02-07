@@ -26,7 +26,7 @@ void DebugManager::setCharacterPosition(int x, int y, int w, int h) {
     m_charaY = y + h / 2;
 }
 
-void DebugManager::draw() const {
+void DebugManager::render() const {
     if (!m_enabled) {
         return;
     }

@@ -2,8 +2,8 @@
 #include "GameSettings.h"
 #include "FpsController.h"
 #include "InputDeviceHub.h"
-#include "FieldManager.h"   // Žb’è‘Î‰ž
 #include "DebugManager.h"
+#include "SceneManager.h"
 
 int WINAPI WinMain(
       _In_ HINSTANCE hInstance
@@ -50,8 +50,7 @@ int WINAPI WinMain(
     // Set the drawing target to the back screen
     SetDrawScreen(DX_SCREEN_BACK);
 
-    FieldManager fieldManager;
-    fieldManager.load();
+    SceneManager sceneManager;
 
     // Main loop
     while (true) {
@@ -73,10 +72,9 @@ int WINAPI WinMain(
             DebugManager::instance().toggle();
         }
 
-        // Žb’è‘Î‰ž
-        fieldManager.update();
-        fieldManager.draw();
-        DebugManager::instance().draw();
+        sceneManager.update();
+        sceneManager.render();
+        DebugManager::instance().render();
 
         // Method to adjust the frame interval
         FpsController::instance().wait();

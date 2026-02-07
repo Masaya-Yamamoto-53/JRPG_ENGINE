@@ -15,7 +15,7 @@ public:
 
     void setCharacterPosition(int x, int y, int w, int h);
 
-    void draw() const;
+    void render() const;
 
 private:
     DebugManager();
