@@ -34,6 +34,9 @@
     <Filter Include="ヘッダー ファイル\FactoryMethod">
       <UniqueIdentifier>{002be20c-836b-43c0-99ca-507d4901d009}</UniqueIdentifier>
     </Filter>
+    <Filter Include="ヘッダー ファイル\Scene">
+      <UniqueIdentifier>{a20298f3-52ed-4c25-9d9a-b28bb21b6dab}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FpsController.cpp">
@@ -178,6 +181,21 @@
     </ClInclude>
     <ClInclude Include="SimpleEnemyFactory.h">
       <Filter>ヘッダー ファイル\FactoryMethod</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="SceneManager.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MenuScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="BattleScene.h">
+      <Filter>ヘッダー ファイル\Scene</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

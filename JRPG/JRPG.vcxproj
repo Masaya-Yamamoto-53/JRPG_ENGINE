@@ -163,6 +163,7 @@
     <ClCompile Include="TileSet.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="BattleScene.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="CollisionChecker.h" />
     <ClInclude Include="common.h" />
@@ -174,16 +175,20 @@
     <ClInclude Include="FieldCharacter.h" />
     <ClInclude Include="FieldManager.h" />
     <ClInclude Include="FieldRenderer.h" />
+    <ClInclude Include="FieldScene.h" />
     <ClInclude Include="FpsController.h" />
+    <ClInclude Include="GameScene.h" />
     <ClInclude Include="GameSettings.h" />
     <ClInclude Include="AnimationStrategy.h" />
     <ClInclude Include="InputDeviceHub.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="KeyboardInput.h" />
+    <ClInclude Include="MenuScene.h" />
     <ClInclude Include="MovementController.h" />
     <ClInclude Include="MovementStrategy.h" />
     <ClInclude Include="PlayerAnimationStrategy.h" />
     <ClInclude Include="PlayerMovementStrategy.h" />
+    <ClInclude Include="SceneManager.h" />
     <ClInclude Include="SimpleEnemyFactory.h" />
     <ClInclude Include="TileMap.h" />
     <ClInclude Include="TileSet.h" />
