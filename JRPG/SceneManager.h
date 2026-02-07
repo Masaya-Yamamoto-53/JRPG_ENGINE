@@ -6,6 +6,8 @@
 #include "MenuScene.h"
 #include "BattleScene.h"
 
+#include "Party.h"
+
 enum class SceneType {
       Field
     , Menu
@@ -16,6 +18,8 @@ class SceneManager {
 private:
     SceneType currentSceneType;
     std::unique_ptr<GameScene> currentScene;
+
+    Party m_party;  // パーティ情報
 
 public:
     SceneManager() {
@@ -52,6 +56,8 @@ public:
         return currentSceneType;
     }
     */
+
+    Party& getParty() { return m_party; }
 
 private:
     // シーン生成

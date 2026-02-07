@@ -148,7 +148,6 @@
     <ClCompile Include="EnemyMovementStrategy.cpp" />
     <ClCompile Include="Field.cpp" />
     <ClCompile Include="FieldCharacter.cpp" />
-    <ClCompile Include="FieldManager.cpp" />
     <ClCompile Include="FieldRenderer.cpp" />
     <ClCompile Include="FieldScene.cpp" />
     <ClCompile Include="FpsController.cpp" />
@@ -158,8 +157,10 @@
     <ClCompile Include="KeyboardInput.cpp" />
     <ClCompile Include="MovementController.cpp" />
     <ClCompile Include="MovementStrategy.cpp" />
+    <ClCompile Include="Party.cpp" />
     <ClCompile Include="PlayerAnimationStrategy.cpp" />
     <ClCompile Include="PlayerMovementStrategy.cpp" />
+    <ClCompile Include="SceneManager.cpp" />
     <ClCompile Include="TileMap.cpp" />
     <ClCompile Include="TileSet.cpp" />
   </ItemGroup>
@@ -174,7 +175,6 @@
     <ClInclude Include="EnemyMovementStrategy.h" />
     <ClInclude Include="Field.h" />
     <ClInclude Include="FieldCharacter.h" />
-    <ClInclude Include="FieldManager.h" />
     <ClInclude Include="FieldRenderer.h" />
     <ClInclude Include="FieldScene.h" />
     <ClInclude Include="FpsController.h" />
@@ -187,6 +187,7 @@
     <ClInclude Include="MenuScene.h" />
     <ClInclude Include="MovementController.h" />
     <ClInclude Include="MovementStrategy.h" />
+    <ClInclude Include="Party.h" />
     <ClInclude Include="PlayerAnimationStrategy.h" />
     <ClInclude Include="PlayerMovementStrategy.h" />
     <ClInclude Include="SceneManager.h" />

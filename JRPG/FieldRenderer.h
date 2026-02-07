@@ -7,8 +7,8 @@ private:
 public:
     FieldRenderer();
 
-    void drawField(const Field& field);
-    void drawCharacter(
+    void renderField(const Field& field);
+    void renderCharacter(
           const Field& field
         , const std::vector<std::unique_ptr<FieldCharacter>>& players
         , const std::vector<std::unique_ptr<FieldCharacter>>& enemies

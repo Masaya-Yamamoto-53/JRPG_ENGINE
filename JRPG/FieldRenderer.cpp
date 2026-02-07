@@ -31,7 +31,7 @@ void DrawDottedHLine(int y, int winW, int color) {
     }
 }
 
-void FieldRenderer::drawField(const Field& field) {
+void FieldRenderer::renderField(const Field& field) {
     const TileSet& set = field.getTileSet();
     const TileMap& map = field.getTileMap();
     const Camera& cam = field.getCamera();
@@ -87,7 +87,7 @@ void FieldRenderer::drawField(const Field& field) {
     }
 }
 
-void FieldRenderer::drawCharacter(
+void FieldRenderer::renderCharacter(
       const Field& field
     , const std::vector<std::unique_ptr<FieldCharacter>>& players
     , const std::vector<std::unique_ptr<FieldCharacter>>& enemies

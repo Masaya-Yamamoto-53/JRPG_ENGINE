@@ -69,10 +69,15 @@ void Field::update(const MoveAmounts& amounts, const Direction& direction) {
         , m_players[0].get()->getSpriteHeight()
     );
 
+    // エンカウント判定
     for (auto& p : m_players) {
         for (auto& e : m_enemies) {
             if (m_collisionChecker.checkCharacterCollision(*p, *e)) {
-                printf("hit!");
+                // エンカウントイベント追加
+                FieldEvent event;
+                event.type = FieldEventType::Encounter;
+                //event.groupId = e->getGroup();
+                m_events.push_back(event);
             }
         }
     }
@@ -92,14 +97,14 @@ bool Field::load(const std::string& path) {
 bool Field::loadJson(const std::string& path, json& out) {
     std::ifstream ifs(path);
     if (!ifs) {
-        fprintf(stderr, "Error: cannot open field json %s\n", path.c_str());
+        printf("Error: cannot open field json %s\n", path.c_str());
         return false;
     }
 
     try {
         ifs >> out;
     } catch (const std::exception& e) {
-        fprintf(stderr, "Error: JSON parse error in %s: %s\n", path.c_str(), e.what());
+        printf("Error: JSON parse error in %s: %s\n", path.c_str(), e.what());
         return false;
     }
 
@@ -108,7 +113,7 @@ bool Field::loadJson(const std::string& path, json& out) {
 
 bool Field::loadTilesets(const json& j) {
     if (!j.contains("tilesets") || !j["tilesets"].is_array()) {
-        fprintf(stderr, "Error: 'tilesets' is missing or not an array\n");
+        printf("Error: 'tilesets' is missing or not an array\n");
         return false;
     }
 
@@ -116,12 +121,12 @@ bool Field::loadTilesets(const json& j) {
     try {
         tilesetsPath = j["tilesets"].get<std::vector<std::string>>();
     } catch (const std::exception& e) {
-        fprintf(stderr, "Error: invalid tilesets format: %s\n", e.what());
+        printf("Error: invalid tilesets format: %s\n", e.what());
         return false;
     }
 
     if (!m_tileSet.loadFromJson(tilesetsPath)) {
-        fprintf(stderr, "Error: tilesets load failed\n");
+        printf("Error: tilesets load failed\n");
         return false;
     }
 
@@ -130,14 +135,14 @@ bool Field::loadTilesets(const json& j) {
 
 bool Field::loadMap(const json& j) {
     if (!j.contains("map") || !j["map"].is_string()) {
-        fprintf(stderr, "Error: 'map' is missing or not a string\n");
+        printf("Error: 'map' is missing or not a string\n");
         return false;
     }
 
     std::string mapFilePath = j["map"].get<std::string>();
 
     if (!m_tileMap.load(mapFilePath)) {
-        fprintf(stderr, "Error: TileMap load failed: %s\n", mapFilePath.c_str());
+        printf("Error: TileMap load failed: %s\n", mapFilePath.c_str());
         return false;
     }
 
@@ -153,7 +158,7 @@ bool Field::loadEnemies(const json& j) {
     std::string enemyFilePath = j["enemies"].get<std::string>();
     std::ifstream ifs(enemyFilePath);
     if (!ifs) {
-        fprintf(stderr, "Error: cannot open enemies json %s\n", enemyFilePath.c_str());
+        printf("Error: cannot open enemies json %s\n", enemyFilePath.c_str());
         return false;
     }
 
@@ -161,12 +166,12 @@ bool Field::loadEnemies(const json& j) {
     try {
         ifs >> j2;
     } catch (const std::exception& e) {
-        fprintf(stderr, "Error: JSON parse error in %s: %s\n", enemyFilePath.c_str(), e.what());
+        printf("Error: JSON parse error in %s: %s\n", enemyFilePath.c_str(), e.what());
         return false;
     }
 
     if (!j2.contains("enemies") || !j2["enemies"].is_array()) {
-        fprintf(stderr, "Error: 'enemies' is missing or not an array in %s\n", enemyFilePath.c_str());
+        printf("Error: 'enemies' is missing or not an array in %s\n", enemyFilePath.c_str());
         return false;
     }
 
@@ -174,7 +179,7 @@ bool Field::loadEnemies(const json& j) {
         if (!enemyData.contains("type") ||
             !enemyData.contains("x") ||
             !enemyData.contains("y")) {
-            fprintf(stderr, "Error: enemy data missing fields\n");
+            printf("Error: enemy data missing fields\n");
             continue;
         }
 
@@ -184,7 +189,7 @@ bool Field::loadEnemies(const json& j) {
 
         auto enemy = m_factory.create(type, x, y);
         if (!enemy) {
-            fprintf(stderr, "Error: Unknown enemy type: %s\n", type.c_str());
+            printf("Error: Unknown enemy type: %s\n", type.c_str());
             continue;
         }
 

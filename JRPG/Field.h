@@ -10,6 +10,18 @@
 #include "json.hpp"
 using json = nlohmann::json;
 
+enum class FieldEventType {
+      Encounter   // 敵とエンカウント
+    , ChestOpened // 宝箱を開けた
+    , MapChanged  // マップが変わった
+    , NpcTalk     // NPCと会話した
+};
+
+struct FieldEvent {
+    FieldEventType type;
+    int groupId;
+};
+
 class Field {
 private:
     TileSet m_tileSet;
@@ -19,6 +31,8 @@ private:
     CollisionChecker m_collisionChecker;
 
     SimpleEnemyFactory m_factory;
+
+    std::vector<FieldEvent> m_events;
 
     std::vector<std::unique_ptr<FieldCharacter>> m_players;
     std::vector<std::unique_ptr<FieldCharacter>> m_enemies;
@@ -41,6 +55,9 @@ public:
     bool loadMap(const json& j);
     // 敵データを読み込む
     bool loadEnemies(const json& j);
+    //
+    const std::vector<FieldEvent>& getEvents() const { return m_events; }
+    void clearEnvets() { m_events.clear(); }
     // カメラを取得
     const Camera& getCamera() const { return m_camera; }
     // タイルセット取得

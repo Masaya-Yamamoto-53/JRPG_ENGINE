@@ -13,45 +13,9 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
-    <Filter Include="ソース ファイル\AnimationStrategy">
-      <UniqueIdentifier>{33b9f85f-6c98-4123-b299-d226dccfbb86}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\AnimationStrategy">
-      <UniqueIdentifier>{d4802999-d86a-4ddc-b3e1-344953023086}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\MovementStrategy">
-      <UniqueIdentifier>{66f0c8fa-c833-4f56-b772-0f78e7a07b2f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\MovementStrategy">
-      <UniqueIdentifier>{41269f2b-52f6-4e93-bde4-e63b2655151e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Input">
-      <UniqueIdentifier>{54fe5803-a978-4f39-84d8-b1bfd73e1295}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ソース ファイル\Input">
-      <UniqueIdentifier>{1fbee02e-d032-48af-a767-f8445f3abf3e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\FactoryMethod">
-      <UniqueIdentifier>{002be20c-836b-43c0-99ca-507d4901d009}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="ヘッダー ファイル\Scene">
-      <UniqueIdentifier>{a20298f3-52ed-4c25-9d9a-b28bb21b6dab}</UniqueIdentifier>
-    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="FpsController.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="GameSettings.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="Field.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="FieldCharacter.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="FieldRenderer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="DebugManager.cpp">
@@ -69,57 +33,63 @@
     <ClCompile Include="TileSet.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="FieldManager.cpp">
-      <Filter>ソース ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyAnimationStrategy.cpp">
-      <Filter>ソース ファイル\AnimationStrategy</Filter>
-    </ClCompile>
-    <ClCompile Include="AnimationStrategy.cpp">
-      <Filter>ソース ファイル\AnimationStrategy</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerAnimationStrategy.cpp">
-      <Filter>ソース ファイル\AnimationStrategy</Filter>
-    </ClCompile>
-    <ClCompile Include="MovementStrategy.cpp">
-      <Filter>ソース ファイル\MovementStrategy</Filter>
-    </ClCompile>
-    <ClCompile Include="EnemyMovementStrategy.cpp">
-      <Filter>ソース ファイル\MovementStrategy</Filter>
-    </ClCompile>
-    <ClCompile Include="PlayerMovementStrategy.cpp">
-      <Filter>ソース ファイル\MovementStrategy</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="CollisionChecker.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="KeyboardInput.cpp">
-      <Filter>ソース ファイル\Input</Filter>
+    <ClCompile Include="Party.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="InputDeviceHub.cpp">
-      <Filter>ソース ファイル\Input</Filter>
+    <ClCompile Include="FieldScene.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="GameSettings.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Field.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="FieldCharacter.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="FieldRenderer.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyMovementStrategy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="MovementStrategy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerMovementStrategy.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="InputController.cpp">
-      <Filter>ソース ファイル\Input</Filter>
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardInput.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="InputDeviceHub.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimationStrategy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyAnimationStrategy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAnimationStrategy.cpp">
+      <Filter>ソース ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="SceneManager.cpp">
+      <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FpsController.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="GameSettings.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="Field.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="FieldRenderer.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="FieldManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="DebugManager.h">
@@ -131,9 +101,6 @@
     <ClInclude Include="TileMap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="FieldCharacter.h">
-      <Filter>ヘッダー ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="common.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
@@ -143,59 +110,74 @@
     <ClInclude Include="MovementController.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="AnimationStrategy.h">
-      <Filter>ヘッダー ファイル\AnimationStrategy</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerAnimationStrategy.h">
-      <Filter>ヘッダー ファイル\AnimationStrategy</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyAnimationStrategy.h">
-      <Filter>ヘッダー ファイル\AnimationStrategy</Filter>
-    </ClInclude>
-    <ClInclude Include="MovementStrategy.h">
-      <Filter>ヘッダー ファイル\MovementStrategy</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyMovementStrategy.h">
-      <Filter>ヘッダー ファイル\MovementStrategy</Filter>
-    </ClInclude>
-    <ClInclude Include="PlayerMovementStrategy.h">
-      <Filter>ヘッダー ファイル\MovementStrategy</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="CollisionChecker.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="InputDeviceHub.h">
-      <Filter>ヘッダー ファイル\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="KeyboardInput.h">
-      <Filter>ヘッダー ファイル\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="InputController.h">
-      <Filter>ヘッダー ファイル\Input</Filter>
-    </ClInclude>
-    <ClInclude Include="EnemyFactory.h">
-      <Filter>ヘッダー ファイル\FactoryMethod</Filter>
-    </ClInclude>
-    <ClInclude Include="SimpleEnemyFactory.h">
-      <Filter>ヘッダー ファイル\FactoryMethod</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
-    </ClInclude>
-    <ClInclude Include="FieldScene.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
+    <ClInclude Include="Party.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="SceneManager.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="MenuScene.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldScene.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="BattleScene.h">
-      <Filter>ヘッダー ファイル\Scene</Filter>
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="GameSettings.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldRenderer.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="FieldCharacter.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="Field.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimationStrategy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyAnimationStrategy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerAnimationStrategy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyFactory.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleEnemyFactory.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="InputController.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="InputDeviceHub.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardInput.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyMovementStrategy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="MovementStrategy.h">
+      <Filter>ヘッダー ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerMovementStrategy.h">
+      <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
