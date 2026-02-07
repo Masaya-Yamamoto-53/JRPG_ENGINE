@@ -5,6 +5,7 @@ FieldManager::FieldManager()
     , m_field()
     , m_movementController()
 {
+    load();
 }
 
 void FieldManager::update() {
