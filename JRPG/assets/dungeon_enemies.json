@@ -5,6 +5,7 @@
       "type": "goblin",
       "x": 150,
       "y": 100,
+      "group": 1,
       "spawn": {
         "method": "static"
       }
@@ -14,9 +15,28 @@
       "type": "goblin",
       "x": 450,
       "y": 450,
+      "group": 2,
       "spawn": {
         "method": "static"
       }
+    }
+  ],
+
+  "encounters": [
+    {
+      "group": 1,
+      "members": [
+        { "type": "goblin", "level": 2 },
+        { "type": "goblin", "level": 2 }
+      ]
+    },
+    {
+      "group": 2,
+      "members": [
+        { "type": "goblin", "level": 2 },
+        { "type": "goblin", "level": 2 },
+        { "type": "goblin", "level": 2 }
+      ]
     }
   ]
 }
