@@ -22,7 +22,10 @@ private:
     Party m_party;  // パーティ情報
 
 public:
-    SceneManager() {
+    SceneManager()
+        : m_party()
+    {
+        m_party.addMember(0); // メンバーID 0 を追加
         changeScene(SceneType::Field);
     }
 

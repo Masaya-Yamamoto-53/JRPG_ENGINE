@@ -1,5 +1,7 @@
 #include <fstream>
 #include <memory>
+#include <iomanip>
+#include <sstream>
 #include "Field.h"
 #include "FieldCharacter.h"
 #include "PlayerAnimationStrategy.h"
@@ -9,20 +11,34 @@
 #include "DebugManager.h"
 #include "GameSettings.h"
 
-Field::Field()
+Field::Field(const Party& party)
     : m_tileSet()
     , m_tileMap()
     , m_camera()
     , m_collisionChecker()
     , m_factory()
 {
-    // b’è‘Î‰
+    loadPlayersFormParty(party);
+}
+
+static std::string toIdString(int id) {
+    std::stringstream ss;
+    ss << std::setw(2) << std::setfill('0') << id;
+    return ss.str();
+}
+
+void Field::loadPlayersFormParty(const Party& party) {
+    std::vector<int> ids = party.getMemberIds();
+    if (ids.empty()) return;
+
+    std::string idStr = toIdString(ids[0]);  // © C++11‘Î‰ƒ[ƒ–„‚ß
+
     auto playerCharacter = std::make_unique<FieldCharacter>(
-          "00"
-        , "assets\\characters\\players\\"
-        , std::make_unique<PlayerMovementStrategy>()
-        , std::make_unique<PlayerAnimationStrategy>()
-        , 100, 100
+        idStr,
+        "assets\\characters\\players\\",
+        std::make_unique<PlayerMovementStrategy>(),
+        std::make_unique<PlayerAnimationStrategy>(),
+        100, 100
     );
 
     m_players.push_back(std::move(playerCharacter));

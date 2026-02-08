@@ -13,5 +13,8 @@ public:
     // パーティからメンバーを削除
     void removeMember(int memberId);
 
+    // パーティメンバーのID一覧を取得
+    const std::vector<int>& getMemberIds() const { return m_memberIds; }
+
 };
 

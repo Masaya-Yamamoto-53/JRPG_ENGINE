@@ -6,6 +6,7 @@
 #include "CollisionChecker.h"
 #include "SimpleEnemyFactory.h"
 #include "FieldCharacter.h"
+#include "Party.h"
 
 #include "json.hpp"
 using json = nlohmann::json;
@@ -38,7 +39,7 @@ private:
     std::vector<std::unique_ptr<FieldCharacter>> m_enemies;
 
 public:
-    Field();
+    Field(const Party& party);
     // 味方キャラクターを取得
     const std::vector<std::unique_ptr<FieldCharacter>>& getPlayers() const { return m_players; }
     // 敵キャラクターを取得
@@ -57,6 +58,8 @@ public:
     bool loadEnemies(const json& j);
     //
     const std::vector<FieldEvent>& getEvents() const { return m_events; }
+    //
+    void loadPlayersFormParty(const Party& party);
     void clearEnvets() { m_events.clear(); }
     // カメラを取得
     const Camera& getCamera() const { return m_camera; }
