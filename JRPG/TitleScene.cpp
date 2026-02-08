@@ -11,6 +11,7 @@ TitleScene::TitleScene(SceneManager* sceneManager)
     : m_sceneManager(sceneManager)
     , m_selectedIndex(0)
 {
+    load();
 }
 
 void TitleScene::update() {
@@ -32,8 +33,6 @@ void TitleScene::render() {
         const MenuItem& item = m_menuItems[i];
         bool selected = (i == m_selectedIndex);
 
-        /*
-
         // 画像が存在する場合（normal と selected の両方が有効）
         if (item.normalHandle != -1 && item.selectedHandle != -1) {
             int handle = selected ? item.selectedHandle : item.normalHandle;
@@ -45,26 +44,25 @@ void TitleScene::render() {
             const char* prefix = selected ? "> " : "  ";
             DrawString(item.x, item.y, (std::string(prefix) + item.label).c_str(), color);
         }
-        */
     }
 }
 
 
 void TitleScene::load() {
     // JSONファイルを開く
-    std::string jsonPath = "asets//title_menu.json";
+    std::string jsonPath = "assets\\title_menu.json";
     std::ifstream ifs(jsonPath);
     if (!ifs) {
-        printf("JSON error: cannot open %s\n", jsonPath.c_str());
+        printf("TitleScene: JSON error: cannot open %s\n", jsonPath.c_str());
     }
     json j;
     try {
         ifs >> j;
     }
     catch (const std::exception& e) {
-        printf("JSON parse error in %s: %s\n", jsonPath.c_str(), e.what());
+        printf("TileScene: JSON parse error in %s: %s\n", jsonPath.c_str(), e.what());
     }
-
+    // メニュー項目を読み込み
     for (auto& item : j["menu"]) {
         MenuItem m;
         m.label = item["label"].get<std::string>();
