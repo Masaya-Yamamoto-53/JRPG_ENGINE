@@ -2,6 +2,11 @@
 #include "KeyboardInput.h"
 
 class InputDeviceHub {
+public:
+    static constexpr int KEY_UP    = KEY_INPUT_W;
+    static constexpr int KEY_DOWN  = KEY_INPUT_S;
+    static constexpr int KEY_ENTER = KEY_INPUT_RETURN;
+
 private:
     // キーボード入力管理クラス
     KeyboardInput m_keyboard;

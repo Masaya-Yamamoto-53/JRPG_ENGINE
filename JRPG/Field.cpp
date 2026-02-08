@@ -11,14 +11,14 @@
 #include "DebugManager.h"
 #include "GameSettings.h"
 
-Field::Field(const Party& party)
+Field::Field(int i)//const Party& party)
     : m_tileSet()
     , m_tileMap()
     , m_camera()
     , m_collisionChecker()
     , m_factory()
 {
-    loadPlayersFormParty(party);
+    loadPlayersFormParty(i);//party);
 }
 
 static std::string toIdString(int id) {
@@ -27,11 +27,11 @@ static std::string toIdString(int id) {
     return ss.str();
 }
 
-void Field::loadPlayersFormParty(const Party& party) {
-    std::vector<int> ids = party.getMemberIds();
-    if (ids.empty()) return;
+void Field::loadPlayersFormParty(int i) { //const Party& party) {
+    //std::vector<int> ids = party.getMemberIds();
+    //if (ids.empty()) return;
 
-    std::string idStr = toIdString(ids[0]);  // © C++11‘Î‰ƒ[ƒ–„‚ß
+    std::string idStr = toIdString(i); //ids[0]);  // © C++11‘Î‰ƒ[ƒ–„‚ß
 
     auto playerCharacter = std::make_unique<FieldCharacter>(
         idStr,

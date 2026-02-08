@@ -2,6 +2,7 @@
 #include <memory>
 #include "GameScene.h"
 
+#include "TitleScene.h"
 #include "FieldScene.h"
 #include "MenuScene.h"
 #include "BattleScene.h"
@@ -9,7 +10,9 @@
 #include "Party.h"
 
 enum class SceneType {
-      Field
+      Title
+    , Opening
+    , Field
     , Menu
     , Battle
 };
@@ -22,30 +25,11 @@ private:
     Party m_party;  // パーティ情報
 
 public:
-    SceneManager()
-        : m_party()
-    {
-        m_party.addMember(0); // メンバーID 0 を追加
-        changeScene(SceneType::Field);
-    }
-
-    void update() {
-        if (currentScene) {
-            currentScene->update();
-        }
-    }
-
-    void render() {
-        if (currentScene) {
-            currentScene->render();
-        }
-    }
-
+    SceneManager();
+    void update();
+    void render();
     // シーン切替
-    void changeScene(SceneType type) {
-        currentScene = createScene(type);
-        currentSceneType = type;
-    }
+    void changeScene(SceneType type);
 
     // 戦闘など、追加データが必要な場合の切替
     template <typename ... Args>
@@ -67,7 +51,10 @@ private:
     template <typename ... Args>
     std::unique_ptr<GameScene> createScene(SceneType type, Args&& ... args) {
         switch (type) {
+        case SceneType::Title:
+            return std::make_unique<TitleScene>(this, std::forward<Args>(args)...);
         case SceneType::Field:
+            printf("Create Scene: Field\n");
             return std::make_unique<FieldScene>(this, std::forward<Args>(args)...);
         //case SceneType::Menu:
         //    return std::make_unique<MenuScene>(this, std::forward<Args>(args)...);

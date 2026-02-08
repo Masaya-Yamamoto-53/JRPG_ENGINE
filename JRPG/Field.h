@@ -39,7 +39,7 @@ private:
     std::vector<std::unique_ptr<FieldCharacter>> m_enemies;
 
 public:
-    Field(const Party& party);
+    Field(int i);//const Party& party);
     // 味方キャラクターを取得
     const std::vector<std::unique_ptr<FieldCharacter>>& getPlayers() const { return m_players; }
     // 敵キャラクターを取得
@@ -59,7 +59,7 @@ public:
     //
     const std::vector<FieldEvent>& getEvents() const { return m_events; }
     //
-    void loadPlayersFormParty(const Party& party);
+    void loadPlayersFormParty(int i); //const Party& party);
     void clearEnvets() { m_events.clear(); }
     // カメラを取得
     const Camera& getCamera() const { return m_camera; }

@@ -4,7 +4,7 @@
 FieldScene::FieldScene(SceneManager* sceneManager)
     : m_sceneManager(sceneManager)
     , m_inputController()
-    , m_field(sceneManager->getParty())
+    , m_field(0) // sceneManager->getParty())
     , m_movementController()
 {
     load();
