@@ -23,8 +23,14 @@ void TitleScene::update() {
     if (InputDeviceHub::instance().isKeyTriggered(InputDeviceHub::KEY_DOWN)) {
         m_selectedIndex = (m_selectedIndex + 1) % numItems;
     }
+
     if (InputDeviceHub::instance().isKeyTriggered(InputDeviceHub::KEY_ENTER)) {
-        m_sceneManager->changeScene(SceneType::Field);
+        const MenuItem& selectedItem = m_menuItems[m_selectedIndex];
+
+        if (selectedItem.action == "exit") {
+            m_sceneManager->requestQuit();
+        }
+        //m_sceneManager->changeScene(SceneType::Field);
     }
 }
 

@@ -38,11 +38,10 @@ public:
         currentSceneType = type;
     }
 
-    /*
-    SceneType getCurrentSceneType() const {
-        return currentSceneType;
+    void requestQuit() {
+        // DXライブラリの終了を要求
+        PostMessage(GetMainWindowHandle(), WM_CLOSE, 0, 0);
     }
-    */
 
     Party& getParty() { return m_party; }
 

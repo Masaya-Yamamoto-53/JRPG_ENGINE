@@ -4,16 +4,16 @@
       "label": "new_game",
       "normal_image": "assets/ui/title/new_game.png",
       "selected_image": "assets/ui/title/new_game_selected.png",
-      "x": 200,
-      "y": 200,
+      "x": 500,
+      "y": 300,
       "action": "new_game"
     },
     {
       "label": "exit",
       "normal_image": "assets/ui/title/exit.png",
       "selected_image": "assets/ui/title/exit_selected.png",
-      "x": 200,
-      "y": 260,
+      "x": 500,
+      "y": 340,
       "action": "exit"
     }
   ]
